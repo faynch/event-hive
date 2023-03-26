@@ -4,7 +4,7 @@ import Hive from '../pages/assets/hive.svg'
 
 const Login = () => {
     return (
-        <div className="h-full max-w-full bg-[#F3F4F4] p-20">
+        <div className="h-full max-w-full p-20">
             <div className="flex flex-col items-center lg:flex-row">
                 <div className="flex w-full max-w-[40%]">
                     <Image src={LoginImg} alt={'Login'} />
@@ -43,6 +43,14 @@ const Login = () => {
                                 name="password"
                                 placeholder="Password"
                             />
+                        </div>
+                        <div className="flex justify-end px-[3rem] pb-[3rem]">
+                            <a className="mx-3 justify-end rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-12 py-2 font-extrabold text-white hover:bg-gradient-to-r">
+                                Register
+                            </a>
+                            <a className="mx-3 justify-end rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-12 py-2 font-extrabold text-white hover:bg-gradient-to-r">
+                                Sign in
+                            </a>
                         </div>
                     </div>
                 </div>
