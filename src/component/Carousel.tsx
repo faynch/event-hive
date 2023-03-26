@@ -6,7 +6,7 @@ import Event from '../pages/assets/event.svg'
 
 const Carousel = () => {
     return (
-        <div className="mx-36 px-36 py-12 text-center">
+        <div className="bg-white px-36 py-12 text-center">
             <h2 className="text-3xl font-extrabold text-primary">
                 UPCOMING EVENT
             </h2>
@@ -47,7 +47,7 @@ const Carousel = () => {
                 </div>
                 {/* <!-- Slider controls --> */}
 
-                <button
+                {/* <button
                     type="button"
                     className="absolute top-0 left-0 flex h-full cursor-pointer items-center justify-center px-4"
                     data-carousel-prev
@@ -61,7 +61,7 @@ const Carousel = () => {
                     data-carousel-next
                 >
                     <Image src={Right} alt={''} />
-                </button>
+                </button> */}
             </div>
         </div>
     )

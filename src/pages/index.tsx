@@ -9,19 +9,21 @@ export default function Home() {
         <>
             <Navbar />
             <Hero />
-            {/* <Carousel /> */}
-            <h3 className="text-2xl font-extrabold text-primary bg-[#F3F4F4] text-center py-3">
+            <Carousel />
+            <section className='my-3'>
+                <h3 className="py-8 text-center text-2xl font-extrabold text-primary">
                     TOP STORES
                 </h3>
-            <section className="col-span-4 grid grid-cols-1 bg-[#F3F4F4] px-8 md:grid-cols-4 lg:px-16">
-                <div className="md:col-span-2 md:col-start-2">
-                    <StoreCard />
-                </div>
-                <div className="md:col-span-2 md:pr-3">
-                    <StoreCard />
-                </div>
-                <div className="md:col-span-2 md:pl-3">
-                    <StoreCard />
+                <div className="col-span-4 grid grid-cols-1 gap-3 px-8 md:grid-cols-4 md:px-16 lg:px-32 xl:grid-cols-6 xl:gap-6">
+                    <div className="md:col-span-2 md:col-start-2 xl:col-start-1">
+                        <StoreCard />
+                    </div>
+                    <div className="md:col-span-2 md:pr-3 xl:pr-0">
+                        <StoreCard />
+                    </div>
+                    <div className="md:col-span-2 md:pl-3 xl:pl-0">
+                        <StoreCard />
+                    </div>
                 </div>
             </section>
         </>
