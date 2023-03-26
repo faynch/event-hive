@@ -23,14 +23,14 @@ const Login = () => {
                     </div>
                     <div className="my-10 h-full w-full rounded-lg bg-[#F5EAEA] drop-shadow-xl ">
                         <div className="flex flex-row p-[3rem]">
-                            <h5 className="mr-10 text-[2rem] font-extrabold text-[#A459D1]">
+                            <h5 className="mr-[8rem] text-[2rem] font-extrabold text-[#A459D1]">
                                 EMAIL
                             </h5>
                             <input
-                                className="w-full"
+                                className="block w-full rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm  placeholder:text-slate-400 sm:text-sm"
+                                placeholder="Email"
                                 type="email"
                                 name="email"
-                                placeholder="Email"
                             />
                         </div>
                         <div className="flex flex-row px-[3rem] pb-[3rem]">
@@ -38,10 +38,10 @@ const Login = () => {
                                 PASSWORD
                             </h5>
                             <input
-                                className="w-full"
+                                className="block w-full rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm  placeholder:text-slate-400 sm:text-sm"
+                                placeholder="Password"
                                 type="password"
                                 name="password"
-                                placeholder="Password"
                             />
                         </div>
                         <div className="flex justify-end px-[3rem] pb-[3rem]">
