@@ -2,7 +2,8 @@ import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import Menu from '../pages/assets/menu.svg'
+import Account from '../pages/assets/account.svg'
+import Shop from '../pages/assets/shop.svg'
 
 const Navbar = () => {
     const [active, setActive] = useState(false)
@@ -13,31 +14,31 @@ const Navbar = () => {
     }
 
     return (
-        <div className="flex flex-row items-center bg-white">
-            <a href="#" className="flex flex-row">
-                <Image className="w-6" src={Menu} alt={'menu'} />
+        <div className="flex flex-row items-center py-4 px-8 bg-white">
+            <a href="#" className="">
+                <Image className="w-6" src={Shop} alt={'menu'} />
                 {/* <h3 className="hidden md:text-2xl md:font-extrabold md:text-gray-900">Event Hive</h3> */}
             </a>
 
             <div className="flex grow justify-center">
-                <a href="#" className="text-xl font-extrabold text-gray-900">
+                <a href="#" className="px-4 text-xl font-extrabold text-gray-900 lg:px-8">
                     Stores
                 </a>
 
-                <a href="#" className="text-xl font-extrabold text-gray-900">
+                <a href="#" className="px-4 text-xl font-extrabold text-gray-900 md:px-4 lg:px-8">
                     Events
                 </a>
 
-                <a href="#" className="text-xl font-extrabold text-gray-900">
+                <a href="#" className="px-4 text-xl font-extrabold text-gray-900 md:px-4 lg:px-8">
                     Blogs
                 </a>
             </div>
             <div>
                 <button
-                    className="lg:hidden"
+                    className="flex"
                     onClick={handleClick}
                     
-                ><Image className="w-6" src={Menu} alt={'menu'} /></button>
+                ><Image className="w-6" src={Account} alt={'account'} /></button>
             </div>
         </div>
     )
