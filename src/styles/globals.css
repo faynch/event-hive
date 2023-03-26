@@ -9,3 +9,7 @@ html * {
     line-height: 1.625;
     font-family: Nunito, sans-serif;
   }
+
+body {
+  background-color:#F3F4F4;
+}
