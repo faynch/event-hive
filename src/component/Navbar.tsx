@@ -14,39 +14,46 @@ const Navbar = () => {
     }
 
     return (
-        <div className="flex flex-row items-center py-4 px-8 bg-white">
-            <a href="#" className="">
-            <div className='flex flex-row'>
-            <Image className="w-6" src={EventHive} alt={'Event Hive'} />
-            {/* <h3
-                className="text-2xl font-extrabold"
-            >
-                <span className="bg-gradient-to-r from-[#EF9323] to-[#5D3891] bg-clip-text text-transparent">
-                    EVENT HIVE
-                </span>
-            </h3> */}
-            </div>
+        <div className="flex items-center bg-white py-4 px-8">
+            <a href="#" className="w-48 flex-none">
+                <div className="flex flex-row">
+                    <Image
+                        className="mr-3 w-6"
+                        src={EventHive}
+                        alt={'Event Hive'}
+                    />
+                    <span className="bg-gradient-to-r from-[#EF9323] to-[#5D3891] bg-clip-text text-2xl font-extrabold text-transparent">
+                        EVENT HIVE
+                    </span>
+                </div>
             </a>
 
-            <div className="flex grow justify-center">
-                <a href="#" className="px-4 text-xl font-extrabold text-gray-900 lg:px-8">
+            <div className="grow text-center ">
+                <a
+                    href="#"
+                    className="px-4 text-xl font-extrabold text-gray-900 lg:px-8"
+                >
                     Stores
                 </a>
 
-                <a href="#" className="px-4 text-xl font-extrabold text-gray-900 md:px-4 lg:px-8">
+                <a
+                    href="#"
+                    className="px-4 text-xl font-extrabold text-gray-900 md:px-4 lg:px-8"
+                >
                     Events
                 </a>
 
-                <a href="#" className="px-4 text-xl font-extrabold text-gray-900 md:px-4 lg:px-8">
+                <a
+                    href="#"
+                    className="px-4 text-xl font-extrabold text-gray-900 md:px-4 lg:px-8"
+                >
                     Blogs
                 </a>
             </div>
-            <div>
-                <button
-                    className="flex"
-                    onClick={handleClick}
-                    
-                ><Image className="w-6" src={Account} alt={'account'} /></button>
+            <div className="flex w-48 justify-end">
+                <button className="" onClick={handleClick}>
+                    <Image className="w-6" src={Account} alt={'account'} />
+                </button>
             </div>
         </div>
     )
