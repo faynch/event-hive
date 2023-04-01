@@ -36,6 +36,7 @@ model Post {
 
 model Shop {
   id                String  @id @default(uuid())
+  shopName          String
   about             String
   address           String
   pic               String
@@ -45,6 +46,7 @@ model Shop {
 
 model Event {
   id           String @id @default(uuid())
+  eventName    String
   about        String
   address      String
   pic          String
