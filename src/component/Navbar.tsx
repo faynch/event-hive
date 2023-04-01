@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import Account from '../pages/assets/account.svg'
+import Menu from '../pages/assets/menu.svg'
 import EventHive from '../pages/assets/eventHive.svg'
 
 const Navbar = () => {
@@ -14,8 +14,8 @@ const Navbar = () => {
     }
 
     return (
-        <div className="flex items-center bg-white py-4 px-8">
-            <a href="#" className="w-48 flex-none">
+        <div className="grid grid-cols-6 items-center bg-white py-4 px-8">
+            <a href="#" className="w-48 grow md:flex-none">
                 <div className="flex flex-row">
                     <Image
                         className="mr-3 w-6"
@@ -28,7 +28,7 @@ const Navbar = () => {
                 </div>
             </a>
 
-            <div className="grow text-center ">
+            <div className="col-span-4 text-center hidden md:flex md:justify-center">
                 <a
                     href="#"
                     className="px-4 text-xl font-extrabold text-gray-900 lg:px-8"
@@ -50,9 +50,9 @@ const Navbar = () => {
                     Blogs
                 </a>
             </div>
-            <div className="flex w-48 justify-end">
+            <div className="col-start-6 h-6 justify-self-end">
                 <button className="" onClick={handleClick}>
-                    <Image className="w-6" src={Account} alt={'account'} />
+                    <Image className="w-6" src={Menu} alt={'account'} />
                 </button>
             </div>
         </div>
@@ -61,16 +61,4 @@ const Navbar = () => {
 
 export default Navbar
 
-{
-    /* <div className="flex lg:flex-1">
-                    
-                </div>
-                <div className="py-6 flex sm:gap-x-12 md:gap-x-18 lg:gap-x-24">
-                    
-                </div>
-                <div className="lg:flex lg:flex-1 lg:justify-end">
-                    <a href="#" className="text-xl font-extrabold text-gray-900">
-                        Log in
-                    </a>
-                </div> */
-}
+

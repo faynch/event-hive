@@ -57,7 +57,7 @@ function Footer() {
                         <Image className="h-6" src={Instagram} alt={''} />
                     </button>
                 </div>
-                <div className="col-span-2 text-center">© 2023 Event hive</div>
+                <div className="text-center">© 2023 Event hive</div>
             </div>
         </section>
     )
