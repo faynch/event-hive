@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Phone from '../pages/assets/phone.svg'
-import Mail from '../pages/assets/mail.svg'
+import Instagram from '../pages/assets/instagram.svg'
 import Twitter from '../pages/assets/twitter.svg'
 import Facebook from '../pages/assets/facebook.svg'
 
@@ -11,7 +11,7 @@ function GroupButton() {
                 <Image className="h-8" src={Phone} alt={''} />
             </button>
             <button>
-                <Image className="h-8" src={Mail} alt={''} />
+                <Image className="h-8" src={Instagram} alt={''} />
             </button>
             <button>
                 <Image className="h-8" src={Twitter} alt={''} />
