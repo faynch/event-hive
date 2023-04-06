@@ -2,6 +2,7 @@ import Image from 'next/image'
 import LoginImg from '../pages/assets/login.svg'
 import Hive from '../pages/assets/hive.svg'
 import Navbar from '../component/Navbar'
+import Link from 'next/link'
 
 export default function login() {
     return (
@@ -26,7 +27,7 @@ export default function login() {
                         </div>
                         <div className="my-10 h-full w-full rounded-lg bg-[#F5EAEA] drop-shadow-xl ">
                             <div className="flex flex-row p-[3rem]">
-                                <h5 className="mr-10 text-[2rem] font-extrabold text-[#A459D1]">
+                                <h5 className="mr-10 text-[1rem] font-extrabold text-[#A459D1] lg:text-[2rem]">
                                     EMAIL
                                 </h5>
                                 <input
@@ -48,12 +49,18 @@ export default function login() {
                                 />
                             </div>
                             <div className="flex justify-end px-[3rem] pb-[3rem]">
-                                <a className="mx-3 justify-end rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-12 py-2 font-extrabold text-white hover:bg-gradient-to-r">
+                                <Link
+                                    href="/register"
+                                    className="mx-3 justify-end rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-6 py-2 font-extrabold text-white hover:bg-gradient-to-r"
+                                >
                                     Register
-                                </a>
-                                <a className="justify-end rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-12 py-2 font-extrabold text-white hover:bg-gradient-to-r">
+                                </Link>
+                                <Link
+                                    href="/"
+                                    className="justify-end rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-6 py-2 font-extrabold text-white hover:bg-gradient-to-r"
+                                >
                                     Sign in
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>

@@ -1,0 +1,21 @@
+import Image from 'next/image'
+import React from 'react'
+
+interface CardProps {
+    image: string
+    alt: string
+    title: string
+}
+
+function RegisterCard(props: CardProps) {
+    return (
+        <div className="rounded-lg bg-[#F5EAEA] p-10 drop-shadow-lg">
+            <Image src={props.image} alt={props.alt} />
+            <h5 className="text-center text-[1rem] font-extrabold uppercase text-[#A459D1] lg:text-[2rem]">
+                {props.title}
+            </h5>
+        </div>
+    )
+}
+
+export default RegisterCard
