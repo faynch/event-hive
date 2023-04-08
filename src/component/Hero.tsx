@@ -15,7 +15,7 @@ const Hero = () => {
                     <p className="text-lg text-gray-600">
                         Elit sunt amet fugiat veniam occaecat fugiat aliqua.
                     </p>
-                    <Link href={''}>
+                    <Link href="/register">
                         <div className="rounded-md bg-secondary px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">
                             Get started
                         </div>

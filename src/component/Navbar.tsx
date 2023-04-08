@@ -15,7 +15,7 @@ const Navbar = () => {
 
     return (
         <div className="grid grid-cols-6 items-center bg-white py-4 px-8">
-            <a href="#" className="w-48 grow md:flex-none">
+            <a href="/" className="w-48 grow md:flex-none">
                 <div className="flex flex-row">
                     <Image
                         className="mr-3 w-6"
@@ -28,7 +28,7 @@ const Navbar = () => {
                 </div>
             </a>
 
-            <div className="col-span-4 text-center hidden md:flex md:justify-center">
+            <div className="col-span-4 hidden text-center md:flex md:justify-center">
                 <a
                     href="#"
                     className="px-4 text-xl font-extrabold text-gray-900 lg:px-8"
@@ -60,5 +60,3 @@ const Navbar = () => {
 }
 
 export default Navbar
-
-

@@ -10,7 +10,7 @@ import Email from '../pages/assets/email.svg'
 function Footer() {
     return (
         <section className="grid justify-center gap-y-8 bg-[#A459D121] p-14 md:grid-cols-3">
-            <div>
+            <div className='lg:pl-8'>
                 <h5 className="mb-3 text-center text-xl font-extrabold text-primary">
                     CONTACT US
                 </h5>
