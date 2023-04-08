@@ -30,7 +30,7 @@ const Navbar = () => {
 
             <div className="col-span-4 hidden text-center md:flex md:justify-center">
                 <a
-                    href="#"
+                    href="/store"
                     className="px-4 text-xl font-extrabold text-gray-900 lg:px-8"
                 >
                     Stores

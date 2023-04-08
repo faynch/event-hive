@@ -3,10 +3,13 @@ import Visitor from '../pages/assets/visitor.svg'
 import Shopkeeper from '../pages/assets/Shopkeeper.svg'
 import Organzier from '../pages/assets/Organizer.svg'
 import Link from 'next/link'
+import Navbar from '../component/Navbar'
+import Footer from '../component/Footer'
 
 export default function register() {
     return (
         <>
+        <Navbar />
             <div className="h-full max-w-full p-20">
                 <div className="flex flex-col items-center">
                     <h3 className="bg-clip-text text-[2rem] font-extrabold text-[#5D3891] lg:text-[3rem]">
@@ -31,6 +34,7 @@ export default function register() {
                     </div>
                 </div>
             </div>
+        <Footer />
         </>
     )
 }
