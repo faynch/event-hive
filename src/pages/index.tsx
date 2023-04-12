@@ -11,7 +11,7 @@ export default function Home() {
             <Navbar />
             <Hero />
             <Carousel />
-            <section className="my-8">
+            <section className="my-8 mx-52">
                 <h3 className="py-4 text-center text-2xl font-extrabold text-primary">
                     TOP STORES
                 </h3>
