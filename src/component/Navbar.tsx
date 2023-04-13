@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import Account from '../pages/assets/account.svg'
-import Like from '../pages/assets/like.svg'
+import Favourite from '../pages/assets/unlike.svg'
 import Menu from '../pages/assets/menu.svg'
 import EventHive from '../pages/assets/eventHive.svg'
 
@@ -31,8 +31,8 @@ const Navbar = () => {
                             <button>
                                 <Image
                                     className="w-6"
-                                    src={Like}
-                                    alt={'like'}
+                                    src={Favourite}
+                                    alt={'favourite'}
                                 />
                             </button>
                             <button>
@@ -73,7 +73,7 @@ const Navbar = () => {
                 </div>
                 <div className="hidden basis-1/3 space-x-3 justify-end md:flex">
                     <button>
-                        <Image className="w-6" src={Like} alt={'like'} />
+                        <Image className="w-6" src={Favourite} alt={'favourite'} />
                     </button>
                     <button>
                         <Image

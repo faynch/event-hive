@@ -6,7 +6,7 @@ import Facebook from '../pages/assets/facebook.svg'
 
 function GroupButton() {
     return (
-        <div className='flex flex-row gap-3'>
+        <div className='flex flex-row gap-3 justify-center'>
             <button>
                 <Image className="h-8" src={Phone} alt={''} />
             </button>
