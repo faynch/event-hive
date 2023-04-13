@@ -4,7 +4,7 @@ import Shop from '../pages/assets/shop.svg'
 
 const StoreCard = () => {
     return (
-        <div className="my-3 flex flex-col items-center gap-3 rounded-lg bg-white p-9 text-center">
+        <div className="w-96 my-3 flex flex-col items-center gap-3 rounded-lg bg-white p-9 text-center">
             <Image className="w-32" src={Shop} alt={''} />
             <h5 className="text-lg font-extrabold">STORE NAME</h5>
             <GroupButton />
