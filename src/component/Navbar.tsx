@@ -59,22 +59,23 @@ const Navbar = () => {
                         }`}
                     >
                         <ul className="space-y-8 justify-center text-center md:flex md:space-x-12 md:space-y-0">
-                            <li className="text-xl font-extrabold text-gray-900 hover:text-secondary">
+                            <li className="text-xl font-extrabold hover:text-secondary">
                                 <a href="/store">Stores</a>
                             </li>
-                            <li className="text-xl font-extrabold text-gray-900 hover:text-secondary">
+                            <li className="text-xl font-extrabold hover:text-secondary">
                                 <a href="javascript:void(0)">Events</a>
                             </li>
-                            <li className="text-xl font-extrabold text-gray-900 hover:text-secondary">
+                            <li className="text-xl font-extrabold hover:text-secondary">
                                 <a href="javascript:void(0)">Blogs</a>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div className="hidden basis-1/3 space-x-3 justify-end md:flex">
-                    <button>
+                    
+                    <button><a href='/favourite'>
                         <Image className="w-6" src={Favourite} alt={'favourite'} />
-                    </button>
+                    </a></button>
                     <button>
                         <Image
                             className="w-6"

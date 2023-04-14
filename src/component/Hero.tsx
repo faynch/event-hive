@@ -12,7 +12,7 @@ const Hero = () => {
                         EVENT HIVE
                     </h1>
 
-                    <p className="text-lg text-gray-600">
+                    <p className="text-lg">
                         Elit sunt amet fugiat veniam occaecat fugiat aliqua.
                     </p>
                     <Link href="/register">

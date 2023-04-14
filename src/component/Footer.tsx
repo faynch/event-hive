@@ -35,24 +35,18 @@ function Footer() {
                     CONTACT US
                 </h5>
                 <div className="flex flex-row justify-center lg:justify-start">
-                    {/* <div className="mb-2 flex flex-row"> */}
                     <button>
                         <Image className="ml-3 mr-1 h-4" src={Location} alt={''} />
                     </button>
                     Hive101
-                    {/* </div> */}
-                    {/* <div className="mb-2 flex flex-row"> */}
                     <button>
                         <Image className="ml-2 mr-1 h-4" src={Phone} alt={''} />
                     </button>
                     000-111111
-                    {/* </div> */}
-                    {/* <div className="mb-2 flex flex-row"> */}
                     <button>
                         <Image className="ml-2 mr-1 h-4" src={Email} alt={''} />
                     </button>
                     admin@eventhive
-                    {/* </div> */}
                 </div>
             </div>
         </section>
