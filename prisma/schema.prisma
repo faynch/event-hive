@@ -11,13 +11,17 @@ datasource db {
 }
 
 model User {
-  id           String @id @default(uuid())
+  id           String  @id @default(uuid())
   firstName    String
   lastName     String
   role         Role
   email        String
   password     String
-  writtenPosts Post[] @relation("WrittenPosts")
+  writtenPosts Post[]  @relation("WrittenPosts")
+  Event        Event?  @relation(fields: [eventId], references: [id])
+  eventId      String?
+  Shop         Shop?   @relation(fields: [shopId], references: [id])
+  shopId       String?
 }
 
 enum Role {
@@ -41,19 +45,61 @@ model Shop {
   address           String
   pic               String
   tag               Tag[]
-  participateEvents Event[]
+  contact           Contact @relation("ShopContact")
+  //uses explicit
+  participateEvents Event[] @relation("ShopParticipation")
+  appliedEvent      Event[] @relation("AppliedShops")
+
+  // admin             User[]
+  // ShopParticipation ShopParticipation[]
+  // Event             Event?              @relation(fields: [eventId], references: [id])
+  // eventId           String?
+  // Event             Event?              @relation(fields: [eventId], references: [id])
+  User              User[]
+  ShopParticipation ShopParticipation[]
+  Event             Event?              @relation(fields: [eventId], references: [id])
+  eventId           String?
+  Event             Event?              @relation(fields: [eventId], references: [id])
+}
+
+model ShopParticipation {
+  id      String @id @default(uuid())
+  shop    Shop   @relation(fields: [shopId], references: [id])
+  event   Event  @relation(fields: [eventId], references: [id])
+  shopId  String
+  eventId String
+}
+
+model Contact {
+  id        String  @id @default(uuid())
+  shop      Shop    @relation("ShopContact", fields: [contactId], references: [id])
+  contactId String  @unique
+  tel       String
+  facebook  String?
+  instagram String?
+  twitter   String?
 }
 
 model Event {
-  id           String @id @default(uuid())
-  eventName    String
-  about        String
-  address      String
-  pic          String
-  tag          Tag[]
-  containShops Shop[]
+  id                String              @id @default(uuid())
+  eventName         String
+  about             String
+  address           String
+  pic               String
+  tag               Tag[]
+  contact           String[]
+  containShops      Shop[]              @relation("ShopParticipation") //many to many relationship is not supported 
+  admin             User[]
+  appliedShops      Shop[]              @relation("AppliedShops") //
+  //admin User -> one/many admin
+  //add contact
+  //apply -> contact
+  Shop              Shop?               @relation(fields: [shopId], references: [id])
+  shopId            String?
+  ShopParticipation ShopParticipation[]
 }
 
+//include categories inside tags
 model Tag {
   id      String  @id @default(uuid())
   tagName String
