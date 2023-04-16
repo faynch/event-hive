@@ -44,11 +44,13 @@ export default function shop() {
                         YOU ARE ...
                     </h3>
                     <div className="m-10 grid grid-cols-1 gap-5 lg:flex">
-                        <RegisterCard
-                            image={Shopkeeper}
-                            alt="Shopkeeper"
-                            title="Shopkeeper"
-                        />
+                        <div>
+                            <RegisterCard
+                                image={Shopkeeper}
+                                alt="Shopkeeper"
+                                title="Shopkeeper"
+                            />
+                        </div>
                         <div className="rounded-lg bg-[#F5EAEA] p-10 drop-shadow-lg">
                             <div className="my-3 flex flex-row">
                                 <div className="mr-10">

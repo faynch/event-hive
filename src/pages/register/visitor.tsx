@@ -2,6 +2,7 @@ import RegisterCard from '../../component/RegisterCard'
 import Visitor from '../../pages/assets/visitor.svg'
 import Navbar from '../../component/Navbar'
 import Footer from '../../component/Footer'
+import TagSelector from '../../component/TagSelector'
 import { useState } from 'react'
 import Link from 'next/link'
 
@@ -35,6 +36,15 @@ export default function RegisterVisitor() {
         setConfirmPassword(event.target.value)
         setPasswordMatch(event.target.value === password)
     }
+    const [showTagSelector, setShowTagSelector] = useState(false)
+
+    const handleTagSelectorClose = () => {
+        setShowTagSelector(false)
+    }
+
+    const handleShowTagSelector = () => {
+        setShowTagSelector(true)
+    }
     return (
         <>
             <Navbar />
@@ -44,12 +54,13 @@ export default function RegisterVisitor() {
                         YOU ARE ...
                     </h3>
                     <div className="m-10 grid grid-cols-1 gap-5 lg:flex">
-                        <RegisterCard
-                            image={Visitor}
-                            alt="Visitor"
-                            title="Visitor"
-                        />
-
+                        <div>
+                            <RegisterCard
+                                image={Visitor}
+                                alt="Visitor"
+                                title="Visitor"
+                            />
+                        </div>
                         <div className="rounded-lg bg-[#F5EAEA] p-10 drop-shadow-lg">
                             <div className="my-3 flex flex-row">
                                 <div className="mr-10">
@@ -126,6 +137,19 @@ export default function RegisterVisitor() {
                                     <p className="text-red-500">
                                         Passwords do not match.
                                     </p>
+                                )}
+                            </div>
+                            <div className="flex">
+                                <h5 className="my-3 mr-10 text-sm font-extrabold text-[#A459D1] lg:text-2xl">
+                                    Select Tags
+                                </h5>
+                                <button onClick={handleShowTagSelector}>
+                                    +
+                                </button>
+                                {showTagSelector && (
+                                    <TagSelector
+                                        onClose={handleTagSelectorClose}
+                                    />
                                 )}
                             </div>
                             <div className="flex justify-end">

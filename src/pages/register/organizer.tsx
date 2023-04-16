@@ -43,13 +43,15 @@ export default function organizer() {
                     <h3 className="bg-clip-text text-[2rem] font-extrabold text-[#5D3891] lg:text-[3rem]">
                         YOU ARE ...
                     </h3>
-                    <div className="m-10 grid grid-cols-1 gap-5 lg:flex">
-                        <RegisterCard
-                            image={Organzier}
-                            alt="Organzier"
-                            title="Organzier"
-                        />
-                        <div className="rounded-lg bg-[#F5EAEA] p-10 drop-shadow-lg">
+                    <div className="m-10 grid w-full max-w-[1080px] grid-cols-1 gap-5 lg:flex">
+                        <div>
+                            <RegisterCard
+                                image={Organzier}
+                                alt="Organzier"
+                                title="Organzier"
+                            />
+                        </div>
+                        <div className="w-full max-w-[500px] rounded-lg bg-[#F5EAEA] p-10 drop-shadow-lg">
                             <div className="my-3">
                                 <h5 className="text-sm font-extrabold text-[#A459D1] lg:text-2xl">
                                     COMPANY NAME
