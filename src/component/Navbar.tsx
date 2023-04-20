@@ -11,7 +11,7 @@ const Navbar = () => {
     const [navbar, setNavbar] = useState(false)
 
     return (
-        <nav className="w-full bg-white shadow">
+        <nav className="w-full bg-white shadow sticky top-0 z-10">
             <div className="mx-auto justify-stretch px-8 md:flex md:items-center lg:max-w-7xl">
                 <div className="md:basis-1/3">
                     <div className="flex py-5 md:block">

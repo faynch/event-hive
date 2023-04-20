@@ -20,7 +20,7 @@ const CarouselCard = () => {
 
                             <div className="flex flex-col gap-2 pb-2 lg:items-start lg:pt-8 lg:pr-24 xl:pr-36">
                                 <h4 className="text-center text-xl font-extrabold">
-                                    EVENT NAME1
+                                    EVENT NAME 1
                                 </h4>
                                 <p className="text-center lg:text-start text-[#989898] ">
                                     Lorem ipsum dolor sit amet consectetur
@@ -39,19 +39,19 @@ const CarouselCard = () => {
                             </a>
                         </div>
                     </div>
-                    <div id="slide2" className="carousel-item relative w-full">
-                        <div className="grid grid-cols-1 content-center justify-items-center gap-4">
+                    <div id="slide2" className="carousel-item relative w-full justify-center">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 content-center justify-items-center lg:justify-items-end gap-4 lg:gap-12">
                             <Image
                                 src={Event}
                                 className="w-48 md:w-64"
                                 alt={''}
                             />
 
-                            <div className="flex flex-col gap-4 pb-2">
+                            <div className="flex flex-col gap-2 pb-2 lg:items-start lg:pt-8 lg:pr-24 xl:pr-36">
                                 <h4 className="text-center text-xl font-extrabold">
-                                    EVENT NAME2
+                                    EVENT NAME 2
                                 </h4>
-                                <p className="text-center text-[#989898] ">
+                                <p className="text-center lg:text-start text-[#989898] ">
                                     Lorem ipsum dolor sit amet consectetur
                                     adipisicing elit. Consequatur, s
                                 </p>
@@ -68,19 +68,19 @@ const CarouselCard = () => {
                             </a>
                         </div>
                     </div>
-                    <div id="slide3" className="carousel-item relative w-full">
-                        <div className="grid grid-cols-1 content-center justify-items-center gap-4">
+                    <div id="slide3" className="carousel-item relative w-full justify-center">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 content-center justify-items-center lg:justify-items-end gap-4 lg:gap-12">
                             <Image
                                 src={Event}
                                 className="w-48 md:w-64"
                                 alt={''}
                             />
 
-                            <div className="flex flex-col gap-4 pb-2">
+                            <div className="flex flex-col gap-2 pb-2 lg:items-start lg:pt-8 lg:pr-24 xl:pr-36">
                                 <h4 className="text-center text-xl font-extrabold">
-                                    EVENT NAME3
+                                    EVENT NAME 3
                                 </h4>
-                                <p className="text-center text-[#989898] ">
+                                <p className="text-center lg:text-start text-[#989898] ">
                                     Lorem ipsum dolor sit amet consectetur
                                     adipisicing elit. Consequatur, s
                                 </p>
@@ -97,19 +97,19 @@ const CarouselCard = () => {
                             </a>
                         </div>
                     </div>
-                    <div id="slide4" className="carousel-item relative w-full">
-                        <div className="grid grid-cols-1 content-center justify-items-center gap-4">
+                    <div id="slide4" className="carousel-item relative w-full justify-center">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 content-center justify-items-center lg:justify-items-end gap-4 lg:gap-12">
                             <Image
                                 src={Event}
                                 className="w-48 md:w-64"
                                 alt={''}
                             />
 
-                            <div className="flex flex-col gap-4 pb-2">
+                            <div className="flex flex-col gap-2 pb-2 lg:items-start lg:pt-8 lg:pr-24 xl:pr-36">
                                 <h4 className="text-center text-xl font-extrabold">
-                                    EVENT NAME4
+                                    EVENT NAME 4
                                 </h4>
-                                <p className="text-center text-[#989898] ">
+                                <p className="text-center lg:text-start text-[#989898] ">
                                     Lorem ipsum dolor sit amet consectetur
                                     adipisicing elit. Consequatur, s
                                 </p>

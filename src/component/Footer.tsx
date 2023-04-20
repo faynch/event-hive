@@ -36,7 +36,7 @@ function Footer() {
                 </h5>
                 <div className="flex flex-row justify-center lg:justify-start">
                     <button>
-                        <Image className="ml-3 mr-1 h-4" src={Location} alt={''} />
+                        <Image className="lg:ml-3 mr-1 h-4" src={Location} alt={''} />
                     </button>
                     Hive101
                     <button>

@@ -9,7 +9,7 @@ const StoreCard = () => {
     const [active, setActive] = useState(false)
 
     return (
-        <div className="my-3 flex w-96 flex-col items-center gap-3 rounded-lg bg-white px-9 pb-12 text-center">
+        <div className="flex w-96 flex-col items-center gap-3 rounded-lg bg-white px-9 pb-12 text-center">
             <div className="grid grid-cols-3">
                 <Image className="col-start-2 w-32 pt-14" src={Shop} alt={''} />
                 <button onClick={() => setActive(!active)} className="w-8 justify-self-end pt-7 flex items-start">
