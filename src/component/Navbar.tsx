@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router';
 
 import Account from '../pages/assets/account.svg'
 import Favourite from '../pages/assets/unlike.svg'
@@ -10,9 +11,12 @@ import EventHive from '../pages/assets/eventHive.svg'
 const Navbar = () => {
     const [navbar, setNavbar] = useState(false)
 
+    const router = useRouter();
+    const currentRoute = router.pathname;
+
     return (
-        <nav className="w-full bg-white shadow sticky top-0 z-10">
-            <div className="mx-auto justify-stretch px-8 md:flex md:items-center lg:max-w-7xl">
+        <nav className="sticky top-0 z-10 w-full bg-white shadow">
+            <div className="justify-stretch mx-auto px-8 md:flex md:items-center lg:max-w-7xl">
                 <div className="md:basis-1/3">
                     <div className="flex py-5 md:block">
                         <a href="/" className="w-48 grow">
@@ -58,30 +62,33 @@ const Navbar = () => {
                             navbar ? 'block' : 'hidden'
                         }`}
                     >
-                        <ul className="space-y-8 justify-center text-center md:flex md:space-x-12 md:space-y-0">
-                            <li className="text-xl font-extrabold hover:text-secondary">
-                                <a href="/store">Stores</a>
+                        <ul className="justify-center space-y-8 text-center md:flex md:space-x-12 md:space-y-0 ">
+                            <li className="text-xl font-extrabold">
+                                <a href="/stores" className={`hover:text-secondary ${currentRoute === '/stores' ? 'text-secondary' : 'text-black'}`}>
+                                    Stores
+                                </a>
                             </li>
-                            <li className="text-xl font-extrabold hover:text-secondary">
-                                <a href="javascript:void(0)">Events</a>
+                            <li className="text-xl font-extrabold">
+                                <a href="/events" className={`hover:text-secondary ${currentRoute === '/events' ? 'text-secondary' : 'text-black'}`}>Events</a>
                             </li>
-                            <li className="text-xl font-extrabold hover:text-secondary">
-                                <a href="javascript:void(0)">Blogs</a>
+                            <li className="text-xl font-extrabold">
+                                <a href="/blogs" className={`hover:text-secondary ${currentRoute === '/blogs' ? 'text-secondary' : 'text-black'}`}>Blogs</a>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <div className="hidden basis-1/3 space-x-3 justify-end md:flex">
-                    
-                    <button><a href='/favourite'>
-                        <Image className="w-6" src={Favourite} alt={'favourite'} />
-                    </a></button>
+                <div className="hidden basis-1/3 justify-end space-x-3 md:flex">
                     <button>
-                        <Image
-                            className="w-6"
-                            src={Account}
-                            alt={'account'}
-                        />
+                        <a href="/favourite">
+                            <Image
+                                className="w-6"
+                                src={Favourite}
+                                alt={'favourite'}
+                            />
+                        </a>
+                    </button>
+                    <button>
+                        <Image className="w-6" src={Account} alt={'account'} />
                     </button>
                 </div>
             </div>
