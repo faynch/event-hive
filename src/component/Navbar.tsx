@@ -88,7 +88,8 @@ const Navbar = () => {
                         </a>
                     </button>
                     <button>
-                        <Image className="w-6" src={Account} alt={'account'} />
+                    <a href="/shopInfo">
+                        <Image className="w-6" src={Account} alt={'account'} /></a>
                     </button>
                 </div>
             </div>
