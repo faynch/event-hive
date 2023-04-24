@@ -38,9 +38,9 @@ export default function shop() {
     return (
         <>
             <Navbar />
-            <div className="h-full max-w-full p-20">
-                <div className="flex flex-col items-center">
-                    <h3 className="bg-clip-text text-[2rem] font-extrabold text-[#5D3891] lg:text-[3rem]">
+            <div className="flex flex-col-reverse items-center justify-center px-3 py-12 lg:flex-row">
+                <div className="flex flex-col items-center gap-6 lg:pl-6">
+                    <h3 className="bg-clip-text text-2xl font-extrabold text-[#5D3891]">
                         YOU ARE ...
                     </h3>
                     <div className="m-10 grid grid-cols-1 gap-5 lg:flex">

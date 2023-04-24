@@ -48,9 +48,9 @@ export default function RegisterVisitor() {
     return (
         <>
             <Navbar />
-            <div className="h-full max-w-full p-20">
-                <div className="flex flex-col items-center">
-                    <h3 className="bg-clip-text text-[2rem] font-extrabold text-[#5D3891] lg:text-[3rem]">
+            <div className="flex flex-col-reverse items-center justify-center px-3 py-12 lg:flex-row">
+                <div className="flex flex-col items-center gap-6 lg:pl-6">
+                    <h3 className="bg-clip-text text-2xl font-extrabold text-[#5D3891]">
                         YOU ARE ...
                     </h3>
                     <div className="m-10 grid grid-cols-1 gap-5 lg:flex">
@@ -62,9 +62,9 @@ export default function RegisterVisitor() {
                             />
                         </div>
                         <div className="rounded-lg bg-[#F5EAEA] p-10 drop-shadow-lg">
-                            <div className="my-3 flex flex-row">
-                                <div className="mr-10">
-                                    <h5 className="text-sm font-extrabold text-[#A459D1] lg:text-2xl">
+                            <div className="grid grid-cols-2">
+                                <div className="mr-5">
+                                    <h5 className="text-sm mb-3 font-extrabold text-[#A459D1] lg:text-2xl">
                                         FIRST NAME
                                     </h5>
                                     <input
@@ -75,7 +75,7 @@ export default function RegisterVisitor() {
                                     />
                                 </div>
                                 <div>
-                                    <h5 className="text-sm font-extrabold text-[#A459D1] lg:text-2xl">
+                                    <h5 className="text-sm mb-3 font-extrabold text-[#A459D1] lg:text-2xl">
                                         LAST NAME
                                     </h5>
                                     <input
