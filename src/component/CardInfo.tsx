@@ -42,7 +42,7 @@ const LargeCard = () => {
         <div className="mx-20 flex relative flex-row rounded-lg bg-white py-12 px-12 sm:px-20 xl:px-28 ">
             <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
                 <Image className="basis-1/3 w-52 self-center sm:self-start" src={Shop} alt={''} />
-                <div className="absolute top-8 right-8e flex items-center">
+                <div className="absolute top-8 right-8 flex items-center">
                     <button
                         onClick={() => setEditMode(!editMode)}
                         className="mx-3 w-7 md:w-9"
