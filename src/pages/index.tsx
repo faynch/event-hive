@@ -1,12 +1,11 @@
 import Navbar from '../component/Navbar'
 import Hero from '../component/Hero'
 import Image from 'next/image'
-import Carousel from '../component/CarouselCard'
+import Carousel from '../component/Carousel'
 import StoreCard from '../component/StoreCard'
 import Footer from '../component/Footer'
 
 export default function Home() {
-    
     return (
         <>
             <Navbar />
