@@ -86,9 +86,9 @@ const Navbar = () => {
                             </li>
                             <li className="text-xl font-extrabold">
                                 <a
-                                    href="/blogs"
+                                    href="/favourites"
                                     className={`hover:text-secondary ${
-                                        currentRoute === '/blogs'
+                                        currentRoute === '/favourites'
                                             ? 'text-secondary'
                                             : 'text-black'
                                     }`}

@@ -3,7 +3,7 @@ import StoreCard from '../component/StoreCard'
 import Footer from '../component/Footer'
 import Navigator from '../component/Navigator'
 
-function store() {
+function stores() {
     return (
         <>
             <Navbar />
@@ -21,4 +21,4 @@ function store() {
     )
 }
 
-export default store
+export default stores
