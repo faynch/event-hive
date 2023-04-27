@@ -13,6 +13,10 @@ export default function Carousel({ children: slides }) {
     const next = () =>
         setCurr((curr) => (curr === slides.length - 1 ? 0 : curr + 1))
 
+    function handleClick(i: number) {
+        setCurr(i)
+    }
+
     return (
         <>
             <div className="relative overflow-hidden lg:max-w-5xl">
@@ -33,7 +37,9 @@ export default function Carousel({ children: slides }) {
             </div>
             <div className="flex items-center justify-center gap-2 py-4">
                 {slides.map((_: any, i: number) => (
-                    <div
+                    <button
+                        key={i}
+                        onClick={() => handleClick(i)}
                         className={`
               h-3 w-3 rounded-full bg-secondary transition-all
               ${curr === i ? 'p-2' : 'bg-opacity-50'}
