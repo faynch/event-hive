@@ -16,7 +16,7 @@ const Hero = () => {
                         Elit sunt amet fugiat veniam occaecat fugiat aliqua.
                     </p>
                     <Link href="/register">
-                        <div className="rounded-md bg-secondary px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">
+                        <div className="rounded-md bg-[#FFB84C] hover:bg-gradient-to-r from-[#EF9323] to-[#5D3891] px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">
                             Get started
                         </div>
                     </Link>

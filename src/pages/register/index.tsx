@@ -56,7 +56,7 @@ export default function Register() {
                                 href="/test"
                                 className="justify-end rounded-lg pl-4 text-2xl font-extrabold text-primary decoration-2 underline-offset-2 hover:underline"
                             >
-                                Log in
+                                Sign in
                             </Link>
                         </div>
                     </div>
