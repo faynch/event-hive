@@ -1,107 +1,46 @@
 import Image from 'next/image'
-import Event from '../pages/assets/event.svg'
-import GroupButton from './GroupButton'
-import { items } from 'public/CarouselItem.json'
+
+import { useState, useEffect } from 'react'
 
 import Right from '../pages/assets/right.svg'
 import Left from '../pages/assets/left.svg'
 
-const Carousel = () => {
-    const itemList = items
+export default function Carousel({ children: slides }) {
+    const [curr, setCurr] = useState(0)
+
+    const prev = () =>
+        setCurr((curr) => (curr === 0 ? slides.length - 1 : curr - 1))
+    const next = () =>
+        setCurr((curr) => (curr === slides.length - 1 ? 0 : curr + 1))
+
     return (
         <>
-            <div className="grid justify-center bg-white py-8 px-4 md:px-24">
-                <h3 className="py-4 text-center text-2xl font-extrabold text-primary ">
-                    UPCOMING EVENT
-                </h3>
-                <div className="relative lg:max-w-5xl">
-                    <div className="absolute left-5 top-1/3 hidden md:flex">
-                        <a href="#slide1">
-                            <Image src={Left} alt={''} />
-                        </a>
-                    </div>
-                    <div className="absolute right-5 top-1/3 hidden md:flex">
-                        <a href="#slide2">
-                            <Image src={Right} alt={''} />
-                        </a>
-                    </div>
-                    <div className="carousel ">
-                        <div
-                            id="slide1"
-                            className="carousel-item w-full justify-center"
-                        >
-                            <div className="grid grid-cols-1 content-center justify-items-center gap-4 lg:grid-cols-2 lg:justify-items-end lg:gap-12">
-                                <Image
-                                    src={Event}
-                                    className="w-48 md:w-64"
-                                    alt={''}
-                                />
-
-                                <div className="flex flex-col gap-2 pb-2 lg:items-start lg:pt-8 lg:pr-24 xl:pr-36">
-                                    <h4 className="text-center text-xl font-extrabold">
-                                        EVENT NAME 1
-                                    </h4>
-                                    <p className="text-center text-[#989898] lg:text-start ">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto s</p>
-
-                                    <GroupButton />
-                                </div>
-                            </div>
-                        </div>
-                        <div
-                            id="slide2"
-                            className="carousel-item w-full justify-center"
-                        >
-                            <div className="grid grid-cols-1 content-center justify-items-center gap-4 lg:grid-cols-2 lg:justify-items-end lg:gap-12">
-                                <Image
-                                    src={Event}
-                                    className="w-48 md:w-64"
-                                    alt={''}
-                                />
-
-                                <div className="flex flex-col gap-2 pb-2 lg:items-start lg:pt-8 lg:pr-24 xl:pr-36">
-                                    <h4 className="text-center text-xl font-extrabold">
-                                        EVENT NAME 2
-                                    </h4>
-                                    <p className="text-center text-[#989898] lg:text-start ">
-                                        Lorem ipsum dolor sit amet consectetur
-                                        adipisicing elit. Consequatur, s
-                                    </p>
-
-                                    <GroupButton />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div className="relative overflow-hidden lg:max-w-5xl">
+                <div
+                    className="flex transition-transform duration-500 ease-out"
+                    style={{ transform: `translateX(-${curr * 100}%)` }}
+                >
+                    {slides}
                 </div>
-                <div className="flex justify-center gap-2 py-4">
-                    <a href="#slide1">
-                        <button
-                            type="button"
-                            className="h-3 w-3 rounded-full bg-[#F3F4F4]"
-                        ></button>
-                    </a>
-                    <a href="#slide2">
-                        <button
-                            type="button"
-                            className="h-3 w-3 rounded-full bg-[#F3F4F4]"
-                        ></button>
-                    </a>
-                    <a href="#slide3">
-                        <button
-                            type="button"
-                            className="h-3 w-3 rounded-full bg-[#F3F4F4]"
-                        ></button>
-                    </a>
-                    <a href="#slide4">
-                        <button
-                            type="button"
-                            className="h-3 w-3 rounded-full bg-[#F3F4F4]"
-                        ></button>
-                    </a>
+                <div className="absolute inset-0 flex items-center justify-between p-4">
+                    <button onClick={prev}>
+                        <Image src={Left} alt={''} />
+                    </button>
+                    <button onClick={next}>
+                        <Image src={Right} alt={''} />
+                    </button>
                 </div>
+            </div>
+            <div className="flex items-center justify-center gap-2 py-4">
+                {slides.map((_: any, i: number) => (
+                    <div
+                        className={`
+              h-3 w-3 rounded-full bg-secondary transition-all
+              ${curr === i ? 'p-2' : 'bg-opacity-50'}
+            `}
+                    />
+                ))}
             </div>
         </>
     )
 }
-
-export default Carousel

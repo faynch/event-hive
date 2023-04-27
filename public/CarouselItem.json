@@ -1,19 +1,19 @@
 {
     "items": [
         {
-            "id": 1,
+            "id": "1",
             "image": "image",
             "eventName": "event1",
             "description": "des"
         },
         {
-            "id": 2,
+            "id": "2",
             "image": "image",
             "eventName": "event2",
             "description": "des"
         },
         {
-            "id": 3,
+            "id": "3",
             "image": "image",
             "eventName": "event3",
             "description": "des"

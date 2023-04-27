@@ -1,16 +1,55 @@
 import Navbar from '../component/Navbar'
 import Hero from '../component/Hero'
 import Image from 'next/image'
+import Event from '../pages/assets/event.svg'
+import GroupButton from '../component/GroupButton'
 import Carousel from '../component/Carousel'
 import StoreCard from '../component/StoreCard'
 import Footer from '../component/Footer'
+import { items } from 'public/CarouselItem.json'
 
 export default function Home() {
+    const slides = items
+
     return (
         <>
             <Navbar />
             <Hero />
-            <Carousel />
+            <section className="grid justify-center bg-white py-8 px-4 md:px-24">
+                <h3 className="py-4 text-center text-2xl font-extrabold text-primary ">
+                    UPCOMING EVENT
+                </h3>
+
+                <Carousel>
+                    {slides.map((items) => (
+                        <div
+                            id="slide1"
+                            className="carousel-item w-full justify-center"
+                        >
+                            <div className="grid grid-cols-1 content-center justify-items-center gap-4 lg:grid-cols-2 lg:justify-items-end lg:gap-12">
+                                <Image
+                                    src={Event}
+                                    className="w-48 md:w-64"
+                                    alt={''}
+                                />
+
+                                <div className="flex flex-col gap-2 pb-2 lg:items-start lg:pt-8 lg:pr-24 xl:pr-36">
+                                    <h4 className="text-center text-xl font-extrabold">
+                                        {items.eventName}
+                                    </h4>
+                                    <p className="text-center text-[#989898] lg:text-start ">
+                                        Lorem ipsum dolor sit amet consectetur
+                                        adipisicing elit. Consequatur, s
+                                    </p>
+
+                                    <GroupButton />
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </Carousel>
+            </section>
+
             <section className="my-8 grid justify-center">
                 <h3 className="py-4 text-center text-2xl font-extrabold text-primary">
                     TOP STORES
