@@ -1,18 +1,20 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/router'
 
 import Account from '../pages/assets/account.svg'
-import Favourite from '../pages/assets/unlike.svg'
+import Favourite from '../pages/assets/favourite.svg'
 import Menu from '../pages/assets/menu.svg'
 import EventHive from '../pages/assets/eventHive.svg'
 
 const Navbar = () => {
     const [navbar, setNavbar] = useState(false)
+    // const [account, setAccount] = useState(false)
+    const account = true
 
-    const router = useRouter();
-    const currentRoute = router.pathname;
+    const router = useRouter()
+    const currentRoute = router.pathname
 
     return (
         <nav className="sticky top-0 z-10 w-full bg-white shadow">
@@ -32,20 +34,14 @@ const Navbar = () => {
                             </div>
                         </a>
                         <div className="flex items-center space-x-3 md:hidden">
-                            <button>
-                                <Image
-                                    className="w-6"
-                                    src={Favourite}
-                                    alt={'favourite'}
-                                />
-                            </button>
-                            <button>
+                            <button className={account ? 'block' : 'hidden'}>
                                 <Image
                                     className="w-6"
                                     src={Account}
                                     alt={'account'}
                                 />
                             </button>
+
                             <button onClick={() => setNavbar(!navbar)}>
                                 <Image
                                     className="w-6"
@@ -64,32 +60,54 @@ const Navbar = () => {
                     >
                         <ul className="justify-center space-y-8 text-center md:flex md:space-x-12 md:space-y-0 ">
                             <li className="text-xl font-extrabold">
-                                <a href="/stores" className={`hover:text-secondary ${currentRoute === '/stores' ? 'text-secondary' : 'text-black'}`}>
+                                <a
+                                    href="/stores"
+                                    className={`hover:text-secondary ${
+                                        currentRoute === '/stores'
+                                            ? 'text-secondary'
+                                            : 'text-black'
+                                    }`}
+                                >
                                     Stores
                                 </a>
                             </li>
+
                             <li className="text-xl font-extrabold">
-                                <a href="/events" className={`hover:text-secondary ${currentRoute === '/events' ? 'text-secondary' : 'text-black'}`}>Events</a>
+                                <a
+                                    href="/events"
+                                    className={`hover:text-secondary ${
+                                        currentRoute === '/events'
+                                            ? 'text-secondary'
+                                            : 'text-black'
+                                    }`}
+                                >
+                                    Events
+                                </a>
                             </li>
                             <li className="text-xl font-extrabold">
-                                <a href="/blogs" className={`hover:text-secondary ${currentRoute === '/blogs' ? 'text-secondary' : 'text-black'}`}>Blogs</a>
+                                <a
+                                    href="/blogs"
+                                    className={`hover:text-secondary ${
+                                        currentRoute === '/blogs'
+                                            ? 'text-secondary'
+                                            : 'text-black'
+                                    }`}
+                                >
+                                    Favourites
+                                </a>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div className="hidden basis-1/3 justify-end space-x-3 md:flex">
-                    <button>
-                        <a href="/favourite">
+                    <button className={account ? 'block' : 'hidden'}>
+                        <a href="/test">
                             <Image
                                 className="w-6"
-                                src={Favourite}
-                                alt={'favourite'}
+                                src={Account}
+                                alt={'account'}
                             />
                         </a>
-                    </button>
-                    <button>
-                    <a href="/shopInfo">
-                        <Image className="w-6" src={Account} alt={'account'} /></a>
                     </button>
                 </div>
             </div>

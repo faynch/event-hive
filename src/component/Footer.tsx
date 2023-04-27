@@ -10,13 +10,13 @@ import Email from '../pages/assets/email.svg'
 function Footer() {
     return (
         <section className="grid gap-y-8 bg-[#A459D121] py-14 lg:flex">
-            <div className="lg:basis-2/3 flex flex-row items-center justify-center lg:justify-end">
+            <div className="flex flex-row items-center justify-center lg:basis-2/3 lg:justify-end">
                 <Image className="w-12" src={EventHive} alt={'Event Hive'} />
                 <h3 className="ml-3 bg-gradient-to-r from-[#EF9323] to-[#5D3891] bg-clip-text text-3xl font-extrabold text-transparent">
                     EVENT HIVE
                 </h3>
             </div>
-            <div className="lg:basis-1/3 flex flex-col justify-center">
+            <div className="flex flex-col justify-center lg:basis-1/3">
                 <div className="mb-3 flex flex-row justify-center gap-3">
                     <button>
                         <Image className="h-6" src={Facebook} alt={''} />
@@ -36,7 +36,11 @@ function Footer() {
                 </h5>
                 <div className="flex flex-row justify-center lg:justify-start">
                     <button>
-                        <Image className="lg:ml-3 mr-1 h-4" src={Location} alt={''} />
+                        <Image
+                            className="mr-1 h-4 lg:ml-3"
+                            src={Location}
+                            alt={''}
+                        />
                     </button>
                     Hive101
                     <button>

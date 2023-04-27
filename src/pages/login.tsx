@@ -8,7 +8,7 @@ export default function login() {
     return (
         <>
             <Navbar />
-            <div className="h-full max-w-full p-20">
+            <div className="h-full max-w-full p-20 ">
                 <div className="flex flex-col items-center lg:flex-row">
                     <div className="flex w-full max-w-[40%]">
                         <Image src={LoginImg} alt={'Login'} />
