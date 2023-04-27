@@ -7,7 +7,7 @@ import Product from '../pages/assets/product.svg'
 import GroupButton from '../component/GroupButton'
 import { items } from 'public/CarouselItem.json'
 
-function ProductInfo() {
+function ShopInfo() {
     const slides = items
     return (
         <>
@@ -50,4 +50,4 @@ function ProductInfo() {
     )
 }
 
-export default ProductInfo
+export default ShopInfo

@@ -26,10 +26,12 @@ export default function Carousel({ children: slides }) {
                 >
                     {slides}
                 </div>
-                <div className="absolute inset-0 flex items-center justify-between p-4">
+                <div className="absolute left-5 top-1/3 hidden md:flex">
                     <button onClick={prev}>
                         <Image src={Left} alt={''} />
                     </button>
+                </div>
+                <div className="absolute right-5 top-1/3 hidden md:flex">
                     <button onClick={next}>
                         <Image src={Right} alt={''} />
                     </button>
