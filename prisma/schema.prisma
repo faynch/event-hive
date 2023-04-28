@@ -24,13 +24,13 @@ model User {
 }
 
 model ShopOwner {
-  id        String @id @default(uuid())
+  id        String  @id @default(uuid())
   firstName String
   lastName  String
   email     String
   password  String
   shop      Shop?
-  shopId    String
+  shopId    String?
 }
 
 model EventOrganizer {
