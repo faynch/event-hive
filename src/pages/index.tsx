@@ -25,7 +25,7 @@ export default function Home() {
                         <div className="flex w-full flex-none justify-center">
                             <div className="grid grid-cols-1 content-center justify-items-center gap-4 lg:grid-cols-2 lg:justify-items-end lg:gap-12">
                                 <a href="/eventInfo">
-                                    {' '}
+                       
                                     <Image
                                         src={Upcoming}
                                         className="w-48 md:w-64"
@@ -47,7 +47,7 @@ export default function Home() {
                                 </div>
                             </div>
                         </div>
-                    ))}
+                    ))} 
                 </Carousel>
             </section>
 
@@ -57,7 +57,7 @@ export default function Home() {
                 </h3>
                 <div className="my-3 grid grid-cols-1 gap-8 lg:grid-cols-4 xl:max-w-7xl 2xl:grid-cols-6 2xl:gap-12">
                     <div className="lg:col-span-2 lg:col-start-2 lg:justify-self-center 2xl:col-start-1 2xl:mt-12">
-                        <Card type={"Shop"}/>
+                        <Card type="Shop" />
                     </div>
                     <div className="lg:col-span-2">
                         <Card type={"Shop"}/>

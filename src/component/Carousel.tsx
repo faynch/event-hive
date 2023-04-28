@@ -1,11 +1,13 @@
 import Image from 'next/image'
 
-import { useState, useEffect } from 'react'
+import { useState} from 'react'
 
 import Right from '../pages/assets/right.svg'
 import Left from '../pages/assets/left.svg'
 
-export default function Carousel({ children: slides }) {
+
+
+export default function Carousel({children: slides}: any) {
     const [curr, setCurr] = useState(0)
 
     const prev = () =>
@@ -16,6 +18,7 @@ export default function Carousel({ children: slides }) {
     function handleClick(i: number) {
         setCurr(i)
     }
+    
 
     return (
         <>
