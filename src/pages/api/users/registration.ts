@@ -2,51 +2,61 @@
 // import type { NextApiRequest, NextApiResponse } from 'next'
 
 import { NextApiRequest, NextApiResponse } from "next"
-import { PrismaClient } from "@prisma/client"
-
-// type Data = {
-//   name: string
-// }
-
-// export default function handler(
-//   req: NextApiRequest,
-//   res: NextApiResponse<Data>
-// ) {
-//   res.status(200).json({ name: 'John Doe' })
-// }
-
-// export default async (req: NextApiRequest, res: NextApiResponse) => {
-//   if(req.method !== 'POST'){
-//     return res.status(405).json({ message: 'Method is not allowed'});
-//   }
-
-//   try {
-//     const { user } = req.body
-//     const prisma = new PrismaClient()
-//     // const user: Prisma.UserCreateInput = JSON.parse(req.body);
-//     const savedUser = await prisma.user.create({
-//       data: user
-//     })
-//     res.status(200).json(savedUser)
-//   } catch (error) {
-//     res.status(400).json({message: 'Something went wrong'})
-//   }
-
-// }
+import { Prisma, PrismaClient } from "@prisma/client"
 
 export default async function register(req: NextApiRequest, res: NextApiResponse){
   if(req.method !== 'POST'){
     return res.status(405).json({message: 'Method is not allowed'})
   }
   try {
-    const { registerInfo } = req.body;
+    const { firstName, lastName, email, password, tagIds, favouriteShopIds, favouriteEventIds } = req.body;
     const prisma = new PrismaClient();
-    const savedInfo = await prisma.user.create({
-      data: registerInfo
+
+    if(!firstName || !lastName || !email || !password){
+      return res.status(400).json({message: 'Please provide all required fields'})
+    }
+
+    const userTags = await validateInput(tagIds, 'tag');
+    const userFavouriteShops = await validateInput(favouriteShopIds, 'shop');
+    const userFavouriteEvents = await validateInput(favouriteEventIds, 'event');
+    const user = await prisma.user.create({
+      data: {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: password,
+        tags: userTags,
+        favouriteShops: userFavouriteShops,
+        favouriteEvents: userFavouriteEvents,
+      },
     });
-    return res.status(200).json(savedInfo);
+    return res.status(200).json(user);
   } catch (error) {
     return res.status(400).json({message: 'Something went wrong'});
   }
 }
-  
+
+async function validateInput(fieldValue: any, modelName: String){
+  const prisma = new PrismaClient();
+  if(!fieldValue){
+    return {};
+  }
+
+  const existingModel = await (prisma as any).modelName.findMany({
+    where: {
+      id: {
+        in: fieldValue,
+      },
+    },
+  });
+
+  if(!existingModel){
+    throw new Error(`${modelName} does not exist`);
+  }
+
+  return {
+    connect: {
+      id: fieldValue,
+    },
+  };
+}
