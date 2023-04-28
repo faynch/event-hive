@@ -58,6 +58,7 @@ model Shop {
   eventParticipations Event[]   @relation("Participation")
   user                User?     @relation(fields: [userId], references: [id])
   userId              String?
+  products            Product[]
 }
 
 model Event {
@@ -80,6 +81,15 @@ model Event {
   shopParticipations Shop[]          @relation("Participation")
   user               User?           @relation(fields: [userId], references: [id])
   userId             String?
+}
+
+model Product {
+  id          String  @id @default(uuid())
+  productName String
+  description String
+  price       Int
+  shop        Shop?   @relation(fields: [shopId], references: [id])
+  shopId      String?
 }
 
 model Tag {
