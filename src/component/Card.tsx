@@ -3,22 +3,31 @@ import GroupButton from './GroupButton'
 import Shop from '../pages/assets/shop.svg'
 import Like from '../pages/assets/like.svg'
 import Unlike from '../pages/assets/unlike.svg'
+import Event from '../pages/assets/event.svg'
 import { useState } from 'react'
 
-const StoreCard = () => {
+export default function Card({ type }) {
     const [active, setActive] = useState(false)
 
     return (
         <div className="relative flex w-96 flex-col items-center gap-3 rounded-lg bg-white px-9 pb-12 text-center">
-            <a href="/shopInfo" className='flex flex-col justify-center gap-3'>
+            <a href={type === 'Shop' ? '/shopInfo' : '/eventInfo'} className='flex flex-col justify-center gap-3'>
                 
-                    <Image
+            {type === 'Shop' ? (
+                        <Image
                         className="col-start-2 w-32 pt-14"
-                        src={Shop}
-                        alt={''}
-                    />
+                            src={Shop}
+                            alt={''}
+                        />
+                    ) : (
+                        <Image
+                        className="col-start-2 w-32 pt-14"
+                            src={Event}
+                            alt={''}
+                        />
+                    )}
                 
-                <h5 className="text-lg font-extrabold">STORE NAME</h5>
+                <h5 className="text-lg font-extrabold">Example {type}</h5>
             </a>
             <div className="absolute top-7 right-7">
                 <button onClick={() => setActive(!active)} className="w-8">
@@ -42,4 +51,4 @@ const StoreCard = () => {
     )
 }
 
-export default StoreCard
+

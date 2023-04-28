@@ -1,5 +1,5 @@
 {
-    "items": [
+    "eventList": [
         {
             "id": "1",
             "image": "image",
@@ -17,6 +17,53 @@
             "image": "image",
             "eventName": "event3",
             "description": "des"
+        }
+    ],
+
+    "shopList": [
+        {
+            "id": "1",
+            "image": "image",
+            "shopName": "shop1",
+            "description": "des"
+        },
+        {
+            "id": "2",
+            "image": "image",
+            "shopName": "shop2",
+            "description": "des"
+        },
+        {
+            "id": "3",
+            "image": "image",
+            "shopName": "shop3",
+            "description": "des"
+        }
+    ]
+
+    ,
+
+    "productList": [
+        {
+            "id": "1",
+            "image": "image",
+            "productName": "product1",
+            "description": "des",
+            "price": "50"
+        },
+        {
+            "id": "2",
+            "image": "image",
+            "productName": "product2",
+            "description": "des",
+            "price": "50"
+        },
+        {
+            "id": "3",
+            "image": "image",
+            "productName": "product3",
+            "description": "des",
+            "price": "50"
         }
     ]
 }
