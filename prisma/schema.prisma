@@ -56,7 +56,7 @@ model Shop {
   shopOwnerId         String    @unique
   eventApplications   Event[]   @relation("Application")
   eventParticipations Event[]   @relation("Participation")
-  favouriteByUser     User[]
+  favouriteByUsers    User[]
   products            Product[]
 }
 
@@ -77,7 +77,7 @@ model Event {
   eventOrganizerId   String?
   shopApplications   Shop[]          @relation("Application")
   shopParticipations Shop[]          @relation("Participation")
-  favouriteByUser    User[]
+  favouriteByUsers   User[]
 }
 
 model Product {
@@ -92,7 +92,7 @@ model Product {
 model Tag {
   id      Int     @id @default(autoincrement())
   tagName String
-  user    User[]
-  Shop    Shop[]
-  Event   Event[]
+  users   User[]
+  shops   Shop[]
+  events  Event[]
 }
