@@ -3,8 +3,10 @@ import Visitor from '../../pages/assets/visitor.svg'
 import Navbar from '../../component/Navbar'
 import Footer from '../../component/Footer'
 import TagSelector from '../../component/TagSelector'
+import Add from '@/pages/assets/add.svg'
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function RegisterVisitor() {
     const [password, setPassword] = useState('')
@@ -62,9 +64,9 @@ export default function RegisterVisitor() {
                             />
                         </div>
                         <div className="rounded-lg bg-[#F5EAEA] p-10 drop-shadow-lg">
-                            <div className="grid grid-cols-2">
-                                <div className="mr-5">
-                                    <h5 className="text-sm mb-3 font-extrabold text-[#A459D1] lg:text-2xl">
+                            <div className="grid grid-cols-2 gap-3">
+                                <div className="">
+                                    <h5 className="mb-3 text-sm font-extrabold text-[#A459D1] lg:text-2xl">
                                         FIRST NAME
                                     </h5>
                                     <input
@@ -75,7 +77,7 @@ export default function RegisterVisitor() {
                                     />
                                 </div>
                                 <div>
-                                    <h5 className="text-sm mb-3 font-extrabold text-[#A459D1] lg:text-2xl">
+                                    <h5 className="mb-3 text-sm font-extrabold text-[#A459D1] lg:text-2xl">
                                         LAST NAME
                                     </h5>
                                     <input
@@ -144,7 +146,7 @@ export default function RegisterVisitor() {
                                     Select Tags
                                 </h5>
                                 <button onClick={handleShowTagSelector}>
-                                    +
+                                    <Image width={25} src={Add} alt={'add'} />
                                 </button>
                                 {showTagSelector && (
                                     <TagSelector
