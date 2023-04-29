@@ -15,6 +15,8 @@ export default function CardInfo({ type }: any) {
     const [description, setDescription] = useState(
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis distinctio nostrum aliquid enim facere obcaecati in vero quia? Maxime nam dolore perspiciatis expedita quia tempora, consectetur deserunt. Mollitia, veritatis maiores?'
     )
+    const [phone, setPhone] = useState('000-111111')
+    const [email, setEmail] = useState('admin@eventhive')
     const [editMode, setEditMode] = useState(false)
     const [like, setLike] = useState(false)
 
@@ -47,6 +49,29 @@ export default function CardInfo({ type }: any) {
                             value={storeName}
                             onChange={(e) => setStoreName(e.target.value)}
                         />
+                        <div className="flex flex-row items-center gap-2">
+                            <button>
+                                <Image className="h-8" src={Phone} alt={''} />
+                            </button>
+                            <input
+                                className="border-2 border-black bg-white"
+                                value={phone}
+                                onChange={(e) => setPhone(e.target.value)}
+                            />
+                            <button>
+                                <Image
+                                    className="ml-2 h-8"
+                                    src={Email}
+                                    alt={''}
+                                />
+                            </button>
+                            <input
+                                className="border-2 border-black bg-white"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </div>
+
                         <GroupButton />
                         <button className="items-center rounded-xl bg-[#F5EAEA] px-3 text-[#F16767] sm:self-start">
                             catagories
@@ -58,7 +83,12 @@ export default function CardInfo({ type }: any) {
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
                         />
-                        <button onClick={handleSave}>Save</button>
+                        <button
+                            onClick={handleSave}
+                            className="mx-3 justify-end self-end rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-6 py-2 font-extrabold text-white hover:bg-gradient-to-r"
+                        >
+                            Save
+                        </button>
                     </div>
                 </div>
             </div>
@@ -105,14 +135,14 @@ export default function CardInfo({ type }: any) {
                         {storeName}
                     </h2>
                     <div className="flex flex-row items-center gap-2">
-                    <button>
-                        <Image className="h-8" src={Phone} alt={''} />
-                    </button>
-                    000-111111
-                    <button>
-                        <Image className="h-8 ml-2" src={Email} alt={''} />
-                    </button>
-                    admin@eventhive
+                        <button>
+                            <Image className="h-8" src={Phone} alt={''} />
+                        </button>
+                        {phone}
+                        <button>
+                            <Image className="ml-2 h-8" src={Email} alt={''} />
+                        </button>
+                        {email}
                     </div>
                     <GroupButton />
                     <button className="items-center rounded-xl bg-[#F5EAEA] px-3 text-[#F16767] sm:self-start">
