@@ -7,7 +7,10 @@ import Unlike from '../pages/assets/unlike.svg'
 import Edit from '../pages/assets/edit.svg'
 import { useState } from 'react'
 
-export default function CardInfo({ type }) {
+import Phone from '../pages/assets/phone.svg'
+import Email from '../pages/assets/email.svg'
+
+export default function CardInfo({ type }: any) {
     const [storeName, setStoreName] = useState(`Example ${type}`)
     const [description, setDescription] = useState(
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis distinctio nostrum aliquid enim facere obcaecati in vero quia? Maxime nam dolore perspiciatis expedita quia tempora, consectetur deserunt. Mollitia, veritatis maiores?'
@@ -101,6 +104,16 @@ export default function CardInfo({ type }) {
                     <h2 className="text-2xl font-extrabold sm:text-4xl">
                         {storeName}
                     </h2>
+                    <div className="flex flex-row items-center gap-2">
+                    <button>
+                        <Image className="h-8" src={Phone} alt={''} />
+                    </button>
+                    000-111111
+                    <button>
+                        <Image className="h-8 ml-2" src={Email} alt={''} />
+                    </button>
+                    admin@eventhive
+                    </div>
                     <GroupButton />
                     <button className="items-center rounded-xl bg-[#F5EAEA] px-3 text-[#F16767] sm:self-start">
                         catagories

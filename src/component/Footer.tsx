@@ -3,7 +3,7 @@ import EventHive from '../pages/assets/eventHive.svg'
 import Twitter from '../pages/assets/twitter.svg'
 import Facebook from '../pages/assets/facebook.svg'
 import Instagram from '../pages/assets/instagram.svg'
-import Phone from '../pages/assets/phone2.svg'
+import Phone from '../pages/assets/phone.svg'
 import Location from '../pages/assets/location.svg'
 import Email from '../pages/assets/email.svg'
 
