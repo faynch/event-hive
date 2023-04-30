@@ -81,12 +81,12 @@ model Event {
 }
 
 model Product {
-  id          String  @id @default(uuid())
+  id          String @id @default(uuid())
   productName String
   description String
   price       Int
-  shop        Shop?   @relation(fields: [shopId], references: [id])
-  shopId      String?
+  shop        Shop?  @relation(fields: [shopId], references: [id])
+  shopId      String
 }
 
 model Tag {
