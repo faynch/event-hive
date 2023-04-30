@@ -3,6 +3,7 @@
 
 import { NextApiRequest, NextApiResponse } from "next"
 import { Prisma, PrismaClient } from "@prisma/client"
+import validateInput from "utils/validateInput";
 
 export default async function register(req: NextApiRequest, res: NextApiResponse){
   if(req.method !== 'POST'){
@@ -13,7 +14,7 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
     const prisma = new PrismaClient();
 
     if(!firstName || !lastName || !email || !password){
-      return res.status(400).json({message: 'Please provide all required fields'})
+      return res.status(400).json({message: 'Please provide all required fields'});
     }
 
     const userTags = await validateInput(tagIds, 'tag');
@@ -34,29 +35,4 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
   } catch (error) {
     return res.status(400).json({message: 'Something went wrong'});
   }
-}
-
-async function validateInput(fieldValue: any, modelName: String){
-  const prisma = new PrismaClient();
-  if(!fieldValue){
-    return {};
-  }
-
-  const existingModel = await (prisma as any).modelName.findMany({
-    where: {
-      id: {
-        in: fieldValue,
-      },
-    },
-  });
-
-  if(!existingModel){
-    throw new Error(`${modelName} does not exist`);
-  }
-
-  return {
-    connect: {
-      id: fieldValue,
-    },
-  };
 }
