@@ -45,7 +45,7 @@ export default function CardInfo({ type }: any) {
 
                     <div className="col-span-2 flex basis-2/3 flex-col items-center gap-4 sm:items-start">
                         <input
-                            className="border-2 border-black bg-white text-2xl font-extrabold sm:text-4xl"
+                            className="border-2 border-gray-500 bg-white text-2xl font-extrabold sm:text-4xl"
                             value={storeName}
                             onChange={(e) => setStoreName(e.target.value)}
                         />
@@ -54,7 +54,7 @@ export default function CardInfo({ type }: any) {
                                 <Image className="h-8" src={Phone} alt={''} />
                             </button>
                             <input
-                                className="border-2 border-black bg-white"
+                                className="border-2 border-gray-500 bg-white"
                                 value={phone}
                                 onChange={(e) => setPhone(e.target.value)}
                             />
@@ -66,7 +66,7 @@ export default function CardInfo({ type }: any) {
                                 />
                             </button>
                             <input
-                                className="border-2 border-black bg-white"
+                                className="border-2 border-gray-500 bg-white"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
@@ -77,7 +77,7 @@ export default function CardInfo({ type }: any) {
                             catagories
                         </button>
                         <textarea
-                            className="w-full bg-white text-center sm:text-start"
+                            className="w-full border-2 border-gray-500 bg-white text-center sm:text-start"
                             rows={5}
                             cols={100}
                             value={description}

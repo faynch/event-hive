@@ -11,8 +11,8 @@ function ShopInfo() {
     return (
         <>
             <Navbar />
-            <div className="grid justify-center mt-12 md:py-8 px-8 md:px-20">
-                <CardInfo type={"Shop"} />
+            <div className="mt-12 grid justify-center px-8 md:py-8 md:px-20">
+                <CardInfo type={'Shop'} />
             </div>
             <div className="grid justify-center py-8 px-4 md:px-24">
                 <h3 className="py-4 text-center text-2xl font-extrabold text-primary ">
@@ -36,7 +36,9 @@ function ShopInfo() {
                                         Lorem ipsum dolor sit amet consectetur
                                         adipisicing elit. Consequatur, s
                                     </p>
-                                    <p className="font-extrabold">{items.price} ฿</p>
+                                    <p className="font-extrabold">
+                                        {items.price} ฿
+                                    </p>
                                 </div>
                             </div>
                         </div>
