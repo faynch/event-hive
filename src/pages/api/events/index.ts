@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler (req: NextApiRequest, res: NextApiResponse) {
     const prisma = new PrismaClient();
-    const event = await prisma.event.findMany();
-  
-    return res.json(event);
+    const events = await prisma.event.findMany();
+
+    return res.json(events);
 }
