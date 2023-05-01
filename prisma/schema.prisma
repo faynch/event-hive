@@ -10,17 +10,89 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+//draw diagram
+
 model User {
-  id        Int    @id @default(autoincrement())
-  firstName String
-  lastName  String
-  role      Role
-  email     String
-  password  String
+  id              String  @id @default(uuid())
+  firstName       String
+  lastName        String
+  email           String
+  password        String
+  tags            Tag[]
+  favouriteShops  Shop[]
+  favouriteEvents Event[]
 }
 
-enum Role {
-  SPECTATOR
-  SHOPKEEPER
-  EVENTORGANIZER
+model ShopOwner {
+  id        String  @id @default(uuid())
+  firstName String
+  lastName  String
+  email     String
+  password  String
+  shop      Shop?
+  shopId    String?
+}
+
+model EventOrganizer {
+  id          String  @id @default(uuid())
+  companyName String
+  email       String
+  password    String
+  events      Event[]
+}
+
+model Shop {
+  id                  String    @id @default(uuid())
+  shopName            String
+  about               String
+  address             String
+  picture             String
+  tags                Tag[]
+  telephone           String
+  facebook            String?
+  instagram           String?
+  line                String?
+  shopOwner           ShopOwner @relation(fields: [shopOwnerId], references: [id])
+  shopOwnerId         String    @unique
+  eventApplications   Event[]   @relation("Application")
+  eventParticipations Event[]   @relation("Participation")
+  favouriteByUsers    User[]
+  products            Product[]
+}
+
+model Event {
+  id                 String          @id @default(uuid())
+  eventName          String
+  about              String
+  location           String
+  picture            String
+  tags               Tag[]
+  startDate          DateTime
+  endDate            DateTime
+  telephone          String
+  facebook           String?
+  instagram          String?
+  line               String?
+  eventOrganizer     EventOrganizer? @relation(fields: [eventOrganizerId], references: [id])
+  eventOrganizerId   String?
+  shopApplications   Shop[]          @relation("Application")
+  shopParticipations Shop[]          @relation("Participation")
+  favouriteByUsers   User[]
+}
+
+model Product {
+  id          String @id @default(uuid())
+  productName String
+  description String
+  price       Int
+  shop        Shop?  @relation(fields: [shopId], references: [id])
+  shopId      String
+}
+
+model Tag {
+  id      Int     @id @default(autoincrement())
+  tagName String
+  users   User[]
+  shops   Shop[]
+  events  Event[]
 }
