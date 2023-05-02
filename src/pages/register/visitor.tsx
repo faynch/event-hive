@@ -144,7 +144,7 @@ export default function RegisterVisitor() {
                             </div>
                             <div className="my-3 flex">
                                 <h5 className="mr-10 text-sm font-extrabold text-[#A459D1] lg:text-2xl">
-                                    Select Tags
+                                    SELECT TAGS
                                 </h5>
                                 <button onClick={handleShowTagSelector}>
                                     <Image width={25} src={Add} alt={'add'} />
@@ -156,18 +156,18 @@ export default function RegisterVisitor() {
                                         setSelectTags={setSelectedTags}
                                     />
                                 )}
-                                <div className="ml-10 grid grid-cols-3 gap-1">
+                                <div className="ml-5 grid grid-cols-3 gap-2 ">
                                     {selectedTags.length > 0 ? (
                                         selectedTags.map((tag) => (
                                             <button
-                                                className="items-center rounded-xl bg-[#F3A4A4] px-3 text-[#F16767]"
+                                                className="items-center rounded-xl bg-[#FFFFFF] px-3 text-[#F16767]"
                                                 key={tag}
                                             >
                                                 {tag}
                                             </button>
                                         ))
                                     ) : (
-                                        <h5 className="mr-10 text-base text-[#A459D1]">
+                                        <h5 className="pt-1 text-base text-[#A459D1]">
                                             No Tags Select
                                         </h5>
                                     )}

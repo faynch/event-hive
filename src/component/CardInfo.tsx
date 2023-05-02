@@ -6,9 +6,11 @@ import Like from '../pages/assets/like.svg'
 import Unlike from '../pages/assets/unlike.svg'
 import Edit from '../pages/assets/edit.svg'
 import { useState } from 'react'
+import TagSelector, { Tag } from '../component/TagSelector'
 
 import Phone from '../pages/assets/phone.svg'
 import Email from '../pages/assets/email.svg'
+import Add from '@/pages/assets/add.svg'
 
 export default function CardInfo({ type }: any) {
     const [storeName, setStoreName] = useState(`Example ${type}`)
@@ -23,6 +25,17 @@ export default function CardInfo({ type }: any) {
     const handleSave = () => {
         // logic to save changes made by the user
         setEditMode(false) // switch back to view mode
+    }
+
+    const [showTagSelector, setShowTagSelector] = useState(false)
+    const [selectedTags, setSelectedTags] = useState<Tag[]>([])
+
+    const handleTagSelectorClose = () => {
+        setShowTagSelector(false)
+    }
+
+    const handleShowTagSelector = () => {
+        setShowTagSelector(true)
     }
 
     if (editMode) {
@@ -45,7 +58,7 @@ export default function CardInfo({ type }: any) {
 
                     <div className="col-span-2 flex basis-2/3 flex-col items-center gap-4 sm:items-start">
                         <input
-                            className="border-2 border-gray-500 bg-white text-2xl font-extrabold sm:text-4xl"
+                            className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 text-2xl font-extrabold shadow-sm placeholder:text-slate-400 sm:text-4xl"
                             value={storeName}
                             onChange={(e) => setStoreName(e.target.value)}
                         />
@@ -54,7 +67,7 @@ export default function CardInfo({ type }: any) {
                                 <Image className="h-8" src={Phone} alt={''} />
                             </button>
                             <input
-                                className="border-2 border-gray-500 bg-white"
+                                className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
                                 value={phone}
                                 onChange={(e) => setPhone(e.target.value)}
                             />
@@ -66,18 +79,48 @@ export default function CardInfo({ type }: any) {
                                 />
                             </button>
                             <input
-                                className="border-2 border-gray-500 bg-white"
+                                className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
 
                         <GroupButton />
-                        <button className="items-center rounded-xl bg-[#F5EAEA] px-3 text-[#F16767] sm:self-start">
-                            catagories
-                        </button>
+                        {showTagSelector && (
+                            <TagSelector
+                                onClose={handleTagSelectorClose}
+                                selectTags={selectedTags}
+                                setSelectTags={setSelectedTags}
+                            />
+                        )}
+                        <div className="flex flex-wrap">
+                            {selectedTags.length > 0 ? (
+                                selectedTags.map((tag) => (
+                                    <button
+                                        className="my-2 mr-2 items-center rounded-xl bg-[#F5EAEA] px-3 text-[#F16767]"
+                                        key={tag}
+                                    >
+                                        {tag}
+                                    </button>
+                                ))
+                            ) : (
+                                <button
+                                    className="items-center rounded-xl bg-[#F5EAEA] px-3 text-[#F16767] sm:self-start"
+                                    onClick={handleShowTagSelector}
+                                >
+                                    catagories
+                                </button>
+                            )}
+                            <button
+                                className="ml-2"
+                                onClick={handleShowTagSelector}
+                            >
+                                <Image width={25} src={Add} alt={'add'} />
+                            </button>
+                        </div>
+
                         <textarea
-                            className="w-full border-2 border-gray-500 bg-white text-center sm:text-start"
+                            className="block w-full rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
                             rows={5}
                             cols={100}
                             value={description}
@@ -145,9 +188,25 @@ export default function CardInfo({ type }: any) {
                         {email}
                     </div>
                     <GroupButton />
-                    <button className="items-center rounded-xl bg-[#F5EAEA] px-3 text-[#F16767] sm:self-start">
-                        catagories
-                    </button>
+                    <div className="flex flex-wrap">
+                        {selectedTags.length > 0 ? (
+                            selectedTags.map((tag) => (
+                                <button
+                                    className="mr-2 mb-2 items-center rounded-xl bg-[#F5EAEA] px-3 text-[#F16767]"
+                                    key={tag}
+                                >
+                                    {tag}
+                                </button>
+                            ))
+                        ) : (
+                            <button
+                                className="items-center rounded-xl bg-[#F5EAEA] px-3 text-[#F16767] sm:self-start"
+                                onClick={handleShowTagSelector}
+                            >
+                                catagories
+                            </button>
+                        )}
+                    </div>
                     <p className="text-center sm:text-start">{description}</p>
                 </div>
             </div>
