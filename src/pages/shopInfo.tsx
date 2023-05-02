@@ -99,13 +99,15 @@ function ShopInfo() {
                                     className="w-full rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
                                     placeholder="price"
                                     value={price}
-                                    onChange={(e) =>
-                                        setPrice(e.target.value)}
+                                    onChange={(e) => setPrice(e.target.value)}
                                 />
                             </div>
                         </div>
                         <div className="flex w-full justify-center gap-4 px-12 lg:max-w-5xl lg:justify-end">
-                            <button onClick={() => addSlide()} className="rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-8 py-2 text-center font-extrabold text-white hover:bg-gradient-to-r">
+                            <button
+                                onClick={() => addSlide()}
+                                className="rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-8 py-2 text-center font-extrabold text-white hover:bg-gradient-to-r"
+                            >
                                 Add
                             </button>
                             <button
@@ -138,21 +140,19 @@ function ShopInfo() {
                                 {slides.map((items) => (
                                     <div className="flex w-full flex-none justify-center">
                                         <div className="grid grid-cols-1 content-center justify-items-center gap-4 lg:grid-cols-2 lg:justify-items-end lg:gap-12">
-                                            <a href="/shopInfo">
-                                                {items.image != '' ? (
-                                                    <img
-                                                        src={items.image}
-                                                        className="w-40 md:w-52"
-                                                        alt={''}
-                                                    />
-                                                ) : (
-                                                    <Image
-                                                        src={Product}
-                                                        className="w-40 md:w-52"
-                                                        alt={''}
-                                                    />
-                                                )}
-                                            </a>
+                                            {items.image != '' ? (
+                                                <img
+                                                    src={items.image}
+                                                    className="w-40 md:w-52"
+                                                    alt={''}
+                                                />
+                                            ) : (
+                                                <Image
+                                                    src={Product}
+                                                    className="w-40 md:w-52"
+                                                    alt={''}
+                                                />
+                                            )}
 
                                             <div className="flex flex-col gap-2 pb-2 lg:items-start lg:pt-8 lg:pr-24 xl:pr-36">
                                                 <h4 className="text-center text-xl font-extrabold">
