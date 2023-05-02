@@ -10,16 +10,17 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
     return res.status(405).json({message: 'Method is not allowed'})
   }
   try {
-    const { firstName, lastName, email, password, tagIds, favouriteShopIds, favouriteEventIds } = req.body;
+    const { firstName, lastName, email, password, tags, favouriteShopIds, favouriteEventIds } = req.body;
     const prisma = new PrismaClient();
 
     if(!firstName || !lastName || !email || !password){
       return res.status(400).json({message: 'Please provide all required fields'});
     }
 
-    const userTags = await validateInput(tagIds, 'tag');
+    const userTags = await validateInput(tags, 'tag');
     const userFavouriteShops = await validateInput(favouriteShopIds, 'shop');
     const userFavouriteEvents = await validateInput(favouriteEventIds, 'event');
+
     const user = await prisma.user.create({
       data: {
         firstName: firstName,
@@ -30,6 +31,11 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
         favouriteShops: userFavouriteShops,
         favouriteEvents: userFavouriteEvents,
       },
+      include: {
+        tags: true,
+        favouriteShops: true,
+        favouriteEvents: true,
+      }
     });
     return res.status(200).json(user);
   } catch (error) {
