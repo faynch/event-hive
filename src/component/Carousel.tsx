@@ -1,13 +1,11 @@
 import Image from 'next/image'
 
-import { useState} from 'react'
+import { useState } from 'react'
 
 import Right from '../pages/assets/right.svg'
 import Left from '../pages/assets/left.svg'
 
-
-
-export default function Carousel({children: slides}: any) {
+export default function Carousel({ children: slides }: any) {
     const [curr, setCurr] = useState(0)
 
     const prev = () =>
@@ -18,29 +16,44 @@ export default function Carousel({children: slides}: any) {
     function handleClick(i: number) {
         setCurr(i)
     }
-    
 
     return (
         <>
             <div className="relative overflow-hidden lg:max-w-5xl">
+                {slides.length <= 1 ? (
+                    <div className="flex ">{slides}</div>
+                ) : (
+                    <div
+                        className="flex transition-transform duration-500 ease-out"
+                        style={{ transform: `translateX(-${curr * 100}%)` }}
+                    >
+                        {slides}
+                    </div>
+                )}
                 <div
-                    className="flex transition-transform duration-500 ease-out"
-                    style={{ transform: `translateX(-${curr * 100}%)` }}
+                    className={`absolute left-5 top-1/3 hidden md:flex ${
+                        slides.length <= 1 ? 'invisible' : ''
+                    }`}
                 >
-                    {slides}
-                </div>
-                <div className="absolute left-5 top-1/3 hidden md:flex">
                     <button onClick={prev}>
                         <Image src={Left} alt={''} />
                     </button>
                 </div>
-                <div className="absolute right-5 top-1/3 hidden md:flex">
+                <div
+                    className={`absolute right-5 top-1/3 hidden md:flex ${
+                        slides.length <= 1 ? 'invisible' : ''
+                    }`}
+                >
                     <button onClick={next}>
                         <Image src={Right} alt={''} />
                     </button>
                 </div>
             </div>
-            <div className="flex items-center justify-center gap-2 py-4">
+            <div
+                className={`flex items-center justify-center gap-2 py-4 ${
+                    slides.length <= 1 ? 'invisible' : ''
+                }`}
+            >
                 {slides.map((_: any, i: number) => (
                     <button
                         key={i}

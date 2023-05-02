@@ -23,21 +23,21 @@
     "shopList": [
         {
             "id": "1",
-            "image": "image",
+            "image": "",
             "shopName": "shop1",
-            "description": "des"
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, s"
         },
         {
             "id": "2",
-            "image": "image",
+            "image": "",
             "shopName": "shop2",
-            "description": "des"
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, s"
         },
         {
             "id": "3",
-            "image": "image",
+            "image": "",
             "shopName": "shop3",
-            "description": "des"
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, s"
         }
     ]
 
@@ -46,23 +46,23 @@
     "productList": [
         {
             "id": "1",
-            "image": "image",
+            "image": "",
             "productName": "product1",
-            "description": "des",
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, s",
             "price": "50"
         },
         {
             "id": "2",
-            "image": "image",
+            "image": "",
             "productName": "product2",
-            "description": "des",
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, s",
             "price": "50"
         },
         {
             "id": "3",
-            "image": "image",
+            "image": "",
             "productName": "product3",
-            "description": "des",
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, s",
             "price": "50"
         }
     ]
