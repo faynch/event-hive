@@ -20,7 +20,7 @@ export default function Home() {
                     UPCOMING EVENT
                 </h3>
 
-                <Carousel>
+                <Carousel autoSlide={true}>
                     {slides.map((items) => (
                         <div className="flex w-full flex-none justify-center">
                             <div className="grid grid-cols-1 content-center justify-items-center gap-4 lg:grid-cols-2 lg:justify-items-end lg:gap-12">

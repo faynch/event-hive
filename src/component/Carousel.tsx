@@ -1,11 +1,11 @@
 import Image from 'next/image'
 
-import { useState } from 'react'
+import { useState, useEffect } from "react"
 
 import Right from '../pages/assets/right.svg'
 import Left from '../pages/assets/left.svg'
 
-export default function Carousel({ children: slides }: any) {
+export default function Carousel({ children: slides, autoSlide = false,}: any) {
     const [curr, setCurr] = useState(0)
 
     const prev = () =>
@@ -16,6 +16,12 @@ export default function Carousel({ children: slides }: any) {
     function handleClick(i: number) {
         setCurr(i)
     }
+
+    useEffect(() => {
+        if (!autoSlide) return
+        const slideInterval = setInterval(next, 3000)
+        return () => clearInterval(slideInterval)
+      }, [])
 
     return (
         <>
