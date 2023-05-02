@@ -11,6 +11,7 @@ import TagSelector, { Tag } from '../component/TagSelector'
 import Phone from '../pages/assets/phone.svg'
 import Email from '../pages/assets/email.svg'
 import Add from '@/pages/assets/add.svg'
+import GroupButtonInput from './GroupButtonInput'
 
 export default function CardInfo({ type }: any) {
     const [storeName, setStoreName] = useState(`Example ${type}`)
@@ -85,7 +86,7 @@ export default function CardInfo({ type }: any) {
                             />
                         </div>
 
-                        <GroupButton />
+                        <GroupButtonInput />
                         {showTagSelector && (
                             <TagSelector
                                 onClose={handleTagSelectorClose}
