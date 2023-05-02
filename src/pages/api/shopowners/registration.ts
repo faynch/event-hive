@@ -35,6 +35,9 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
                 lastName: lastName,
                 email: email,
                 password: password,
+            },
+            include: {
+                shop: true,
             }
         });
         return res.status(200).json(shopOwner);
