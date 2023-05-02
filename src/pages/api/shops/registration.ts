@@ -18,6 +18,7 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
         }
 
         const shopTags = await validateInput(tags, 'tag');
+        const validOwnerId = await validateInput(shopOwnerId, 'shopOwner');
         const shopEventApplications = await validateInput(eventApplications, 'event');
         const shopEventParticipations = await validateInput(eventParticipations, 'event');
         const shopFavouriteByUsers = await validateInput(favouriteByUsers, 'user');
@@ -33,11 +34,18 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
                 facebook: facebook,
                 instagram: instagram,
                 line: line,
-                shopOwnerId: shopOwnerId,
+                shopOwner: validOwnerId,
                 eventApplications: shopEventApplications,
                 eventParticipations: shopEventParticipations,
                 favouriteByUsers: shopFavouriteByUsers,
                 // products: products,
+            },
+            include: {
+                tags: true,
+                eventApplications: true,
+                eventParticipations: true,
+                favouriteByUsers: true,
+                products: true,
             }
         });
         return res.status(200).json(shop);
