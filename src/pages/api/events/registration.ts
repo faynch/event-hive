@@ -8,21 +8,25 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
     }
     try{
         // need to give defaut parameter for picture (like default pic of the event)
-        const { eventName, about, location, picture, tagIds, startDate, endDate, telephone, facebook, instagram
+        const { eventName, about, location, picture, tags, startDate, endDate, telephone, facebook, instagram
             , line, eventOrganizerId, shopApplications, shopParticipations, favouriteByUsers } = req.body;
         const prisma = new PrismaClient;
         
-        if(!eventName || !about || !location || !tagIds || !startDate || !endDate || !telephone || !eventOrganizerId){
+        if(!eventName || !about || !location || !tags || !startDate || !endDate || !telephone || !eventOrganizerId){
             return res.status(400).json({message: 'Please provide all required fields'});
         }
 
-        const eventTags = await validateInput(tagIds, 'tag');
-
+        const eventTags = await validateInput(tags, 'tag');
+        const eventOrganizer = await validateInput(eventOrganizerId, 'eventOrganizer');
         // wonder if these supposed to be initialized later
         const eventShopApplications = await validateInput(shopApplications, 'shop');
         const eventShopParticipations = await validateInput(shopParticipations, 'shop');
         const eventFavouriteByUsers = await validateInput(favouriteByUsers, 'user');
         
+        console.log(eventTags)
+        console.log(eventShopApplications)
+        console.log(eventShopParticipations)
+        console.log(eventFavouriteByUsers)
         const event = await prisma.event.create({
             data: {
                 eventName: eventName,
@@ -34,15 +38,24 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
                 endDate: endDate,
                 telephone: telephone,
                 facebook: facebook,
+                instagram: instagram,
                 line: line,
-                eventOrganizerId: eventOrganizerId,
+                eventOrganizer: eventOrganizer,
                 shopApplications: eventShopApplications,
                 shopParticipations: eventShopParticipations,
                 favouriteByUsers: eventFavouriteByUsers,
+            },
+            include: {
+                tags: true,
+                eventOrganizer: true,
+                shopApplications: true,
+                shopParticipations: true,
+                favouriteByUsers: true,
             }
         });
         return res.status(200).json(event);
     } catch (error) {
+        console.log(error)
         return res.status(400).json({message: 'Something went wrong'});
     }
 }
