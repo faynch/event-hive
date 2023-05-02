@@ -1,6 +1,5 @@
 import { PrismaClient } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
-import validateInput from "utils/validateInput";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
     if(req.method != "GET"){
