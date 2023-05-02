@@ -18,19 +18,18 @@ model User {
   lastName        String
   email           String
   password        String
-  tags            Tag[]
-  favouriteShops  Shop[]
-  favouriteEvents Event[]
+  tags            Tag[]   @relation("UserTag")
+  favouriteShops  Shop[]  @relation("FollowedShop")
+  favouriteEvents Event[] @relation("FollowedEvent")
 }
 
 model ShopOwner {
-  id        String  @id @default(uuid())
+  id        String @id @default(uuid())
   firstName String
   lastName  String
   email     String
   password  String
-  shop      Shop?
-  shopId    String?
+  shop      Shop?  @relation("ShopOwner")
 }
 
 model EventOrganizer {
@@ -47,16 +46,16 @@ model Shop {
   about               String
   address             String
   picture             String
-  tags                Tag[]
+  tags                Tag[]     @relation("ShopTag")
   telephone           String
   facebook            String?
   instagram           String?
   line                String?
-  shopOwner           ShopOwner @relation(fields: [shopOwnerId], references: [id])
+  shopOwner           ShopOwner @relation("ShopOwner", fields: [shopOwnerId], references: [id])
   shopOwnerId         String    @unique
   eventApplications   Event[]   @relation("Application")
   eventParticipations Event[]   @relation("Participation")
-  favouriteByUsers    User[]
+  favouriteByUsers    User[]    @relation("FollowedShop")
   products            Product[]
 }
 
@@ -66,7 +65,7 @@ model Event {
   about              String
   location           String
   picture            String
-  tags               Tag[]
+  tags               Tag[]           @relation("EventTag")
   startDate          DateTime
   endDate            DateTime
   telephone          String
@@ -77,7 +76,8 @@ model Event {
   eventOrganizerId   String?
   shopApplications   Shop[]          @relation("Application")
   shopParticipations Shop[]          @relation("Participation")
-  favouriteByUsers   User[]
+  favouriteByUsers   User[]          @relation("FollowedEvent")
+  userId             String?
 }
 
 model Product {
@@ -92,7 +92,7 @@ model Product {
 model Tag {
   id      Int     @id @default(autoincrement())
   tagName String
-  users   User[]
-  shops   Shop[]
-  events  Event[]
+  users   User[]  @relation("UserTag")
+  shops   Shop[]  @relation("ShopTag")
+  events  Event[] @relation("EventTag")
 }
