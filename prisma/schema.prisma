@@ -37,7 +37,7 @@ model EventOrganizer {
   companyName String
   email       String
   password    String
-  events      Event[]
+  events      Event[] @relation("EventOrganizer")
 }
 
 model Shop {
@@ -72,8 +72,8 @@ model Event {
   facebook           String?
   instagram          String?
   line               String?
-  eventOrganizer     EventOrganizer? @relation(fields: [eventOrganizerId], references: [id])
-  eventOrganizerId   String?
+  eventOrganizer     EventOrganizer? @relation("EventOrganizer", fields: [eventOrganizerId], references: [id])
+  eventOrganizerId   String          @unique
   shopApplications   Shop[]          @relation("Application")
   shopParticipations Shop[]          @relation("Participation")
   favouriteByUsers   User[]          @relation("FollowedEvent")
