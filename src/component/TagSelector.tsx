@@ -1,12 +1,18 @@
 import React, { useState } from 'react'
 
-type Tag = 'Home decor' | 'Fashion' | 'Food' | 'Travel'
+export type Tag = 'Home decor' | 'Fashion' | 'Food' | 'Travel'
 
 type Props = {
     onClose: () => void
+    selectTags: Tag[]
+    setSelectTags: React.Dispatch<React.SetStateAction<Tag[]>>
 }
 
-const TagSelector: React.FC<Props> = ({ onClose }) => {
+const TagSelector: React.FC<Props> = ({
+    onClose,
+    selectTags,
+    setSelectTags,
+}) => {
     const [selectedTags, setSelectedTags] = useState<Tag[]>([])
     const tags: Tag[] = ['Home decor', 'Fashion', 'Food', 'Travel']
 
@@ -23,7 +29,7 @@ const TagSelector: React.FC<Props> = ({ onClose }) => {
     }
 
     const handleSubmit = () => {
-        console.log(selectedTags) // Do something with the selected tags
+        setSelectTags(selectedTags)
         onClose()
     }
 

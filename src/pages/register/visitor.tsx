@@ -2,7 +2,7 @@ import RegisterCard from '../../component/RegisterCard'
 import Visitor from '../../pages/assets/visitor.svg'
 import Navbar from '../../component/Navbar'
 import Footer from '../../component/Footer'
-import TagSelector from '../../component/TagSelector'
+import TagSelector, { Tag } from '../../component/TagSelector'
 import Add from '@/pages/assets/add.svg'
 import { useState } from 'react'
 import Link from 'next/link'
@@ -39,6 +39,7 @@ export default function RegisterVisitor() {
         setPasswordMatch(event.target.value === password)
     }
     const [showTagSelector, setShowTagSelector] = useState(false)
+    const [selectedTags, setSelectedTags] = useState<Tag[]>([])
 
     const handleTagSelectorClose = () => {
         setShowTagSelector(false)
@@ -141,8 +142,8 @@ export default function RegisterVisitor() {
                                     </p>
                                 )}
                             </div>
-                            <div className="flex">
-                                <h5 className="my-3 mr-10 text-sm font-extrabold text-[#A459D1] lg:text-2xl">
+                            <div className="my-3 flex">
+                                <h5 className="mr-10 text-sm font-extrabold text-[#A459D1] lg:text-2xl">
                                     Select Tags
                                 </h5>
                                 <button onClick={handleShowTagSelector}>
@@ -151,8 +152,26 @@ export default function RegisterVisitor() {
                                 {showTagSelector && (
                                     <TagSelector
                                         onClose={handleTagSelectorClose}
+                                        selectTags={selectedTags}
+                                        setSelectTags={setSelectedTags}
                                     />
                                 )}
+                                <div className="ml-10 grid grid-cols-3 gap-1">
+                                    {selectedTags.length > 0 ? (
+                                        selectedTags.map((tag) => (
+                                            <button
+                                                className="items-center rounded-xl bg-[#F3A4A4] px-3 text-[#F16767]"
+                                                key={tag}
+                                            >
+                                                {tag}
+                                            </button>
+                                        ))
+                                    ) : (
+                                        <h5 className="mr-10 text-base text-[#A459D1]">
+                                            No Tags Select
+                                        </h5>
+                                    )}
+                                </div>
                             </div>
                             <div className="flex justify-end">
                                 <Link
