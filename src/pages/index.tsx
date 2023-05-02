@@ -3,7 +3,7 @@ import Hero from '../component/Hero'
 import Image from 'next/image'
 import Upcoming from '../pages/assets/upcoming.svg'
 import GroupButton from '../component/GroupButton'
-import Carousel from '../component/Carousel'
+import Carousel from '../component/CarouselCard'
 import Card from '../component/Card'
 import Footer from '../component/Footer'
 import { eventList } from 'public/CarouselItem.json'
@@ -25,7 +25,6 @@ export default function Home() {
                         <div className="flex w-full flex-none justify-center">
                             <div className="grid grid-cols-1 content-center justify-items-center gap-4 lg:grid-cols-2 lg:justify-items-end lg:gap-12">
                                 <a href="/eventInfo">
-                       
                                     <Image
                                         src={Upcoming}
                                         className="w-48 md:w-64"
@@ -47,7 +46,7 @@ export default function Home() {
                                 </div>
                             </div>
                         </div>
-                    ))} 
+                    ))}
                 </Carousel>
             </section>
 
@@ -60,10 +59,10 @@ export default function Home() {
                         <Card type="Shop" />
                     </div>
                     <div className="lg:col-span-2">
-                        <Card type={"Shop"}/>
+                        <Card type={'Shop'} />
                     </div>
                     <div className="lg:col-span-2 2xl:mt-12">
-                        <Card type={"Shop"}/>
+                        <Card type={'Shop'} />
                     </div>
                 </div>
             </section>
