@@ -77,7 +77,6 @@ model Event {
   shopApplications   Shop[]          @relation("Application")
   shopParticipations Shop[]          @relation("Participation")
   favouriteByUsers   User[]          @relation("FollowedEvent")
-  userId             String?
 }
 
 model Product {
