@@ -1,6 +1,7 @@
 import GroupButton from "./GroupButton";
 
-function CarouselCardInput(contact: any) {
+function CarouselCardInput({contact}: any) {
+
     return (
         <div className="flex w-full flex-col items-center gap-4 rounded-lg bg-[#F5EAEA] p-12 drop-shadow-xl lg:max-w-5xl lg:gap-8">
             <div className="flex w-full flex-row items-center">
