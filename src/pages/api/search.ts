@@ -12,6 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     eventName: {
                         contains: Array.isArray(searchString)
                         ? searchString[0]: searchString,
+                        mode: "insensitive",
                     },
                 },
             ],
@@ -25,6 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     shopName: {
                         contains: Array.isArray(searchString)
                         ? searchString[0]: searchString,
+                        mode: "insensitive",
                     },
                 },
             ],
