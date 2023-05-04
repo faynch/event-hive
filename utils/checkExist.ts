@@ -26,10 +26,12 @@ export default async function checkExist(email: string){
     });
 
     if(existingUser){
-        return existingUser;
+        return {query: existingUser, role: "user"};
     }else if(existingShopOwner){
-        return existingShopOwner;
+        return {query: existingShopOwner, role: "shopOwner"};
+    }else if(existingShopOwner){
+        return {query: existingEventOrganizer, role: "eventOrganizer"};
     }else{
-        return existingEventOrganizer;
+        return null;
     }
 }
