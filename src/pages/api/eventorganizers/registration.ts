@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
+import checkExist from "utils/checkExist";
 import validateInput from "utils/validateInput";
 
 export default async function register(req: NextApiRequest, res: NextApiResponse){
@@ -13,6 +14,12 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
         
         if(!companyName || !email || !password){
             return res.status(400).json({message: 'Please provide all required fields'});
+        }
+        
+        const existingEmail = await checkExist(email);
+
+        if(existingEmail){
+          return res.status(400).json({message: 'The email has already been taken. Please try another email.'})
         }
         
         // const eventOrgEvents = await validateInput(events, 'eventOrganizer');

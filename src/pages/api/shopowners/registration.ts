@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
+import checkExist from "utils/checkExist";
 
 export default async function register(req: NextApiRequest, res: NextApiResponse){
     if(req.method != "POST"){
@@ -9,6 +10,12 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
         const { firstName, lastName, email, password } = req.body;
         const prisma = new PrismaClient;
     
+        const existingEmail = await checkExist(email);
+
+        if(existingEmail){
+          return res.status(400).json({message: 'The email has already been taken. Please try another email.'})
+        }
+        
         const shopOwner = await prisma.shopOwner.create({
             data: {
                 firstName: firstName,
