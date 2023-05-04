@@ -1,6 +1,5 @@
 import ModelSelector from './modelSelector'
 
-console.log('in the validate file tho')
 export default async function validateInput(fieldValues: any, modelName: string) {
     if (!fieldValues) {
         return {}

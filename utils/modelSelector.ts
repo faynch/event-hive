@@ -1,5 +1,4 @@
 const { PrismaClient } = require('@prisma/client')
-console.log('Im in the file tho')
 const prisma = new PrismaClient()
 
 export default class ModelSelector {
