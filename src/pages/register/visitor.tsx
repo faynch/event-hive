@@ -48,6 +48,11 @@ export default function RegisterVisitor() {
     const handleShowTagSelector = () => {
         setShowTagSelector(true)
     }
+
+    const handleSubmit = () => {
+        console.log(selectedTags)
+    }
+
     return (
         <>
             <Navbar />
@@ -64,7 +69,7 @@ export default function RegisterVisitor() {
                                 title="Visitor"
                             />
                         </div>
-                        <div className="rounded-lg bg-[#F5EAEA] p-10 drop-shadow-lg">
+                        <div className="max-w-[740px] rounded-lg bg-[#F5EAEA] p-10 drop-shadow-lg">
                             <div className="grid grid-cols-2 gap-3">
                                 <div className="">
                                     <h5 className="mb-3 text-sm font-extrabold text-[#A459D1] lg:text-2xl">
@@ -146,7 +151,10 @@ export default function RegisterVisitor() {
                                 <h5 className="mr-10 text-sm font-extrabold text-[#A459D1] lg:text-2xl">
                                     SELECT TAGS
                                 </h5>
-                                <button onClick={handleShowTagSelector}>
+                                <button
+                                    className=""
+                                    onClick={handleShowTagSelector}
+                                >
                                     <Image width={25} src={Add} alt={'add'} />
                                 </button>
                                 {showTagSelector && (
@@ -156,15 +164,29 @@ export default function RegisterVisitor() {
                                         setSelectTags={setSelectedTags}
                                     />
                                 )}
-                                <div className="ml-5 grid grid-cols-3 gap-2 ">
+                                <div className="ml-5 flex flex-wrap">
                                     {selectedTags.length > 0 ? (
                                         selectedTags.map((tag) => (
-                                            <button
-                                                className="items-center rounded-xl bg-[#FFFFFF] px-3 text-[#F16767]"
-                                                key={tag}
-                                            >
-                                                {tag}
-                                            </button>
+                                            <div className="m-1 flex">
+                                                <button
+                                                    className="flex items-center rounded-xl bg-[#FFFFFF] px-3 text-[#F16767]"
+                                                    key={tag}
+                                                >
+                                                    {tag}
+                                                </button>
+                                                <button
+                                                    className="ml-1 h-4 w-4 items-center justify-center rounded-full bg-[#F16767] align-middle text-[10px] font-bold text-white"
+                                                    onClick={() =>
+                                                        setSelectedTags(
+                                                            selectedTags.filter(
+                                                                (t) => t !== tag
+                                                            )
+                                                        )
+                                                    }
+                                                >
+                                                    X
+                                                </button>
+                                            </div>
                                         ))
                                     ) : (
                                         <h5 className="pt-1 text-base text-[#A459D1]">
@@ -174,12 +196,12 @@ export default function RegisterVisitor() {
                                 </div>
                             </div>
                             <div className="flex justify-end">
-                                <Link
-                                    href="/"
+                                <button
                                     className="justify-end rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-6 py-2 font-extrabold text-white hover:bg-gradient-to-r"
+                                    onClick={handleSubmit}
                                 >
                                     Submit
-                                </Link>
+                                </button>
                             </div>
                         </div>
                     </div>

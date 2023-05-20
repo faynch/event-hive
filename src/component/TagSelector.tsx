@@ -30,9 +30,7 @@ type Props = {
 }
 
 const TagSelector: React.FC<Props> = ({ onClose, setSelectTags }) => {
-    const [selectedTags, setSelectedTags] = useState<Tag[]>(
-        JSON.parse(localStorage.getItem('selectedTags') || '[]')
-    )
+    const [selectedTags, setSelectedTags] = useState<Tag[]>([])
 
     const tags: Tag[] = [
         'Art',
@@ -72,8 +70,6 @@ const TagSelector: React.FC<Props> = ({ onClose, setSelectTags }) => {
 
     const handleSubmit = () => {
         setSelectTags(selectedTags)
-        console.log(selectedTags)
-        sessionStorage.setItem('selectedTags', JSON.stringify(selectedTags))
         onClose()
     }
 

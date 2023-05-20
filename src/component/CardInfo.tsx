@@ -94,15 +94,29 @@ export default function CardInfo({ type }: any) {
                                 setSelectTags={setSelectedTags}
                             />
                         )}
-                        <div className="flex flex-wrap">
+                        <div className="ml-5 flex flex-wrap">
                             {selectedTags.length > 0 ? (
                                 selectedTags.map((tag) => (
-                                    <button
-                                        className="my-2 mr-2 items-center rounded-xl bg-[#F5EAEA] px-3 text-[#F16767]"
-                                        key={tag}
-                                    >
-                                        {tag}
-                                    </button>
+                                    <div className="mx-1 flex">
+                                        <button
+                                            className="flex items-center rounded-xl bg-[#F5EAEA] px-3 text-[#F16767]"
+                                            key={tag}
+                                        >
+                                            {tag}
+                                        </button>
+                                        <button
+                                            className="ml-1 h-3 w-3 items-center justify-center rounded-full bg-[#F16767] align-middle text-[9px] font-bold text-white"
+                                            onClick={() =>
+                                                setSelectedTags(
+                                                    selectedTags.filter(
+                                                        (t) => t !== tag
+                                                    )
+                                                )
+                                            }
+                                        >
+                                            X
+                                        </button>
+                                    </div>
                                 ))
                             ) : (
                                 <button

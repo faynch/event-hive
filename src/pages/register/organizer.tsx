@@ -7,10 +7,18 @@ import { useState } from 'react'
 
 export default function organizer() {
     const [password, setPassword] = useState('')
+    const [companyName, setCompanyName] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [passwordMatch, setPasswordMatch] = useState(true)
     const [email, setEmail] = useState('')
     const [isValidEmail, setIsValidEmail] = useState(true)
+
+    function handleCompanyNameChange(
+        event: React.ChangeEvent<HTMLInputElement>
+    ) {
+        const newCompanyName = event.target.value
+        setCompanyName(newCompanyName)
+    }
 
     function handleEmailChange(event: React.ChangeEvent<HTMLInputElement>) {
         const newEmail = event.target.value
@@ -61,6 +69,8 @@ export default function organizer() {
                                     placeholder="Company Name"
                                     type="name"
                                     name="companyname"
+                                    value={companyName}
+                                    onChange={handleCompanyNameChange}
                                 />
                             </div>
                             <div className="my-3">
