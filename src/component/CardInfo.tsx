@@ -105,7 +105,7 @@ export default function CardInfo({ type }: any) {
                                             {tag}
                                         </button>
                                         <button
-                                            className="ml-1 h-3 w-3 items-center justify-center rounded-full bg-[#F16767] align-middle text-[9px] font-bold text-white"
+                                            className="ml-[-0.5rem] h-4 w-4 items-center justify-center rounded-full bg-[#F16767] align-middle text-[10px] font-bold text-white"
                                             onClick={() =>
                                                 setSelectedTags(
                                                     selectedTags.filter(

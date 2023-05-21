@@ -43,6 +43,20 @@ export default function organizer() {
         setConfirmPassword(event.target.value)
         setPasswordMatch(event.target.value === password)
     }
+    const handleSubmit = () => {
+        const formData = {
+            password: password,
+            companyName: companyName,
+            email: email,
+        }
+
+        // Convert form data to JSON string
+        const jsonData = JSON.stringify(formData)
+
+        // Log the JSON data
+        console.log(jsonData)
+    }
+
     return (
         <>
             <Navbar />
@@ -127,12 +141,12 @@ export default function organizer() {
                                 )}
                             </div>
                             <div className="flex justify-end">
-                                <Link
-                                    href="/"
+                                <button
                                     className="justify-end rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-6 py-2 font-extrabold text-white hover:bg-gradient-to-r"
+                                    onClick={handleSubmit}
                                 >
                                     Submit
-                                </Link>
+                                </button>
                             </div>
                         </div>
                     </div>

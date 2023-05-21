@@ -6,11 +6,21 @@ import Link from 'next/link'
 import { useState } from 'react'
 
 export default function shop() {
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [passwordMatch, setPasswordMatch] = useState(true)
     const [email, setEmail] = useState('')
     const [isValidEmail, setIsValidEmail] = useState(true)
+
+    function handleFirstNameChange(event: React.ChangeEvent<HTMLInputElement>) {
+        setFirstName(event.target.value)
+    }
+
+    function handleLastNameChange(event: React.ChangeEvent<HTMLInputElement>) {
+        setLastName(event.target.value)
+    }
 
     function handleEmailChange(event: React.ChangeEvent<HTMLInputElement>) {
         const newEmail = event.target.value
@@ -35,6 +45,18 @@ export default function shop() {
         setConfirmPassword(event.target.value)
         setPasswordMatch(event.target.value === password)
     }
+
+    const handleSubmit = () => {
+        const formData = {
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: password,
+        }
+        const jsonData = JSON.stringify(formData)
+        console.log(jsonData)
+    }
+
     return (
         <>
             <Navbar />
@@ -52,9 +74,9 @@ export default function shop() {
                             />
                         </div>
                         <div className="rounded-lg bg-[#F5EAEA] p-10 drop-shadow-lg">
-                            <div className="my-3 flex flex-row">
-                                <div className="mr-10">
-                                    <h5 className="text-sm font-extrabold text-[#A459D1] lg:text-2xl">
+                            <div className="grid grid-cols-2 gap-3">
+                                <div>
+                                    <h5 className="mb-3 text-sm font-extrabold text-[#A459D1] lg:text-2xl">
                                         FIRST NAME
                                     </h5>
                                     <input
@@ -62,10 +84,12 @@ export default function shop() {
                                         placeholder="First Name"
                                         type="name"
                                         name="firstname"
+                                        value={firstName}
+                                        onChange={handleFirstNameChange}
                                     />
                                 </div>
                                 <div>
-                                    <h5 className="text-sm font-extrabold text-[#A459D1] lg:text-2xl">
+                                    <h5 className="mb-3 text-sm font-extrabold text-[#A459D1] lg:text-2xl">
                                         LAST NAME
                                     </h5>
                                     <input
@@ -73,6 +97,8 @@ export default function shop() {
                                         placeholder="Last Name"
                                         type="name"
                                         name="lastname"
+                                        value={lastName}
+                                        onChange={handleLastNameChange}
                                     />
                                 </div>
                             </div>
@@ -130,12 +156,12 @@ export default function shop() {
                                 )}
                             </div>
                             <div className="flex justify-end">
-                                <Link
-                                    href="/"
+                                <button
                                     className="justify-end rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-6 py-2 font-extrabold text-white hover:bg-gradient-to-r"
+                                    onClick={handleSubmit}
                                 >
                                     Submit
-                                </Link>
+                                </button>
                             </div>
                         </div>
                     </div>

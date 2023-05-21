@@ -9,11 +9,21 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 export default function RegisterVisitor() {
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [passwordMatch, setPasswordMatch] = useState(true)
     const [email, setEmail] = useState('')
     const [isValidEmail, setIsValidEmail] = useState(true)
+
+    function handleFirstNameChange(event: React.ChangeEvent<HTMLInputElement>) {
+        setFirstName(event.target.value)
+    }
+
+    function handleLastNameChange(event: React.ChangeEvent<HTMLInputElement>) {
+        setLastName(event.target.value)
+    }
 
     function handleEmailChange(event: React.ChangeEvent<HTMLInputElement>) {
         const newEmail = event.target.value
@@ -38,6 +48,7 @@ export default function RegisterVisitor() {
         setConfirmPassword(event.target.value)
         setPasswordMatch(event.target.value === password)
     }
+
     const [showTagSelector, setShowTagSelector] = useState(false)
     const [selectedTags, setSelectedTags] = useState<Tag[]>([])
 
@@ -50,7 +61,15 @@ export default function RegisterVisitor() {
     }
 
     const handleSubmit = () => {
-        console.log(selectedTags)
+        const formData = {
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: password,
+            tags: selectedTags,
+        }
+        const jsonData = JSON.stringify(formData)
+        console.log(jsonData)
     }
 
     return (
@@ -71,7 +90,7 @@ export default function RegisterVisitor() {
                         </div>
                         <div className="max-w-[740px] rounded-lg bg-[#F5EAEA] p-10 drop-shadow-lg">
                             <div className="grid grid-cols-2 gap-3">
-                                <div className="">
+                                <div>
                                     <h5 className="mb-3 text-sm font-extrabold text-[#A459D1] lg:text-2xl">
                                         FIRST NAME
                                     </h5>
@@ -80,6 +99,8 @@ export default function RegisterVisitor() {
                                         placeholder="First Name"
                                         type="name"
                                         name="firstname"
+                                        value={firstName}
+                                        onChange={handleFirstNameChange}
                                     />
                                 </div>
                                 <div>
@@ -91,6 +112,8 @@ export default function RegisterVisitor() {
                                         placeholder="Last Name"
                                         type="name"
                                         name="lastname"
+                                        value={lastName}
+                                        onChange={handleLastNameChange}
                                     />
                                 </div>
                             </div>
@@ -175,7 +198,7 @@ export default function RegisterVisitor() {
                                                     {tag}
                                                 </button>
                                                 <button
-                                                    className="ml-1 h-4 w-4 items-center justify-center rounded-full bg-[#F16767] align-middle text-[10px] font-bold text-white"
+                                                    className="ml-[-0.5rem] h-4 w-4 items-center justify-center rounded-full bg-[#F16767] align-middle text-[10px] font-bold text-white"
                                                     onClick={() =>
                                                         setSelectedTags(
                                                             selectedTags.filter(
