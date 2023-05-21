@@ -9,7 +9,7 @@ import Email from '../pages/assets/email.svg'
 
 function Footer() {
     return (
-        <section className="grid gap-y-8 bg-[#A459D121] py-14 lg:flex">
+        <section className="grid gap-y-8 bg-[#A459D121] py-14 lg:flex lg:bottom-0 lg:w-screen lg:absolute">
             <div className="flex flex-row items-center justify-center lg:basis-2/3 lg:justify-end">
                 <Image className="w-12" src={EventHive} alt={'Event Hive'} />
                 <h3 className="ml-3 bg-gradient-to-r from-[#EF9323] to-[#5D3891] bg-clip-text text-3xl font-extrabold text-transparent">
