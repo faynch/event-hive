@@ -3,7 +3,7 @@ import CardInfo from '../component/CardInfo'
 import Footer from '../component/Footer'
 import Image from 'next/image'
 
-import { useState} from 'react'
+import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
 import { shopList } from 'public/CarouselItem.json'
@@ -32,7 +32,7 @@ function EventInfo() {
     function handleClick(i: number) {
         setCurr(i)
     }
-    
+
     const addSlide = () => {
         setIndex(uuidv4())
         slides.push({
@@ -167,7 +167,13 @@ function EventInfo() {
                                                     </h4>
                                                 </a>
                                                 <p className="text-center text-[#989898] lg:text-start ">
-                                                    {items.description}
+                                                    {items.description.length >
+                                                    130
+                                                        ? items.description.slice(
+                                                              0,
+                                                              130
+                                                          ) + '...'
+                                                        : items.description}
                                                 </p>
                                                 <button
                                                     className="rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-8 py-2 text-center font-extrabold text-white hover:bg-gradient-to-r"

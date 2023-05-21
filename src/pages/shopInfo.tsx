@@ -3,7 +3,7 @@ import CardInfo from '../component/CardInfo'
 import Footer from '../component/Footer'
 import Image from 'next/image'
 
-import { useState} from 'react'
+import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
 import { productList } from 'public/CarouselItem.json'
@@ -177,7 +177,13 @@ function ShopInfo() {
                                                     {items.productName}
                                                 </h4>
                                                 <p className="text-center text-[#989898] lg:text-start ">
-                                                    {items.description}
+                                                    {items.description.length >
+                                                    130
+                                                        ? items.description.slice(
+                                                              0,
+                                                              130
+                                                          ) + '...'
+                                                        : items.description}
                                                 </p>
                                                 <p className="text-center font-extrabold">
                                                     {items.price} ฿
