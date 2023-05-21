@@ -1,40 +1,58 @@
 import Navbar from '../component/Navbar'
 import CardInfo from '../component/CardInfo'
 import Footer from '../component/Footer'
-import Carousel from '../component/Carousel'
 import Image from 'next/image'
-import Add from '../pages/assets/add.svg'
-import Shop from '../pages/assets/product.svg'
-import { shopList } from 'public/CarouselItem.json'
 
-import { useState } from 'react'
-import GroupButton from '../component/GroupButton'
+import { useState} from 'react'
+import { v4 as uuidv4 } from 'uuid'
+
+import { shopList } from 'public/CarouselItem.json'
+import Shop from '../pages/assets/product.svg'
+
+import Right from '../pages/assets/right.svg'
+import Left from '../pages/assets/left.svg'
+import Add from '../pages/assets/add.svg'
 
 function EventInfo() {
+    const [curr, setCurr] = useState(0)
     const [edit, setEdit] = useState(false)
+
+    const [index, setIndex] = useState(String)
     const [image, setImage] = useState(String)
     const [storeName, setStoreName] = useState(String)
     const [description, setDescription] = useState(String)
+
     const [slides, setSlides] = useState(shopList)
 
-    var index = String(slides.length + 1)
+    const prev = () =>
+        setCurr((curr) => (curr === 0 ? slides.length - 1 : curr - 1))
+    const next = () =>
+        setCurr((curr) => (curr === slides.length - 1 ? 0 : curr + 1))
+
+    function handleClick(i: number) {
+        setCurr(i)
+    }
+    
     const addSlide = () => {
+        setIndex(uuidv4())
         slides.push({
             id: index,
             image: image,
             shopName: storeName,
             description: description,
         })
-        console.log(slides)
+        setEdit(false)
     }
     const deleteSlide = (id: any) => {
+        if (curr === slides.length - 1) {
+            prev()
+        }
         const delslides = slides.filter(
             (x) => x.id.toString() !== id.toString()
         )
-
         setSlides(delslides)
     }
-    console.log(slides, 'data-')
+
     return (
         <>
             <Navbar />
@@ -95,10 +113,10 @@ function EventInfo() {
                                 Add
                             </button>
                             <button
-                                className="rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-8 py-2 text-center font-extrabold text-white hover:bg-gradient-to-r"
                                 onClick={() => setEdit(false)}
+                                className="rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-8 py-2 text-center font-extrabold text-white hover:bg-gradient-to-r"
                             >
-                                Save
+                                Exit
                             </button>
                         </div>
                     </>
@@ -117,10 +135,13 @@ function EventInfo() {
                                 />
                             </button>
                         </div>
-                        {slides.length <= 0 ? (
-                            <div></div>
-                        ) : (
-                            <Carousel>
+                        <div className="relative overflow-hidden lg:max-w-5xl">
+                            <div
+                                className="flex transition-transform duration-500 ease-out"
+                                style={{
+                                    transform: `translateX(-${curr * 100}%)`,
+                                }}
+                            >
                                 {slides.map((items) => (
                                     <div className="flex w-full flex-none justify-center">
                                         <div className="grid grid-cols-1 content-center justify-items-center gap-4 lg:grid-cols-2 lg:justify-items-end lg:gap-12">
@@ -160,8 +181,42 @@ function EventInfo() {
                                         </div>
                                     </div>
                                 ))}
-                            </Carousel>
-                        )}
+                            </div>
+                            <div
+                                className={`absolute left-5 top-1/3 hidden md:flex ${
+                                    slides.length <= 1 ? 'invisible' : ''
+                                }`}
+                            >
+                                <button onClick={prev}>
+                                    <Image src={Left} alt={''} />
+                                </button>
+                            </div>
+                            <div
+                                className={`absolute right-5 top-1/3 hidden md:flex ${
+                                    slides.length <= 1 ? 'invisible' : ''
+                                }`}
+                            >
+                                <button onClick={next}>
+                                    <Image src={Right} alt={''} />
+                                </button>
+                            </div>
+                        </div>
+                        <div
+                            className={`flex items-center justify-center gap-2 py-4 ${
+                                slides.length <= 1 ? 'invisible' : ''
+                            }`}
+                        >
+                            {slides.map((_: any, i: number) => (
+                                <button
+                                    key={i}
+                                    onClick={() => handleClick(i)}
+                                    className={`
+              h-3 w-3 rounded-full bg-secondary transition-all
+              ${curr === i ? 'p-2' : 'bg-opacity-50'}
+            `}
+                                />
+                            ))}
+                        </div>
                     </>
                 )}
             </div>
@@ -171,4 +226,3 @@ function EventInfo() {
 }
 
 export default EventInfo
-
