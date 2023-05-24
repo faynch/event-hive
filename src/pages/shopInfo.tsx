@@ -12,10 +12,15 @@ import Product from '../pages/assets/product.svg'
 import Right from '../pages/assets/right.svg'
 import Left from '../pages/assets/left.svg'
 import Add from '../pages/assets/add.svg'
+import { useRouter } from 'next/router'
 
 function ShopInfo() {
     const [curr, setCurr] = useState(0)
     const [edit, setEdit] = useState(false)
+
+    const router = useRouter()
+    const { data } = router.query
+    const item = data ? JSON.parse(String(data)) : null
 
     const [index, setIndex] = useState(String)
     const [image, setImage] = useState(String)
@@ -59,7 +64,7 @@ function ShopInfo() {
         <>
             <Navbar />
             <div className="mt-12 grid justify-center px-8 md:py-8 md:px-20">
-                <CardInfo type={'Shop'} />
+                <CardInfo type={'Shop'} data={item} />
             </div>
             <div className="flex flex-col items-center justify-center gap-8 p-8 md:px-24">
                 {edit ? (

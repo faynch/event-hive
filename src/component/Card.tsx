@@ -17,12 +17,18 @@ export default function Card(props: CardProps) {
 
     const router = useRouter()
 
-    function sendData(data: any) {
+    function sendEventData(data: any) {
         router.push({
             pathname: '/eventInfo',
             query: { data: JSON.stringify(data) },
         })
-        // console.log("print from " + data.id)
+    }
+
+    function sendShopData(data: any) {
+        router.push({
+            pathname: '/shopInfo',
+            query: { data: JSON.stringify(data) },
+        })
     }
 
     function isAvailble() {
@@ -35,31 +41,49 @@ export default function Card(props: CardProps) {
         return true
     }
 
-    const defaultPic = props.type === 'Shop' ? Shop : Event
-
     return (
         <div className="relative flex w-96 flex-col items-center gap-3 rounded-lg bg-white px-9 pb-12 text-center">
-            <div
-                id="eventLink"
-                onClick={() => sendData(props.data)}
-                data-json={props.data}
-                className="flex flex-col items-center gap-3"
-            >
-                {props.data.picture === '' ? (
-                    <Image className="w-32 pt-14" src={defaultPic} alt={''} />
-                ) : (
-                    <img className='mt-14 h-32 w-32 rounded-full' src={props.data.picture} alt={''} />
-                )}
-                {props.type === 'Shop' ? (
-                    <h5 className="text-lg font-extrabold">
-                        {props.data.shopName}
-                    </h5>
-                ) : (
+            {props.type === 'Event' ? (
+                <div
+                    // id="eventLink"
+                    onClick={() => sendEventData(props.data)}
+                    // data-json={props.data}
+                    className="flex flex-col items-center gap-3"
+                >
+                    {props.data.picture === '' ? (
+                        <Image className="w-32 pt-14" src={Event} alt={''} />
+                    ) : (
+                        <img
+                            className="mt-14 h-32 w-32 rounded-full"
+                            src={props.data.picture}
+                            alt={''}
+                        />
+                    )}
                     <h5 className="text-lg font-extrabold">
                         {props.data.eventName}
                     </h5>
-                )}
-            </div>
+                </div>
+            ) : (
+                <div
+                    // id="eventLink"
+                    onClick={() => sendShopData(props.data)}
+                    // data-json={props.data}
+                    className="flex flex-col items-center gap-3"
+                >
+                    {props.data.picture === '' ? (
+                        <Image className="w-32 pt-14" src={Shop} alt={''} />
+                    ) : (
+                        <img
+                            className="mt-14 h-32 w-32 rounded-full"
+                            src={props.data.picture}
+                            alt={''}
+                        />
+                    )}
+                    <h5 className="text-lg font-extrabold">
+                        {props.data.shopName}
+                    </h5>
+                </div>
+            )}
             <div className="absolute top-7 right-7">
                 <button onClick={() => setActive(!active)} className="w-8">
                     {active ? (

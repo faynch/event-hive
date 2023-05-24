@@ -58,13 +58,6 @@ function EventInfo() {
         setSlides(delslides)
     }
 
-    // const getData = () => {
-    //     const router = useRouter();
-    //     const data = router.query.data;
-    //     return <div>Data: {data}</div>;
-    //   };
-    // const data = getData()
-
     return (
         <>
             <Navbar />

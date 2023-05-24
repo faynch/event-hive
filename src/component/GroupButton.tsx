@@ -13,7 +13,7 @@ interface GroupButtonProps {
 }
 
 function GroupButton(props: GroupButtonProps) {
-    console.log(props)
+    // console.log(props)
 
     
     return (
