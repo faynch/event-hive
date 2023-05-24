@@ -12,10 +12,15 @@ import Shop from '../pages/assets/product.svg'
 import Right from '../pages/assets/right.svg'
 import Left from '../pages/assets/left.svg'
 import Add from '../pages/assets/add.svg'
+import { useRouter } from 'next/router'
 
 function EventInfo() {
     const [curr, setCurr] = useState(0)
     const [edit, setEdit] = useState(false)
+
+    const router = useRouter()
+    const { data } = router.query
+    const item = data ? JSON.parse(String(data)) : null
 
     const [index, setIndex] = useState(String)
     const [image, setImage] = useState(String)
@@ -53,11 +58,18 @@ function EventInfo() {
         setSlides(delslides)
     }
 
+    // const getData = () => {
+    //     const router = useRouter();
+    //     const data = router.query.data;
+    //     return <div>Data: {data}</div>;
+    //   };
+    // const data = getData()
+
     return (
         <>
             <Navbar />
             <div className="mt-12 grid justify-center px-8 md:py-8 md:px-20">
-                <CardInfo type="Event" />
+                <CardInfo type="Event" data={item} />
             </div>
             <div className="flex flex-col items-center justify-center gap-8 p-8 md:px-24">
                 {edit ? (
@@ -105,21 +117,20 @@ function EventInfo() {
                                 />
                             </div>
                             <div className="flex w-full justify-center gap-4 lg:max-w-5xl lg:justify-end">
-                            <button
-                                onClick={() => addSlide()}
-                                className="rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-8 py-2 text-center font-extrabold text-white hover:bg-gradient-to-r"
-                            >
-                                Add
-                            </button>
-                            <button
-                                onClick={() => setEdit(false)}
-                                className="rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-8 py-2 text-center font-extrabold text-white hover:bg-gradient-to-r"
-                            >
-                                Back
-                            </button>
+                                <button
+                                    onClick={() => addSlide()}
+                                    className="rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-8 py-2 text-center font-extrabold text-white hover:bg-gradient-to-r"
+                                >
+                                    Add
+                                </button>
+                                <button
+                                    onClick={() => setEdit(false)}
+                                    className="rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-8 py-2 text-center font-extrabold text-white hover:bg-gradient-to-r"
+                                >
+                                    Back
+                                </button>
+                            </div>
                         </div>
-                        </div>
-                        
                     </>
                 ) : (
                     <>
@@ -231,16 +242,5 @@ function EventInfo() {
         </>
     )
 }
-
-export async function getServerSideProps() {
-    const res = await fetch('http://localhost:3000/api/events/'); // Replace with your API endpoint URL
-    const data = await res.json();
-  
-    return {
-      props: {
-        user: data,
-      },
-    };
-  }
 
 export default EventInfo

@@ -5,6 +5,7 @@ import Like from '../pages/assets/like.svg'
 import Unlike from '../pages/assets/unlike.svg'
 import Event from '../pages/assets/event.svg'
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 
 interface CardProps {
     type: string
@@ -14,12 +15,24 @@ interface CardProps {
 export default function Card(props: CardProps) {
     const [active, setActive] = useState(false)
 
+    const router = useRouter()
+
+    function sendData(data: any) {
+        router.push({
+            pathname: '/eventInfo',
+            query: { data: JSON.stringify(data) },
+        })
+        // console.log("print from " + data.id)
+    }
+
     const defaultPic = props.type === 'Shop' ? Shop : Event
 
     return (
         <div className="relative flex w-96 flex-col items-center gap-3 rounded-lg bg-white px-9 pb-12 text-center">
-            <a
-                href={props.type === 'Shop' ? '/shopInfo' : '/eventInfo'}
+            <div
+                id="eventLink"
+                onClick={() => sendData(props.data)}
+                data-json={props.data}
                 className="flex flex-col items-center gap-3"
             >
                 {props.data.picture === '' ? (
@@ -38,7 +51,7 @@ export default function Card(props: CardProps) {
                         {props.data.eventName}
                     </h5>
                 )}
-            </a>
+            </div>
             <div className="absolute top-7 right-7">
                 <button onClick={() => setActive(!active)} className="w-8">
                     {active ? (
@@ -48,12 +61,13 @@ export default function Card(props: CardProps) {
                     )}
                 </button>
             </div>
-            <GroupButton />
+            {/* <GroupButton data={} /> */}
             <p>
                 {props.data.about.length > 100
                     ? props.data.about.slice(0, 100) + '...'
                     : props.data.about}
             </p>
+            <div className="flex flex-wrap gap-2">
             {props.data.tags.map((tag: any) => (
                 <button
                     key={tag.id}
@@ -61,7 +75,7 @@ export default function Card(props: CardProps) {
                 >
                     {tag.tagName}
                 </button>
-            ))}
+            ))}</div>
         </div>
     )
 }

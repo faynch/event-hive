@@ -203,7 +203,7 @@ export default function CardInfo(props: CardInfoProps) {
                         </button>
                         {props.data.eventOrganizer.email}
                     </div>
-                    <GroupButton />
+                    <GroupButton line={props.data.line} facebook={props.data.facebook} instagram={props.data.instagram} tiktok={props.data.tiktok}/>
                     <div className="flex flex-wrap gap-2">
                         {props.data.tags.map((tag: any) => (
                             <button
