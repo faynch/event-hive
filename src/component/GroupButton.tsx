@@ -14,9 +14,11 @@ interface GroupButtonProps {
 
 function GroupButton(props: GroupButtonProps) {
     console.log(props)
+
+    
     return (
         <div className="flex flex-row justify-center gap-3">
-            <button className={props.instagram != undefined ? 'block' : 'hidden'}>
+            <button className={props.instagram != "" ? 'block' : 'hidden'}>
                 <Link
                     href={props.instagram}
                     rel="noopener noreferrer"
@@ -25,7 +27,7 @@ function GroupButton(props: GroupButtonProps) {
                     <Image className="h-8" src={Instagram} alt={''} />
                 </Link>
             </button>
-            <button className={props.facebook != undefined ? 'block' : 'hidden'}>
+            <button className={props.facebook != "" ? 'block' : 'hidden'}>
                 <Link
                     href={props.facebook}
                     rel="noopener noreferrer"
@@ -34,7 +36,7 @@ function GroupButton(props: GroupButtonProps) {
                     <Image className="h-8" src={Facebook} alt={''} />
                 </Link>
             </button>
-            <button className={props.line != undefined ? 'block' : 'hidden'}>
+            <button className={props.line != "" ? 'block' : 'hidden'}>
                 <Link
                     href="https://shop.line.me/home/"
                     rel="noopener noreferrer"
@@ -43,7 +45,7 @@ function GroupButton(props: GroupButtonProps) {
                     <Image className="h-8" src={Twitter} alt={''} />
                 </Link>
             </button>
-            <button className={props.tiktok != undefined ? 'block' : 'hidden'}>
+            <button className={props.line != "" ? 'block' : 'hidden'}>
                 <Link
                     href="https://Tiktok.com"
                     rel="noopener noreferrer"

@@ -25,6 +25,16 @@ export default function Card(props: CardProps) {
         // console.log("print from " + data.id)
     }
 
+    function isAvailble() {
+        if (
+            props.data.line == '' &&
+            props.data.facebook == '' &&
+            props.data.instagram == ''
+        )
+            return false
+        return true
+    }
+
     const defaultPic = props.type === 'Shop' ? Shop : Event
 
     return (
@@ -38,9 +48,7 @@ export default function Card(props: CardProps) {
                 {props.data.picture === '' ? (
                     <Image className="w-32 pt-14" src={defaultPic} alt={''} />
                 ) : (
-                    <div className="mt-14 h-32 w-32 overflow-hidden rounded-full">
-                        <img src={props.data.picture} alt={''} />
-                    </div>
+                    <img className='mt-14 h-32 w-32 rounded-full' src={props.data.picture} alt={''} />
                 )}
                 {props.type === 'Shop' ? (
                     <h5 className="text-lg font-extrabold">
@@ -61,21 +69,27 @@ export default function Card(props: CardProps) {
                     )}
                 </button>
             </div>
-            {/* <GroupButton data={} /> */}
-            <p>
+            <GroupButton
+                line={props.data.line}
+                facebook={props.data.facebook}
+                instagram={props.data.instagram}
+                tiktok={props.data.tiktok}
+            />
+            <p className={isAvailble() ? '' : 'mb-4'}>
                 {props.data.about.length > 100
                     ? props.data.about.slice(0, 100) + '...'
                     : props.data.about}
             </p>
             <div className="flex flex-wrap gap-2">
-            {props.data.tags.map((tag: any) => (
-                <button
-                    key={tag.id}
-                    className="rounded-xl bg-[#F5EAEA] px-3 text-[#F16767]"
-                >
-                    {tag.tagName}
-                </button>
-            ))}</div>
+                {props.data.tags.map((tag: any) => (
+                    <div
+                        key={tag.id}
+                        className="rounded-xl bg-[#F5EAEA] px-3 text-[#F16767]"
+                    >
+                        {tag.tagName}
+                    </div>
+                ))}
+            </div>
         </div>
     )
 }

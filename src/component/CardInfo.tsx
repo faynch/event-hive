@@ -42,6 +42,12 @@ export default function CardInfo(props: CardInfoProps) {
         setShowTagSelector(true)
     }
 
+    function isAvailble () {
+        if (props.data.line == "" && props.data.facebook == "" && props.data.instagram == "" ) 
+            return false
+        return true
+    }
+
     if (editMode) {
         return (
             <div className="relative flex flex-row rounded-lg bg-white py-12 px-12 sm:px-20 lg:max-w-7xl xl:px-28">
@@ -166,9 +172,7 @@ export default function CardInfo(props: CardInfoProps) {
                         alt={''}
                     />
                 ) : (
-                    <div className="h-52 w-52 self-center overflow-hidden rounded-full sm:self-start">
-                        <img src={props.data.picture} alt={''} />
-                    </div>
+                        <img src={props.data.picture} className='rounded-full h-52 w-52 self-center sm:self-start ' alt={''} /> 
                 )}
                 <div className="absolute top-8 right-8 flex items-center">
                     <button
@@ -203,18 +207,19 @@ export default function CardInfo(props: CardInfoProps) {
                         </button>
                         {props.data.eventOrganizer.email}
                     </div>
+                    <div className={`flex flex-wrap items-center ${isAvailble()? 'gap-4' : ''}`}>
                     <GroupButton line={props.data.line} facebook={props.data.facebook} instagram={props.data.instagram} tiktok={props.data.tiktok}/>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-2 py-1 ">
                         {props.data.tags.map((tag: any) => (
-                            <button
+                            <div
                                 key={tag.id}
                                 className="rounded-xl bg-[#F5EAEA] px-3 text-[#F16767]"
                             >
                                 {tag.tagName}
-                            </button>
+                            </div>
                         ))}
-                    </div>
-                    <p className="text-center sm:text-start ">
+                    </div></div>
+                    <p className="text-center sm:text-start">
                         {props.data.about}
                     </p>
                 </div>
