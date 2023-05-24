@@ -63,7 +63,7 @@ function EventInfo() {
                 {edit ? (
                     <>
                         <h3 className="text-center text-2xl font-extrabold text-primary ">
-                            ADD SHOP
+                            ADD HIGHLIGHT SHOP
                         </h3>
 
                         <div className="flex w-full flex-col items-center gap-4 rounded-lg bg-[#F5EAEA] p-12 drop-shadow-xl lg:max-w-5xl lg:gap-8">
@@ -104,8 +104,7 @@ function EventInfo() {
                                     }
                                 />
                             </div>
-                        </div>
-                        <div className="flex w-full justify-center gap-4 px-12 lg:max-w-5xl lg:justify-end">
+                            <div className="flex w-full justify-center gap-4 lg:max-w-5xl lg:justify-end">
                             <button
                                 onClick={() => addSlide()}
                                 className="rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-8 py-2 text-center font-extrabold text-white hover:bg-gradient-to-r"
@@ -116,15 +115,17 @@ function EventInfo() {
                                 onClick={() => setEdit(false)}
                                 className="rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-8 py-2 text-center font-extrabold text-white hover:bg-gradient-to-r"
                             >
-                                Exit
+                                Back
                             </button>
                         </div>
+                        </div>
+                        
                     </>
                 ) : (
                     <>
                         <div className="flex flex-row justify-center gap-4">
                             <h3 className="text-center text-2xl font-extrabold text-primary ">
-                                RECOMMENDED
+                                HIGHLIGHT SHOP
                             </h3>
                             <button>
                                 <Image
@@ -230,5 +231,16 @@ function EventInfo() {
         </>
     )
 }
+
+export async function getServerSideProps() {
+    const res = await fetch('http://localhost:3000/api/events/'); // Replace with your API endpoint URL
+    const data = await res.json();
+  
+    return {
+      props: {
+        user: data,
+      },
+    };
+  }
 
 export default EventInfo

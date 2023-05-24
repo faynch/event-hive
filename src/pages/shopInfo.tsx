@@ -65,7 +65,7 @@ function ShopInfo() {
                 {edit ? (
                     <>
                         <h3 className="text-center text-2xl font-extrabold text-primary ">
-                            ADD RECOMMENDED PRODUCT
+                            ADD HIGHLIGHT PRODUCT
                         </h3>
 
                         <div className="flex w-full flex-col items-center gap-4 rounded-lg bg-[#F5EAEA] p-12 drop-shadow-xl lg:max-w-5xl lg:gap-8">
@@ -137,7 +137,7 @@ function ShopInfo() {
                     <>
                         <div className="flex flex-row justify-center gap-4">
                             <h3 className="text-center text-2xl font-extrabold text-primary ">
-                                RECOMMENDED
+                                HIGHLIGHT PRODUCTS
                             </h3>
                             <button>
                                 <Image
