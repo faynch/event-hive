@@ -36,6 +36,12 @@ function Home({ eventdata, shopdata }: any) {
         return () => clearInterval(slideInterval)
     }, [])
 
+    function isAvailble(item: any) {
+        if (item.line == '' && item.facebook == '' && item.instagram == '')
+            return false
+        return true
+    }
+
     return (
         <>
             <Navbar />
@@ -55,8 +61,7 @@ function Home({ eventdata, shopdata }: any) {
                         {slides.map((item: any) => (
                             <div className="flex w-full flex-none justify-center">
                                 <div className="grid grid-cols-1 content-center justify-items-center gap-4 lg:grid-cols-2 lg:justify-items-end lg:gap-12">
-                                <div
-                    onClick={() => sendEventData(item)}>
+                                    <button onClick={() => sendEventData(item)}>
                                         {item.picture === '' ? (
                                             <Image
                                                 src={Upcoming}
@@ -70,13 +75,15 @@ function Home({ eventdata, shopdata }: any) {
                                                 alt={''}
                                             />
                                         )}
-                                    </div>
-                                    <div className="flex flex-col gap-2 pb-2 lg:items-start lg:pt-8 lg:pr-24 xl:pr-36">
-                                        <a href="/eventInfo">
+                                    </button>
+                                    <div className="flex flex-col items-center gap-2 pb-2 lg:items-start lg:pt-8 lg:pr-24 xl:pr-36">
+                                        <button
+                                            onClick={() => sendEventData(item)}
+                                        >
                                             <h4 className="text-center text-xl font-extrabold">
                                                 {item.eventName}
                                             </h4>
-                                        </a>
+                                        </button>
                                         <p className="text-center text-[#989898] lg:text-start ">
                                             {item.about.length > 130
                                                 ? item.about.slice(0, 130) +
@@ -84,12 +91,28 @@ function Home({ eventdata, shopdata }: any) {
                                                 : item.about}
                                         </p>
 
-                                        <GroupButton
-                                            line={item.line}
-                                            facebook={item.facebook}
-                                            instagram={item.instagram}
-                                            tiktok={item.tiktok}
-                                        />
+                                        <div
+                                            className={`flex flex-col flex-wrap items-center lg:flex-row ${
+                                                isAvailble(item) ? 'gap-3' : ''
+                                            }`}
+                                        >
+                                            <GroupButton
+                                                line={item.line}
+                                                facebook={item.facebook}
+                                                instagram={item.instagram}
+                                                tiktok={item.tiktok}
+                                            />
+                                            <div className="flex flex-wrap gap-2 py-1 ">
+                                                {item.tags.map((tag: any) => (
+                                                    <div
+                                                        key={tag.id}
+                                                        className="rounded-xl bg-[#F5EAEA] px-3 text-[#F16767]"
+                                                    >
+                                                        {tag.tagName}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -136,16 +159,19 @@ function Home({ eventdata, shopdata }: any) {
                 <h3 className="py-4 text-center text-2xl font-extrabold text-primary">
                     TOP STORES
                 </h3>
-                <div className="my-3 grid grid-cols-1 gap-8 lg:grid-cols-4 xl:max-w-7xl 2xl:grid-cols-6 2xl:gap-12">
-                    <div className="lg:col-span-2 lg:col-start-2 lg:justify-self-center 2xl:col-start-1 2xl:mt-12">
-                        <Card type="Shop" data={shopdata[0]}/>
+                <div className="my-3 grid grid-cols-1 gap-8 lg:grid-cols-4 lg:gap-x-16 xl:max-w-7xl xl:grid-cols-6 xl:gap-12">
+                    <div className="hidden xl:grid xl:col-span-2 xl:col-start-1 xl:mt-12">
+                        <Card type="Shop" data={shopdata[1]} />
                     </div>
-                    {/* <div className="lg:col-span-2">
-                        <Card type={'Shop'} />
+                    <div className="lg:col-span-2 lg:col-start-2 lg:justify-self-center xl:col-start-3">
+                        <Card type="Shop" data={shopdata[0]} />
                     </div>
-                    <div className="lg:col-span-2 2xl:mt-12">
-                        <Card type={'Shop'} />
-                    </div> */}
+                    <div className="lg:col-span-2 xl:hidden ">
+                        <Card type="Shop" data={shopdata[1]} />
+                    </div>
+                    <div className="lg:col-span-2 xl:mt-12">
+                        <Card type={'Shop'} data={shopdata[2]} />
+                    </div>
                 </div>
             </section>
             <Footer />
@@ -159,10 +185,12 @@ export async function getServerSideProps() {
     const res2 = await fetch('http://localhost:3000/api/shops/') // Replace with your API endpoint URL
     const data2 = await res2.json()
 
-    return {props: {
-        eventdata: data1,
-        shopdata: data2,
-    },}
+    return {
+        props: {
+            eventdata: data1,
+            shopdata: data2,
+        },
+    }
 }
 
 export default Home
