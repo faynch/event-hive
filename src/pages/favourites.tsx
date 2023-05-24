@@ -4,7 +4,7 @@ import Footer from '../component/Footer'
 import Navigator from '../component/Navigator'
 import { useState } from 'react'
 
-function favourites({ eventdata }: any) {
+function favourites({ eventdata, shopdata }: any) {
     const [toggle, setToggle] = useState(false)
 
     return (
@@ -37,7 +37,11 @@ function favourites({ eventdata }: any) {
                 </div>
                 <div className="mb-8 grid grid-cols-1 gap-8 place-self-center lg:max-w-7xl lg:grid-cols-2 xl:grid-cols-3">
                     {toggle ? (
-                        ''
+                        <>
+                            {shopdata.map((item: any) => (
+                                <Card type="Shop" data={item} />
+                            ))}
+                        </>
                     ) : (
                         <>
                             {eventdata.map((item: any) => (
@@ -53,12 +57,15 @@ function favourites({ eventdata }: any) {
 }
 
 export async function getServerSideProps() {
-    const res = await fetch('http://localhost:3000/api/events/') // Replace with your API endpoint URL
-    const data = await res.json()
+    const res1 = await fetch('http://localhost:3000/api/events/') // Replace with your API endpoint URL
+    const data1 = await res1.json()
+    const res2 = await fetch('http://localhost:3000/api/shops/') // Replace with your API endpoint URL
+    const data2 = await res2.json()
 
     return {
         props: {
-            eventdata: data,
+            eventdata: data1,
+            shopdata: data2,
         },
     }
 }
