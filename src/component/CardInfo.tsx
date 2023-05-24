@@ -180,7 +180,7 @@ export default function CardInfo(props: CardInfoProps) {
                 ) : (
                     <img
                         src={props.data.picture}
-                        className="h-52 w-52 self-center rounded-full sm:self-start "
+                        className="h-52 w-52 self-center rounded-full sm:self-start bg-slate-400"
                         alt={''}
                     />
                 )}
@@ -225,7 +225,7 @@ export default function CardInfo(props: CardInfoProps) {
                         
                         {props.type === 'Shop' ? (
                             <>
-                                email
+                                {props.data.shopOwner.email}
                             </>
                         ) : (
                             <>

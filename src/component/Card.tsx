@@ -52,7 +52,7 @@ export default function Card(props: CardProps) {
                         <Image className="w-32 pt-14" src={Event} alt={''} />
                     ) : (
                         <img
-                            className="mt-14 h-32 w-32 rounded-full"
+                            className="mt-14 h-32 w-32 rounded-full bg-slate-400"
                             src={props.data.picture}
                             alt={''}
                         />
@@ -72,7 +72,7 @@ export default function Card(props: CardProps) {
                         <Image className="w-32 pt-14" src={Shop} alt={''} />
                     ) : (
                         <img
-                            className="mt-14 h-32 w-32 rounded-full"
+                            className="mt-14 h-32 w-32 rounded-full bg-slate-400"
                             src={props.data.picture}
                             alt={''}
                         />
