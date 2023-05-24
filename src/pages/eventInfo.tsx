@@ -6,7 +6,6 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
-import { shopList } from 'public/CarouselItem.json'
 import Shop from '../pages/assets/product.svg'
 
 import Right from '../pages/assets/right.svg'
@@ -27,7 +26,7 @@ function EventInfo() {
     const [storeName, setStoreName] = useState(String)
     const [description, setDescription] = useState(String)
 
-    const [slides, setSlides] = useState(shopList)
+    const [slides, setSlides] = useState(item.shopParticipations)
 
     const prev = () =>
         setCurr((curr) => (curr === 0 ? slides.length - 1 : curr - 1))
@@ -53,7 +52,7 @@ function EventInfo() {
             prev()
         }
         const delslides = slides.filter(
-            (x) => x.id.toString() !== id.toString()
+            (x:any) => x.id.toString() !== id.toString()
         )
         setSlides(delslides)
     }
@@ -147,14 +146,14 @@ function EventInfo() {
                                     transform: `translateX(-${curr * 100}%)`,
                                 }}
                             >
-                                {slides.map((items) => (
+                                {slides.map((items:any) => (
                                     <div className="flex w-full flex-none justify-center">
                                         <div className="grid grid-cols-1 content-center justify-items-center gap-4 lg:grid-cols-2 lg:justify-items-end lg:gap-12">
                                             <a href="/shopInfo">
-                                                {items.image != '' ? (
+                                                {items.picture != '' ? (
                                                     <img
-                                                        src={items.image}
-                                                        className="w-40 md:w-52"
+                                                        src={items.picture}
+                                                        className="w-40 h-40 md:w-52 md:h-52 bg-slate-400 rounded-full"
                                                         alt={''}
                                                     />
                                                 ) : (
@@ -172,13 +171,13 @@ function EventInfo() {
                                                     </h4>
                                                 </a>
                                                 <p className="text-center text-[#989898] lg:text-start ">
-                                                    {items.description.length >
+                                                    {items.about.length >
                                                     130
-                                                        ? items.description.slice(
+                                                        ? items.about.slice(
                                                               0,
                                                               130
                                                           ) + '...'
-                                                        : items.description}
+                                                        : items.about}
                                                 </p>
                                                 <button
                                                     className="rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-8 py-2 text-center font-extrabold text-white hover:bg-gradient-to-r"
