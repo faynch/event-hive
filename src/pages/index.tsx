@@ -11,8 +11,8 @@ import { useState, useEffect } from 'react'
 import Right from '../pages/assets/right.svg'
 import Left from '../pages/assets/left.svg'
 
-export default function Home() {
-    const slides = eventList
+function Home({ eventdata }: any) {
+    const slides = eventdata
     const [curr, setCurr] = useState(0)
 
     const prev = () =>
@@ -25,7 +25,7 @@ export default function Home() {
     }
 
     useEffect(() => {
-        const slideInterval = setInterval(next, 3000)
+        const slideInterval = setInterval(next, 5000)
         return () => clearInterval(slideInterval)
     }, [])
 
@@ -35,37 +35,48 @@ export default function Home() {
             <Hero />
             <section className="grid justify-center bg-white py-8 px-4 md:px-24">
                 <h3 className="py-4 text-center text-2xl font-extrabold text-primary ">
-                    UPCOMING EVENT
+                    UPCOMING EVENTS
                 </h3>
 
                 <div className="relative overflow-hidden lg:max-w-5xl">
                     <div
-                        className="flex transition-transform duration-500  ease-out"
+                        className="flex transition-transform duration-500 ease-out"
                         style={{
                             transform: `translateX(-${curr * 100}%)`,
                         }}
                     >
-                        {slides.map((items) => (
+                        {slides.map((item: any) => (
                             <div className="flex w-full flex-none justify-center">
                                 <div className="grid grid-cols-1 content-center justify-items-center gap-4 lg:grid-cols-2 lg:justify-items-end lg:gap-12">
                                     <a href="/eventInfo">
-                                        <Image
+                                        {item.picture === '' ? (
+                                            <Image
                                             src={Upcoming}
                                             className="w-48 md:w-64"
                                             alt={''}
-                                        />
+                                            />
+                                        ) : (
+                                            <img
+                                                className="w-48 h-48 md:w-60 md:h-60 rounded-full"
+                                                src={item.picture}
+                                                alt={''}
+                                            />
+                                        )}
                                     </a>
                                     <div className="flex flex-col gap-2 pb-2 lg:items-start lg:pt-8 lg:pr-24 xl:pr-36">
                                         <a href="/eventInfo">
                                             <h4 className="text-center text-xl font-extrabold">
-                                                {items.eventName}
+                                                {item.eventName}
                                             </h4>
                                         </a>
                                         <p className="text-center text-[#989898] lg:text-start ">
-                                            {items.description.length > 130 ? items.description.slice(0, 130)+"..." : items.description}
+                                            {item.about.length > 130
+                                                ? item.about.slice(0, 130) +
+                                                  '...'
+                                                : item.about}
                                         </p>
 
-                                        <GroupButton />
+                                        <GroupButton line={item.line} facebook={item.facebook} instagram={item.instagram} tiktok={item.tiktok}/>
                                     </div>
                                 </div>
                             </div>
@@ -113,7 +124,7 @@ export default function Home() {
                     TOP STORES
                 </h3>
                 <div className="my-3 grid grid-cols-1 gap-8 lg:grid-cols-4 xl:max-w-7xl 2xl:grid-cols-6 2xl:gap-12">
-                    <div className="lg:col-span-2 lg:col-start-2 lg:justify-self-center 2xl:col-start-1 2xl:mt-12">
+                    {/* <div className="lg:col-span-2 lg:col-start-2 lg:justify-self-center 2xl:col-start-1 2xl:mt-12">
                         <Card type="Shop" />
                     </div>
                     <div className="lg:col-span-2">
@@ -121,10 +132,23 @@ export default function Home() {
                     </div>
                     <div className="lg:col-span-2 2xl:mt-12">
                         <Card type={'Shop'} />
-                    </div>
+                    </div> */}
                 </div>
             </section>
             <Footer />
         </>
     )
 }
+
+export async function getServerSideProps() {
+    const res = await fetch('http://localhost:3000/api/events/') // Replace with your API endpoint URL
+    const data = await res.json()
+
+    return {
+        props: {
+            eventdata: data,
+        },
+    }
+}
+
+export default Home
