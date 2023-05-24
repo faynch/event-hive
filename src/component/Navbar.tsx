@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import Account from '../pages/assets/account.svg'
-import Favourite from '../pages/assets/favourite.svg'
 import Menu from '../pages/assets/menu.svg'
 import EventHive from '../pages/assets/eventHive.svg'
 
@@ -98,7 +97,7 @@ const Navbar = () => {
                             </li>
                             <li className="text-xl font-extrabold">
                                 <a
-                                    href="/test"
+                                    href="/login2"
                                     className={`rounded-lg hover:underline decoration-2 underline-offset-2 md:hidden ${account? 'text-[#F16767]' : 'text-primary' }`}
                                 >
                                     {account? 'Log out' : 'Sign in'}
@@ -109,7 +108,7 @@ const Navbar = () => {
                 </div>
                 <div className="hidden basis-1/3 justify-end space-x-3 md:flex">
                     <button className={account ? 'block' : 'hidden'}>
-                        <a href="/test">
+                        <a href="/login2">
                             <Image
                                 className="w-6"
                                 src={Account}
@@ -118,7 +117,7 @@ const Navbar = () => {
                         </a>
                     </button>
                     <div className={`flex flex-row items-center gap-6 ${account ? 'hidden' : 'block'}`}>
-                    <Link href="/test">
+                    <Link href="/login2">
                         <div className="justify-end rounded-lg font-extrabold hover:text-primary text-md">
                             Sign in
                         </div>
