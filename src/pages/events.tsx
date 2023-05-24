@@ -3,7 +3,7 @@ import Card from '../component/Card'
 import Footer from '../component/Footer'
 import Navigator from '../component/Navigator'
 
-function events() {
+function events({eventdata}:any) {
     return (
         <>
             <Navbar />
@@ -13,14 +13,25 @@ function events() {
                     SEARCH FOR :
                 </h4>
                 <div className="mb-8 grid grid-cols-1 gap-8 place-self-center lg:max-w-7xl lg:grid-cols-2 xl:grid-cols-3">
-                    <Card type="Event" />
-                    <Card type="Event" />
-                    <Card type="Event" />
+                    {eventdata.map((item: any) => (
+                        <Card type="Event" data={item} />
+                    ))}
                 </div>
             </div>
             <Footer />
         </>
     )
 }
+
+export async function getServerSideProps() {
+    const res = await fetch('http://localhost:3000/api/events/'); // Replace with your API endpoint URL
+    const data = await res.json();
+  
+    return {
+      props: {
+        eventdata: data,
+      },
+    };
+  }
 
 export default events
