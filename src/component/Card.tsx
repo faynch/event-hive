@@ -13,7 +13,7 @@ interface CardProps {
 
 export default function Card(props: CardProps) {
     const [active, setActive] = useState(false)
-    
+
     const defaultPic = props.type === 'Shop' ? Shop : Event
 
     return (
@@ -25,14 +25,19 @@ export default function Card(props: CardProps) {
                 {props.data.picture === '' ? (
                     <Image className="w-32 pt-14" src={defaultPic} alt={''} />
                 ) : (
-                    <div className='w-32 h-32 mt-14 rounded-full overflow-hidden' >
-                        <img src={props.data.picture}  alt={''} />
+                    <div className="mt-14 h-32 w-32 overflow-hidden rounded-full">
+                        <img src={props.data.picture} alt={''} />
                     </div>
                 )}
-
-                <h5 className="text-lg font-extrabold">
-                    {props.data.eventName}
-                </h5>
+                {props.type === 'Shop' ? (
+                    <h5 className="text-lg font-extrabold">
+                        {props.data.shopName}
+                    </h5>
+                ) : (
+                    <h5 className="text-lg font-extrabold">
+                        {props.data.eventName}
+                    </h5>
+                )}
             </a>
             <div className="absolute top-7 right-7">
                 <button onClick={() => setActive(!active)} className="w-8">
@@ -43,12 +48,20 @@ export default function Card(props: CardProps) {
                     )}
                 </button>
             </div>
-
             <GroupButton />
-            <p>{props.data.about.length > 100 ? props.data.about.slice(0, 100)+"..." : props.data.about}</p>
-            <button className="rounded-xl bg-[#F5EAEA] px-3 text-[#F16767]">
-                catagories
-            </button>
+            <p>
+                {props.data.about.length > 100
+                    ? props.data.about.slice(0, 100) + '...'
+                    : props.data.about}
+            </p>
+            {props.data.tags.map((tag: any) => (
+                <button
+                    key={tag.id}
+                    className="rounded-xl bg-[#F5EAEA] px-3 text-[#F16767]"
+                >
+                    {tag.tagName}
+                </button>
+            ))}
         </div>
     )
 }
