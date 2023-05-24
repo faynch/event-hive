@@ -45,9 +45,7 @@ export default function Card(props: CardProps) {
         <div className="relative flex w-96 flex-col items-center gap-3 rounded-lg bg-white px-9 pb-12 text-center">
             {props.type === 'Event' ? (
                 <div
-                    // id="eventLink"
                     onClick={() => sendEventData(props.data)}
-                    // data-json={props.data}
                     className="flex flex-col items-center gap-3"
                 >
                     {props.data.picture === '' ? (

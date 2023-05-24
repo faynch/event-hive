@@ -5,16 +5,15 @@ import Upcoming from '../pages/assets/upcoming.svg'
 import GroupButton from '../component/GroupButton'
 import Card from '../component/Card'
 import Footer from '../component/Footer'
-import { eventList } from 'public/CarouselItem.json'
 import { useState, useEffect } from 'react'
 
 import Right from '../pages/assets/right.svg'
 import Left from '../pages/assets/left.svg'
+import { useRouter } from 'next/router'
 
-function Home({ eventdata }: any) {
+function Home({ eventdata, shopdata }: any) {
     const slides = eventdata
     const [curr, setCurr] = useState(0)
-
     const prev = () =>
         setCurr((curr) => (curr === 0 ? slides.length - 1 : curr - 1))
     const next = () =>
@@ -22,6 +21,14 @@ function Home({ eventdata }: any) {
 
     function handleClick(i: number) {
         setCurr(i)
+    }
+
+    const router = useRouter()
+    function sendEventData(data: any) {
+        router.push({
+            pathname: '/eventInfo',
+            query: { data: JSON.stringify(data) },
+        })
     }
 
     useEffect(() => {
@@ -48,21 +55,22 @@ function Home({ eventdata }: any) {
                         {slides.map((item: any) => (
                             <div className="flex w-full flex-none justify-center">
                                 <div className="grid grid-cols-1 content-center justify-items-center gap-4 lg:grid-cols-2 lg:justify-items-end lg:gap-12">
-                                    <a href="/eventInfo">
+                                <div
+                    onClick={() => sendEventData(item)}>
                                         {item.picture === '' ? (
                                             <Image
-                                            src={Upcoming}
-                                            className="w-48 md:w-64"
-                                            alt={''}
+                                                src={Upcoming}
+                                                className="w-48 md:w-64"
+                                                alt={''}
                                             />
                                         ) : (
                                             <img
-                                                className="w-48 h-48 md:w-60 md:h-60 rounded-full"
+                                                className="h-48 w-48 rounded-full md:h-60 md:w-60"
                                                 src={item.picture}
                                                 alt={''}
                                             />
                                         )}
-                                    </a>
+                                    </div>
                                     <div className="flex flex-col gap-2 pb-2 lg:items-start lg:pt-8 lg:pr-24 xl:pr-36">
                                         <a href="/eventInfo">
                                             <h4 className="text-center text-xl font-extrabold">
@@ -76,7 +84,12 @@ function Home({ eventdata }: any) {
                                                 : item.about}
                                         </p>
 
-                                        <GroupButton line={item.line} facebook={item.facebook} instagram={item.instagram} tiktok={item.tiktok}/>
+                                        <GroupButton
+                                            line={item.line}
+                                            facebook={item.facebook}
+                                            instagram={item.instagram}
+                                            tiktok={item.tiktok}
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -124,10 +137,10 @@ function Home({ eventdata }: any) {
                     TOP STORES
                 </h3>
                 <div className="my-3 grid grid-cols-1 gap-8 lg:grid-cols-4 xl:max-w-7xl 2xl:grid-cols-6 2xl:gap-12">
-                    {/* <div className="lg:col-span-2 lg:col-start-2 lg:justify-self-center 2xl:col-start-1 2xl:mt-12">
-                        <Card type="Shop" />
+                    <div className="lg:col-span-2 lg:col-start-2 lg:justify-self-center 2xl:col-start-1 2xl:mt-12">
+                        <Card type="Shop" data={shopdata[0]}/>
                     </div>
-                    <div className="lg:col-span-2">
+                    {/* <div className="lg:col-span-2">
                         <Card type={'Shop'} />
                     </div>
                     <div className="lg:col-span-2 2xl:mt-12">
@@ -141,14 +154,15 @@ function Home({ eventdata }: any) {
 }
 
 export async function getServerSideProps() {
-    const res = await fetch('http://localhost:3000/api/events/') // Replace with your API endpoint URL
-    const data = await res.json()
+    const res1 = await fetch('http://localhost:3000/api/events/') // Replace with your API endpoint URL
+    const data1 = await res1.json()
+    const res2 = await fetch('http://localhost:3000/api/shops/') // Replace with your API endpoint URL
+    const data2 = await res2.json()
 
-    return {
-        props: {
-            eventdata: data,
-        },
-    }
+    return {props: {
+        eventdata: data1,
+        shopdata: data2,
+    },}
 }
 
 export default Home

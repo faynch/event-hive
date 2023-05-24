@@ -26,7 +26,6 @@ function stores({ shopdata }: any) {
 export async function getServerSideProps() {
     const res = await fetch('http://localhost:3000/api/shops/') // Replace with your API endpoint URL
     const data = await res.json()
-    console.log(data)
 
     return {
         props: {
