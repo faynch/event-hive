@@ -1,8 +1,22 @@
+import { useRef } from 'react'
+import { signIn } from 'next-auth/react'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import EventHive from '../pages/assets/eventHive.svg'
 
 export default function login() {
+    const email = useRef("")
+    const password = useRef("")
+
+    const onSubmit = async () => {
+        const result = await signIn("credentials", {
+            email: email.current,
+            password: password.current,
+            redirect: true,
+            callbackUrl: "/",
+        })
+    }
     return (
         <>
             <div className="mx-auto my-24 flex flex-col items-center gap-8 rounded-lg bg-[#F5EAEA] p-12 drop-shadow-xl max-w-md lg:max-w-lg">
@@ -27,6 +41,7 @@ export default function login() {
                         placeholder="Email"
                         type="email"
                         name="email"
+                        onChange={(e) => {email.current = e.target.value}}
                     />
                 </div>
                 <div className="flex w-full flex-row items-center">
@@ -38,11 +53,13 @@ export default function login() {
                         placeholder="Password"
                         type="password"
                         name="password"
+                        onChange={(e) => {password.current = e.target.value}}
                     />
                 </div>
                 <Link
                     href="/"
                     className="w-full rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] p-2 text-center font-extrabold text-white hover:bg-gradient-to-r"
+                    onClick={onSubmit}
                 >
                     Sign in
                 </Link>
