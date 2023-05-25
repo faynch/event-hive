@@ -15,7 +15,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     }
                 }
             ]
-        }
+        },
+        include: {
+            tags: true,
+            eventOrganizer: true,
+            shopApplications: true,
+            shopParticipations: true,
+            favouriteByUsers: true,
+        },
     })
 
     if(event === undefined || event.length == 0){
