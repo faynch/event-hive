@@ -160,18 +160,27 @@ function Home({ eventdata, shopdata }: any) {
                     TOP STORES
                 </h3>
                 <div className="my-3 grid grid-cols-1 gap-8 lg:grid-cols-4 lg:gap-x-16 xl:max-w-7xl xl:grid-cols-6 xl:gap-12">
-                    <div className="hidden xl:grid xl:col-span-2 xl:col-start-1 xl:mt-12">
-                        <Card type="Shop" data={shopdata[1]} />
-                    </div>
-                    <div className="lg:col-span-2 lg:col-start-2 lg:justify-self-center xl:col-start-3">
-                        <Card type="Shop" data={shopdata[0]} />
-                    </div>
-                    <div className="lg:col-span-2 xl:hidden ">
-                        <Card type="Shop" data={shopdata[1]} />
-                    </div>
-                    <div className="lg:col-span-2 xl:mt-12">
-                        <Card type={'Shop'} data={shopdata[2]} />
-                    </div>
+                    {shopdata.length > 0 ? (
+                    <>
+                        {shopdata[0] && (
+                        <div className="lg:col-span-2 lg:col-start-2 lg:justify-self-center xl:col-start-3">
+                            <Card type="Shop" data={shopdata[0]} />
+                        </div>
+                        )}
+                        {shopdata[1] && (
+                        <div className="hidden xl:grid xl:col-span-2 xl:col-start-1 xl:mt-12">
+                            <Card type="Shop" data={shopdata[1]} />
+                        </div>
+                        )}
+                        {shopdata[2] && (
+                        <div className="lg:col-span-2 xl:hidden ">
+                            <Card type="Shop" data={shopdata[2]} />
+                        </div>
+                        )}
+                    </>
+                    ) : (
+                    <p>No data available</p>
+                    )}
                 </div>
             </section>
             <Footer />
