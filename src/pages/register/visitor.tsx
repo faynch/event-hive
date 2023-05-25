@@ -60,16 +60,44 @@ export default function RegisterVisitor() {
         setShowTagSelector(true)
     }
 
-    const handleSubmit = () => {
+    const tagId = selectedTags.map((tag) => {
+        return tag.id
+    })
+
+    async function handleSubmit() {
         const formData = {
             firstName: firstName,
             lastName: lastName,
             email: email,
             password: password,
-            tags: selectedTags,
+            tags: tagId,
         }
         const jsonData = JSON.stringify(formData)
         console.log(jsonData)
+
+        try {
+            const response = await fetch(
+                'http://localhost:3000/api/users/registration',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: jsonData,
+                }
+            )
+
+            if (response.ok) {
+                // Successful response, handle accordingly
+                console.log('Data successfully submitted!')
+            } else {
+                // Error response, handle accordingly
+                console.log('Failed to submit data')
+            }
+        } catch (error) {
+            // Error occurred during the request, handle accordingly
+            console.error('Error:', error)
+        }
     }
 
     return (
@@ -193,16 +221,18 @@ export default function RegisterVisitor() {
                                             <div className="m-1 flex">
                                                 <button
                                                     className="flex items-center rounded-xl bg-[#FFFFFF] px-3 text-[#F16767]"
-                                                    key={tag}
+                                                    key={tag.id}
                                                 >
-                                                    {tag}
+                                                    {tag.tagName}
                                                 </button>
                                                 <button
                                                     className="ml-[-0.5rem] h-4 w-4 items-center justify-center rounded-full bg-[#F16767] align-middle text-[10px] font-bold text-white"
                                                     onClick={() =>
                                                         setSelectedTags(
                                                             selectedTags.filter(
-                                                                (t) => t !== tag
+                                                                (t) =>
+                                                                    t.id !==
+                                                                    tag.id
                                                             )
                                                         )
                                                     }
