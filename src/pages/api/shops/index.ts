@@ -6,6 +6,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const shops = await prisma.shop.findMany({
         include: {
             tags: true,
+            shopOwner: true,
             eventApplications: true,
             eventParticipations: true,
             favouriteByUsers: true,
