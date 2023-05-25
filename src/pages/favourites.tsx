@@ -16,19 +16,19 @@ function favourites({ eventdata, shopdata }: any) {
                     SEARCH FOR :
                 </h4>
                 <div className="mt-6 mb-10 flex justify-center">
-                    <button onClick={() => setToggle(!toggle)}>
+                    <button onClick={() => setToggle(true)}>
                         <div
-                            className={`rounded-l-md bg-[#FFB84C]  px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:opacity-70 ${
-                                toggle ? 'opacity-50' : 'opacity-100'
+                            className={`rounded-l-md bg-[#FFB84C]  px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:opacity-50 ${
+                                toggle ? 'opacity-100' : 'opacity-30'
                             }`}
                         >
                             Stores
                         </div>
                     </button>
-                    <button onClick={() => setToggle(!toggle)}>
+                    <button onClick={() => setToggle(false)}>
                         <div
-                            className={`rounded-r-md bg-[#FFB84C] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:opacity-70 ${
-                                toggle ? 'opacity-100' : 'opacity-50'
+                            className={`rounded-r-md bg-[#FFB84C] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:opacity-50 ${
+                                toggle ? 'opacity-30' : 'opacity-100'
                             }`}
                         >
                             Event
