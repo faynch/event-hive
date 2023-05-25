@@ -13,21 +13,29 @@ import Email from '../pages/assets/email.svg'
 import Add from '@/pages/assets/add.svg'
 import GroupButtonInput from './GroupButtonInput'
 
-export default function CardInfo({ type }: any) {
-    const [storeName, setStoreName] = useState(`Example ${type}`)
-    const [description, setDescription] = useState(
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis distinctio nostrum aliquid enim facere obcaecati in vero quia? Maxime nam dolore perspiciatis expedita quia tempora, consectetur deserunt. Mollitia, veritatis maiores?'
+interface CardInfoProps {
+    type: string
+    data: any
+}
+
+export default function CardInfo(props: CardInfoProps) {
+    const [storeName, setStoreName] = useState(
+        props.data.shopName || `Example ${props.type}`
     )
-    const [phone, setPhone] = useState('000-111111')
-    const [email, setEmail] = useState('admin@eventhive')
+    const [description, setDescription] = useState(
+        props.data.about ||
+            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis distinctio nostrum aliquid enim facere obcaecati in vero quia? Maxime nam dolore perspiciatis expedita quia tempora, consectetur deserunt. Mollitia, veritatis maiores?'
+    )
+    const [phone, setPhone] = useState(props.data.telephone || '000-111111')
+    const [email, setEmail] = useState(
+        props.data.shopOwner.email || 'admin@eventhive'
+    )
     const [editMode, setEditMode] = useState(false)
     const [like, setLike] = useState(false)
-
     const handleSave = () => {
         // logic to save changes made by the user
         setEditMode(false) // switch back to view mode
     }
-
     const [showTagSelector, setShowTagSelector] = useState(false)
     const [selectedTags, setSelectedTags] = useState<Tag[]>([])
 
@@ -39,21 +47,48 @@ export default function CardInfo({ type }: any) {
         setShowTagSelector(true)
     }
 
+    function isAvailble() {
+        if (
+            props.data.line == '' &&
+            props.data.facebook == '' &&
+            props.data.instagram == '' &&
+            props.data.tiktok == ''
+        )
+            return false
+        return true
+    }
+
+    const defaultPic = props.type === 'Shop' ? Shop : Event
+
     if (editMode) {
         return (
             <div className="relative flex flex-row rounded-lg bg-white py-12 px-12 sm:px-20 lg:max-w-7xl xl:px-28">
                 <div className="flex flex-col items-center gap-8 lg:flex-row lg:gap-16">
-                    {type === 'Shop' ? (
+                    {props.type === 'Shop' ? (
+                        props.data.picture === '' ? (
+                            <Image
+                                className="w-52 basis-1/3 self-center sm:self-start"
+                                src={defaultPic}
+                                alt=""
+                            />
+                        ) : (
+                            <img
+                                src={props.data.picture}
+                                className="h-52 w-52 self-center rounded-full bg-slate-400 sm:self-start"
+                                alt=""
+                            />
+                        )
+                    ) : props.data.picture === '' ? (
                         <Image
                             className="w-52 basis-1/3 self-center sm:self-start"
-                            src={Shop}
-                            alt={''}
+                            src={defaultPic}
+                            alt=""
                         />
                     ) : (
-                        <Image
-                            className="w-52 basis-1/3 self-center sm:self-start"
-                            src={Event}
-                            alt={''}
+                        <img
+                            src={props.data.picture}
+                            className="h-52 w-52 self-center rounded-full bg-slate-400 sm:self-start"
+                            alt=""
                         />
                     )}
 
@@ -86,7 +121,12 @@ export default function CardInfo({ type }: any) {
                             />
                         </div>
 
-                        <GroupButtonInput />
+                        <GroupButtonInput
+                            line={props.data.line}
+                            facebook={props.data.facebook}
+                            instagram={props.data.instagram}
+                            tiktok={props.data.tiktok}
+                        />
                         {showTagSelector && (
                             <TagSelector
                                 onClose={handleTagSelectorClose}
@@ -100,9 +140,9 @@ export default function CardInfo({ type }: any) {
                                     <div className="mx-1 flex">
                                         <button
                                             className="flex items-center rounded-xl bg-[#F5EAEA] px-3 text-[#F16767]"
-                                            key={tag}
+                                            // key={tag}
                                         >
-                                            {tag}
+                                            {/* {tag} */}
                                         </button>
                                         <button
                                             className="ml-[-0.5rem] h-4 w-4 items-center justify-center rounded-full bg-[#F16767] align-middle text-[10px] font-bold text-white"
@@ -156,16 +196,16 @@ export default function CardInfo({ type }: any) {
     return (
         <div className="relative flex flex-row rounded-lg bg-white py-12 px-12 sm:px-20 lg:max-w-7xl xl:px-28">
             <div className="flex flex-col items-center gap-8 lg:flex-row lg:gap-16">
-                {type === 'Shop' ? (
+                {props.data.picture === '' ? (
                     <Image
                         className="w-52 basis-1/3 self-center sm:self-start"
-                        src={Shop}
+                        src={defaultPic}
                         alt={''}
                     />
                 ) : (
-                    <Image
-                        className="w-52 basis-1/3 self-center sm:self-start"
-                        src={Event}
+                    <img
+                        src={props.data.picture}
+                        className="h-52 w-52 self-center rounded-full bg-slate-400 sm:self-start"
                         alt={''}
                     />
                 )}
@@ -189,40 +229,54 @@ export default function CardInfo({ type }: any) {
                 </div>
 
                 <div className="col-span-2 flex basis-2/3 flex-col items-center gap-4 sm:items-start">
-                    <h2 className="text-2xl font-extrabold sm:text-4xl">
-                        {storeName}
-                    </h2>
-                    <div className="flex flex-row items-center gap-2">
-                        <button>
-                            <Image className="h-8" src={Phone} alt={''} />
-                        </button>
-                        {phone}
-                        <button>
-                            <Image className="ml-2 h-8" src={Email} alt={''} />
-                        </button>
-                        {email}
-                    </div>
-                    <GroupButton />
-                    <div className="flex flex-wrap">
-                        {selectedTags.length > 0 ? (
-                            selectedTags.map((tag) => (
-                                <button
-                                    className="mr-2 mb-2 items-center rounded-xl bg-[#F5EAEA] px-3 text-[#F16767]"
-                                    key={tag}
-                                >
-                                    {tag}
-                                </button>
-                            ))
+                    <h2 className="pr-4 text-center text-2xl font-extrabold sm:text-start sm:text-4xl">
+                        {props.type === 'Event' ? (
+                            <>{props.data.eventName}</>
                         ) : (
-                            <button
-                                className="items-center rounded-xl bg-[#F5EAEA] px-3 text-[#F16767] sm:self-start"
-                                onClick={handleShowTagSelector}
-                            >
-                                catagories
-                            </button>
+                            <>{props.data.shopName}</>
                         )}
+                    </h2>
+                    <div className="flex flex-col items-center gap-2 sm:flex-row">
+                        <button className="flex flex-row items-center gap-2">
+                            <Image className="h-8" src={Phone} alt={''} />
+                            {props.data.telephone}
+                        </button>
+
+                        <button className="flex flex-row items-center gap-2">
+                            <Image className="ml-2 h-8" src={Email} alt={''} />
+
+                            {props.type === 'Shop' ? (
+                                <>{props.data.shopOwner.email}</>
+                            ) : (
+                                <>{props.data.eventOrganizer.email}</>
+                            )}
+                        </button>
                     </div>
-                    <p className="text-center sm:text-start">{description}</p>
+                    <div
+                        className={`flex flex-col flex-wrap items-center sm:flex-row ${
+                            isAvailble() ? 'gap-4' : ''
+                        }`}
+                    >
+                        <GroupButton
+                            line={props.data.line}
+                            facebook={props.data.facebook}
+                            instagram={props.data.instagram}
+                            tiktok={props.data.tiktok}
+                        />
+                        <div className="flex flex-wrap gap-2 py-1 ">
+                            {props.data.tags.map((tag: any) => (
+                                <div
+                                    key={tag.id}
+                                    className="rounded-xl bg-[#F5EAEA] px-3 text-[#F16767]"
+                                >
+                                    {tag.tagName}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <p className="text-center sm:text-start">
+                        {props.data.about}
+                    </p>
                 </div>
             </div>
         </div>

@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import EventHive from '../pages/assets/eventHive.svg'
 
-export default function test() {
+export default function login() {
     return (
         <>
             <div className="mx-auto my-24 flex flex-col items-center gap-8 rounded-lg bg-[#F5EAEA] p-12 drop-shadow-xl max-w-md lg:max-w-lg">

@@ -16,8 +16,7 @@ export default function organizer() {
     function handleCompanyNameChange(
         event: React.ChangeEvent<HTMLInputElement>
     ) {
-        const newCompanyName = event.target.value
-        setCompanyName(newCompanyName)
+        setCompanyName(event.target.value)
     }
 
     function handleEmailChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -43,11 +42,12 @@ export default function organizer() {
         setConfirmPassword(event.target.value)
         setPasswordMatch(event.target.value === password)
     }
-    const handleSubmit = () => {
+
+    async function handleSubmit() {
         const formData = {
-            password: password,
             companyName: companyName,
             email: email,
+            password: password,
         }
 
         // Convert form data to JSON string
@@ -55,8 +55,31 @@ export default function organizer() {
 
         // Log the JSON data
         console.log(jsonData)
-    }
 
+        try {
+            const response = await fetch(
+                'http://localhost:3000/api/eventorganizers/registration',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: jsonData,
+                }
+            )
+
+            if (response.ok) {
+                // Successful response, handle accordingly
+                console.log('Data successfully submitted!')
+            } else {
+                // Error response, handle accordingly
+                console.log('Failed to submit data')
+            }
+        } catch (error) {
+            // Error occurred during the request, handle accordingly
+            console.error('Error:', error)
+        }
+    }
     return (
         <>
             <Navbar />

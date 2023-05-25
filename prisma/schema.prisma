@@ -72,8 +72,8 @@ model Event {
   facebook           String?
   instagram          String?
   line               String?
-  eventOrganizer     EventOrganizer? @relation("EventOrganizer", fields: [eventOrganizerId], references: [id])
-  eventOrganizerId   String          @unique
+  eventOrganizer     EventOrganizer @relation("EventOrganizer", fields: [eventOrganizerId], references: [id])
+  eventOrganizerId   String          
   shopApplications   Shop[]          @relation("Application")
   shopParticipations Shop[]          @relation("Participation")
   favouriteByUsers   User[]          @relation("FollowedEvent")

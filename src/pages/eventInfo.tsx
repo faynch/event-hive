@@ -6,23 +6,22 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
-import { shopList } from 'public/CarouselItem.json'
 import Shop from '../pages/assets/product.svg'
 
 import Right from '../pages/assets/right.svg'
 import Left from '../pages/assets/left.svg'
 import Add from '../pages/assets/add.svg'
 
-function EventInfo() {
+function EventInfo({ data }: any) {
     const [curr, setCurr] = useState(0)
     const [edit, setEdit] = useState(false)
-
+    
     const [index, setIndex] = useState(String)
     const [image, setImage] = useState(String)
     const [storeName, setStoreName] = useState(String)
     const [description, setDescription] = useState(String)
 
-    const [slides, setSlides] = useState(shopList)
+    const [slides, setSlides] = useState(data.shopParticipations)
 
     const prev = () =>
         setCurr((curr) => (curr === 0 ? slides.length - 1 : curr - 1))
@@ -48,7 +47,7 @@ function EventInfo() {
             prev()
         }
         const delslides = slides.filter(
-            (x) => x.id.toString() !== id.toString()
+            (x: any) => x.id.toString() !== id.toString()
         )
         setSlides(delslides)
     }
@@ -57,13 +56,13 @@ function EventInfo() {
         <>
             <Navbar />
             <div className="mt-12 grid justify-center px-8 md:py-8 md:px-20">
-                <CardInfo type="Event" />
+                <CardInfo type="Event" data={data} />
             </div>
             <div className="flex flex-col items-center justify-center gap-8 p-8 md:px-24">
                 {edit ? (
                     <>
                         <h3 className="text-center text-2xl font-extrabold text-primary ">
-                            ADD SHOP
+                            ADD HIGHLIGHT SHOP
                         </h3>
 
                         <div className="flex w-full flex-col items-center gap-4 rounded-lg bg-[#F5EAEA] p-12 drop-shadow-xl lg:max-w-5xl lg:gap-8">
@@ -104,27 +103,27 @@ function EventInfo() {
                                     }
                                 />
                             </div>
-                        </div>
-                        <div className="flex w-full justify-center gap-4 px-12 lg:max-w-5xl lg:justify-end">
-                            <button
-                                onClick={() => addSlide()}
-                                className="rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-8 py-2 text-center font-extrabold text-white hover:bg-gradient-to-r"
-                            >
-                                Add
-                            </button>
-                            <button
-                                onClick={() => setEdit(false)}
-                                className="rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-8 py-2 text-center font-extrabold text-white hover:bg-gradient-to-r"
-                            >
-                                Exit
-                            </button>
+                            <div className="flex w-full justify-center gap-4 lg:max-w-5xl lg:justify-end">
+                                <button
+                                    onClick={() => addSlide()}
+                                    className="rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-8 py-2 text-center font-extrabold text-white hover:bg-gradient-to-r"
+                                >
+                                    Add
+                                </button>
+                                <button
+                                    onClick={() => setEdit(false)}
+                                    className="rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-8 py-2 text-center font-extrabold text-white hover:bg-gradient-to-r"
+                                >
+                                    Back
+                                </button>
+                            </div>
                         </div>
                     </>
                 ) : (
                     <>
                         <div className="flex flex-row justify-center gap-4">
                             <h3 className="text-center text-2xl font-extrabold text-primary ">
-                                RECOMMENDED
+                                STORE HIGHLIGHTS
                             </h3>
                             <button>
                                 <Image
@@ -142,14 +141,14 @@ function EventInfo() {
                                     transform: `translateX(-${curr * 100}%)`,
                                 }}
                             >
-                                {slides.map((items) => (
+                                {slides.map((items: any) => (
                                     <div className="flex w-full flex-none justify-center">
                                         <div className="grid grid-cols-1 content-center justify-items-center gap-4 lg:grid-cols-2 lg:justify-items-end lg:gap-12">
                                             <a href="/shopInfo">
-                                                {items.image != '' ? (
+                                                {items.picture != '' ? (
                                                     <img
-                                                        src={items.image}
-                                                        className="w-40 md:w-52"
+                                                        src={items.picture}
+                                                        className="h-40 w-40 rounded-full bg-slate-400 md:h-52 md:w-52"
                                                         alt={''}
                                                     />
                                                 ) : (
@@ -167,13 +166,12 @@ function EventInfo() {
                                                     </h4>
                                                 </a>
                                                 <p className="text-center text-[#989898] lg:text-start ">
-                                                    {items.description.length >
-                                                    130
-                                                        ? items.description.slice(
+                                                    {items.about.length > 130
+                                                        ? items.about.slice(
                                                               0,
                                                               130
                                                           ) + '...'
-                                                        : items.description}
+                                                        : items.about}
                                                 </p>
                                                 <button
                                                     className="rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-8 py-2 text-center font-extrabold text-white hover:bg-gradient-to-r"
@@ -229,6 +227,20 @@ function EventInfo() {
             <Footer />
         </>
     )
+}
+
+export async function getServerSideProps(context: { req: any; query: any }) {
+    const { req, query } = context
+    const valueFromRouter = query.id
+    const data = await fetch(
+        `http://localhost:3000/api/events/${valueFromRouter}`
+    )
+    const jsonData = await data.json()
+    return {
+        props: {
+            data: jsonData[0],
+        },
+    }
 }
 
 export default EventInfo

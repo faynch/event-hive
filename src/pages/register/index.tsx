@@ -53,7 +53,7 @@ export default function Register() {
                         <div className="flex flex-row items-center ">
                             <p className="text-xl">Have an account already?</p>
                             <Link
-                                href="/test"
+                                href="/login2"
                                 className="justify-end rounded-lg pl-4 text-2xl font-extrabold text-primary decoration-2 underline-offset-2 hover:underline"
                             >
                                 Sign in

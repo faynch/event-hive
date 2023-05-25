@@ -4,7 +4,7 @@ import Footer from '../component/Footer'
 import Navigator from '../component/Navigator'
 import { useState } from 'react'
 
-function favourites() {
+function favourites({ eventdata, shopdata }: any) {
     const [toggle, setToggle] = useState(false)
 
     return (
@@ -16,19 +16,19 @@ function favourites() {
                     SEARCH FOR :
                 </h4>
                 <div className="mt-6 mb-10 flex justify-center">
-                    <button onClick={() => setToggle(!toggle)}>
+                    <button onClick={() => setToggle(true)}>
                         <div
-                            className={`rounded-l-md bg-[#FFB84C]  px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:opacity-70 ${
-                                toggle ? 'opacity-50' : 'opacity-100'
+                            className={`rounded-l-md bg-[#FFB84C]  px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:opacity-50 ${
+                                toggle ? 'opacity-100' : 'opacity-30'
                             }`}
                         >
                             Stores
                         </div>
                     </button>
-                    <button onClick={() => setToggle(!toggle)}>
+                    <button onClick={() => setToggle(false)}>
                         <div
-                            className={`rounded-r-md bg-[#FFB84C] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:opacity-70 ${
-                                toggle ? 'opacity-100' : 'opacity-50'
+                            className={`rounded-r-md bg-[#FFB84C] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:opacity-50 ${
+                                toggle ? 'opacity-30' : 'opacity-100'
                             }`}
                         >
                             Event
@@ -36,14 +36,38 @@ function favourites() {
                     </button>
                 </div>
                 <div className="mb-8 grid grid-cols-1 gap-8 place-self-center lg:max-w-7xl lg:grid-cols-2 xl:grid-cols-3">
-                    <Card type={toggle ? "Event" : "Shop"}/>
-                    <Card type={toggle ? "Event" : "Shop"}/>
-                    <Card type={toggle ? "Event" : "Shop"}/>
+                    {toggle ? (
+                        <>
+                            {shopdata.map((item: any) => (
+                                <Card type="Shop" data={item} />
+                            ))}
+                        </>
+                    ) : (
+                        <>
+                            {eventdata.map((item: any) => (
+                                <Card type="Event" data={item} />
+                            ))}
+                        </>
+                    )}
                 </div>
             </div>
             <Footer />
         </>
     )
+}
+
+export async function getServerSideProps() {
+    const res1 = await fetch('http://localhost:3000/api/events/') // Replace with your API endpoint URL
+    const data1 = await res1.json()
+    const res2 = await fetch('http://localhost:3000/api/shops/') // Replace with your API endpoint URL
+    const data2 = await res2.json()
+
+    return {
+        props: {
+            eventdata: data1,
+            shopdata: data2,
+        },
+    }
 }
 
 export default favourites

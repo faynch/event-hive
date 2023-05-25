@@ -1,27 +1,32 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
-export type Tag =
-    | 'Art'
-    | 'Beauty'
-    | 'Book'
-    | 'Business'
-    | 'Charity'
-    | 'Comedy'
-    | 'Concert'
-    | 'Drink'
-    | 'Education'
-    | 'E-sport'
-    | 'Fashion'
-    | 'Food'
-    | 'Game'
-    | 'Health'
-    | 'Furniture'
-    | 'Movies'
-    | 'Music'
-    | 'Marketing'
-    | 'Sport'
-    | 'Techonology'
-    | 'Vehicle'
+// export type Tag =
+//     | 'Art'
+//     | 'Beauty'
+//     | 'Book'
+//     | 'Business'
+//     | 'Charity'
+//     | 'Comedy'
+//     | 'Concert'
+//     | 'Drink'
+//     | 'Education'
+//     | 'E-sport'
+//     | 'Fashion'
+//     | 'Food'
+//     | 'Game'
+//     | 'Health'
+//     | 'Furniture'
+//     | 'Movies'
+//     | 'Music'
+//     | 'Marketing'
+//     | 'Sport'
+//     | 'Techonology'
+//     | 'Vehicle'
+
+export type Tag = {
+    id: number
+    tagName: string
+}
 
 type Props = {
     onClose: () => void
@@ -31,37 +36,34 @@ type Props = {
 
 const TagSelector: React.FC<Props> = ({ onClose, setSelectTags }) => {
     const [selectedTags, setSelectedTags] = useState<Tag[]>([])
+    const [tags, setTags] = useState<Tag[]>([])
 
-    const tags: Tag[] = [
-        'Art',
-        'Beauty',
-        'Book',
-        'Business',
-        'Charity',
-        'Comedy',
-        'Concert',
-        'Drink',
-        'Education',
-        'E-sport',
-        'Fashion',
-        'Food',
-        'Game',
-        'Health',
-        'Furniture',
-        'Movies',
-        'Music',
-        'Marketing',
-        'Sport',
-        'Techonology',
-        'Vehicle',
-    ]
+    useEffect(() => {
+        fetchTags()
+    }, [])
+
+    const fetchTags = async () => {
+        try {
+            const response = await fetch('/api/tags')
+            if (response.ok) {
+                const data = await response.json()
+                setTags(data)
+            } else {
+                console.error('Error fetching tags:', response.status)
+            }
+        } catch (error) {
+            console.error('Error fetching tags:', error)
+        }
+    }
 
     const handleTagClick = (tag: Tag) => {
-        const isTagSelected = selectedTags.includes(tag)
+        const isTagSelected = selectedTags.find(
+            (selectedTag) => selectedTag.id === tag.id
+        )
 
         if (isTagSelected) {
             setSelectedTags(
-                selectedTags.filter((selectedTag) => selectedTag !== tag)
+                selectedTags.filter((selectedTag) => selectedTag.id !== tag.id)
             )
         } else if (selectedTags.length < 10) {
             setSelectedTags([...selectedTags, tag])
@@ -82,15 +84,17 @@ const TagSelector: React.FC<Props> = ({ onClose, setSelectTags }) => {
                 <div className="mb-4 grid grid-cols-4">
                     {tags.map((tag) => (
                         <button
-                            key={tag}
+                            key={tag.id}
                             className={`mr-2 mb-2 rounded-full py-1 px-3 ${
-                                selectedTags.includes(tag)
+                                selectedTags.find(
+                                    (selectedTag) => selectedTag.id === tag.id
+                                )
                                     ? 'bg-[#F16767] text-white'
                                     : 'bg-[#FFFFFF] text-[#F16767]'
                             }`}
                             onClick={() => handleTagClick(tag)}
                         >
-                            {tag}
+                            {tag.tagName}
                         </button>
                     ))}
                 </div>

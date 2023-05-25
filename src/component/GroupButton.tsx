@@ -5,37 +5,47 @@ import Facebook from '../pages/assets/facebook.svg'
 import Tiktok from '../pages/assets/tiktok.svg'
 import Link from 'next/link'
 
-function GroupButton() {
+interface GroupButtonProps {
+    line: any
+    facebook: any
+    instagram: any
+    tiktok: any
+}
+
+function GroupButton(props: GroupButtonProps) {
+    // console.log(props)
+
+    
     return (
         <div className="flex flex-row justify-center gap-3">
-            <button>
+            <button className={props.instagram != "" ? 'block' : 'hidden'}>
                 <Link
-                    href="https://instagram.com"
+                    href={props.instagram}
                     rel="noopener noreferrer"
                     target="_blank"
                 >
                     <Image className="h-8" src={Instagram} alt={''} />
                 </Link>
             </button>
-            <button>
+            <button className={props.facebook != "" ? 'block' : 'hidden'}>
                 <Link
-                    href="https://facebook.com"
+                    href={props.facebook}
                     rel="noopener noreferrer"
                     target="_blank"
                 >
                     <Image className="h-8" src={Facebook} alt={''} />
                 </Link>
             </button>
-            <button>
+            <button className={props.line != "" ? 'block' : 'hidden'}>
                 <Link
-                    href="https://facebook.com"
+                    href="https://shop.line.me/home/"
                     rel="noopener noreferrer"
                     target="_blank"
                 >
                     <Image className="h-8" src={Twitter} alt={''} />
                 </Link>
             </button>
-            <button>
+            <button className={props.line != "" ? 'block' : 'hidden'}>
                 <Link
                     href="https://Tiktok.com"
                     rel="noopener noreferrer"

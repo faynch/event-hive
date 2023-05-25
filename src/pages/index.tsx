@@ -5,16 +5,15 @@ import Upcoming from '../pages/assets/upcoming.svg'
 import GroupButton from '../component/GroupButton'
 import Card from '../component/Card'
 import Footer from '../component/Footer'
-import { eventList } from 'public/CarouselItem.json'
 import { useState, useEffect } from 'react'
 
 import Right from '../pages/assets/right.svg'
 import Left from '../pages/assets/left.svg'
+import { useRouter } from 'next/router'
 
-export default function Home() {
-    const slides = eventList
+function Home({ eventdata, shopdata }: any) {
+    const slides = eventdata
     const [curr, setCurr] = useState(0)
-
     const prev = () =>
         setCurr((curr) => (curr === 0 ? slides.length - 1 : curr - 1))
     const next = () =>
@@ -24,10 +23,24 @@ export default function Home() {
         setCurr(i)
     }
 
+    const router = useRouter()
+    function sendEventData(data: any) {
+        router.push({
+            pathname: '/eventInfo',
+            query: { data: JSON.stringify(data) },
+        })
+    }
+
     useEffect(() => {
-        const slideInterval = setInterval(next, 3000)
+        const slideInterval = setInterval(next, 5000)
         return () => clearInterval(slideInterval)
     }, [])
+
+    function isAvailble(item: any) {
+        if (item.line == '' && item.facebook == '' && item.instagram == '')
+            return false
+        return true
+    }
 
     return (
         <>
@@ -35,37 +48,71 @@ export default function Home() {
             <Hero />
             <section className="grid justify-center bg-white py-8 px-4 md:px-24">
                 <h3 className="py-4 text-center text-2xl font-extrabold text-primary ">
-                    UPCOMING EVENT
+                    UPCOMING EVENTS
                 </h3>
 
                 <div className="relative overflow-hidden lg:max-w-5xl">
                     <div
-                        className="flex transition-transform duration-500  ease-out"
+                        className="flex transition-transform duration-500 ease-out"
                         style={{
                             transform: `translateX(-${curr * 100}%)`,
                         }}
                     >
-                        {slides.map((items) => (
+                        {slides.map((item: any) => (
                             <div className="flex w-full flex-none justify-center">
                                 <div className="grid grid-cols-1 content-center justify-items-center gap-4 lg:grid-cols-2 lg:justify-items-end lg:gap-12">
-                                    <a href="/eventInfo">
-                                        <Image
-                                            src={Upcoming}
-                                            className="w-48 md:w-64"
-                                            alt={''}
-                                        />
-                                    </a>
-                                    <div className="flex flex-col gap-2 pb-2 lg:items-start lg:pt-8 lg:pr-24 xl:pr-36">
-                                        <a href="/eventInfo">
+                                    <button onClick={() => sendEventData(item)}>
+                                        {item.picture === '' ? (
+                                            <Image
+                                                src={Upcoming}
+                                                className="w-48 md:w-64"
+                                                alt={''}
+                                            />
+                                        ) : (
+                                            <img
+                                                className="h-48 w-48 rounded-full md:h-60 md:w-60"
+                                                src={item.picture}
+                                                alt={''}
+                                            />
+                                        )}
+                                    </button>
+                                    <div className="flex flex-col items-center gap-2 pb-2 lg:items-start lg:pt-8 lg:pr-24 xl:pr-36">
+                                        <button
+                                            onClick={() => sendEventData(item)}
+                                        >
                                             <h4 className="text-center text-xl font-extrabold">
-                                                {items.eventName}
+                                                {item.eventName}
                                             </h4>
-                                        </a>
+                                        </button>
                                         <p className="text-center text-[#989898] lg:text-start ">
-                                            {items.description.length > 130 ? items.description.slice(0, 130)+"..." : items.description}
+                                            {item.about.length > 130
+                                                ? item.about.slice(0, 130) +
+                                                  '...'
+                                                : item.about}
                                         </p>
 
-                                        <GroupButton />
+                                        <div
+                                            className={`flex flex-col flex-wrap items-center lg:flex-row ${
+                                                isAvailble(item) ? 'gap-3' : ''
+                                            }`}
+                                        >
+                                            <GroupButton
+                                                line={item.line}
+                                                facebook={item.facebook}
+                                                instagram={item.instagram}
+                                                tiktok={item.tiktok}
+                                            />
+                                            <div className="flex flex-wrap gap-2 py-1 ">
+                                                {item.tags.map((tag: any) => (
+                                                    <div
+                                                        key={tag.id}
+                                                        className="rounded-xl bg-[#F5EAEA] px-3 text-[#F16767]"
+                                                    >
+                                                        {tag.tagName}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -112,15 +159,18 @@ export default function Home() {
                 <h3 className="py-4 text-center text-2xl font-extrabold text-primary">
                     TOP STORES
                 </h3>
-                <div className="my-3 grid grid-cols-1 gap-8 lg:grid-cols-4 xl:max-w-7xl 2xl:grid-cols-6 2xl:gap-12">
-                    <div className="lg:col-span-2 lg:col-start-2 lg:justify-self-center 2xl:col-start-1 2xl:mt-12">
-                        <Card type="Shop" />
+                <div className="my-3 grid grid-cols-1 gap-8 lg:grid-cols-4 lg:gap-x-16 xl:max-w-7xl xl:grid-cols-6 xl:gap-12">
+                    <div className="hidden xl:grid xl:col-span-2 xl:col-start-1 xl:mt-12">
+                        <Card type="Shop" data={shopdata[1]} />
                     </div>
-                    <div className="lg:col-span-2">
-                        <Card type={'Shop'} />
+                    <div className="lg:col-span-2 lg:col-start-2 lg:justify-self-center xl:col-start-3">
+                        <Card type="Shop" data={shopdata[0]} />
                     </div>
-                    <div className="lg:col-span-2 2xl:mt-12">
-                        <Card type={'Shop'} />
+                    <div className="lg:col-span-2 xl:hidden ">
+                        <Card type="Shop" data={shopdata[1]} />
+                    </div>
+                    <div className="lg:col-span-2 xl:mt-12">
+                        <Card type={'Shop'} data={shopdata[2]} />
                     </div>
                 </div>
             </section>
@@ -128,3 +178,19 @@ export default function Home() {
         </>
     )
 }
+
+export async function getServerSideProps() {
+    const res1 = await fetch('http://localhost:3000/api/events/') // Replace with your API endpoint URL
+    const data1 = await res1.json()
+    const res2 = await fetch('http://localhost:3000/api/shops/') // Replace with your API endpoint URL
+    const data2 = await res2.json()
+
+    return {
+        props: {
+            eventdata: data1,
+            shopdata: data2,
+        },
+    }
+}
+
+export default Home
