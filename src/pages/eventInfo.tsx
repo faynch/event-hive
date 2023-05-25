@@ -11,22 +11,17 @@ import Shop from '../pages/assets/product.svg'
 import Right from '../pages/assets/right.svg'
 import Left from '../pages/assets/left.svg'
 import Add from '../pages/assets/add.svg'
-import { useRouter } from 'next/router'
 
-function EventInfo() {
+function EventInfo({ data }: any) {
     const [curr, setCurr] = useState(0)
     const [edit, setEdit] = useState(false)
-
-    const router = useRouter()
-    const { data } = router.query
-    const item = data ? JSON.parse(String(data)) : null
-
+    
     const [index, setIndex] = useState(String)
     const [image, setImage] = useState(String)
     const [storeName, setStoreName] = useState(String)
     const [description, setDescription] = useState(String)
 
-    const [slides, setSlides] = useState(item.shopParticipations)
+    const [slides, setSlides] = useState(data.shopParticipations)
 
     const prev = () =>
         setCurr((curr) => (curr === 0 ? slides.length - 1 : curr - 1))
@@ -52,7 +47,7 @@ function EventInfo() {
             prev()
         }
         const delslides = slides.filter(
-            (x:any) => x.id.toString() !== id.toString()
+            (x: any) => x.id.toString() !== id.toString()
         )
         setSlides(delslides)
     }
@@ -61,7 +56,7 @@ function EventInfo() {
         <>
             <Navbar />
             <div className="mt-12 grid justify-center px-8 md:py-8 md:px-20">
-                <CardInfo type="Event" data={item} />
+                <CardInfo type="Event" data={data} />
             </div>
             <div className="flex flex-col items-center justify-center gap-8 p-8 md:px-24">
                 {edit ? (
@@ -146,14 +141,14 @@ function EventInfo() {
                                     transform: `translateX(-${curr * 100}%)`,
                                 }}
                             >
-                                {slides.map((items:any) => (
+                                {slides.map((items: any) => (
                                     <div className="flex w-full flex-none justify-center">
                                         <div className="grid grid-cols-1 content-center justify-items-center gap-4 lg:grid-cols-2 lg:justify-items-end lg:gap-12">
                                             <a href="/shopInfo">
                                                 {items.picture != '' ? (
                                                     <img
                                                         src={items.picture}
-                                                        className="w-40 h-40 md:w-52 md:h-52 bg-slate-400 rounded-full"
+                                                        className="h-40 w-40 rounded-full bg-slate-400 md:h-52 md:w-52"
                                                         alt={''}
                                                     />
                                                 ) : (
@@ -171,8 +166,7 @@ function EventInfo() {
                                                     </h4>
                                                 </a>
                                                 <p className="text-center text-[#989898] lg:text-start ">
-                                                    {items.about.length >
-                                                    130
+                                                    {items.about.length > 130
                                                         ? items.about.slice(
                                                               0,
                                                               130
@@ -233,6 +227,20 @@ function EventInfo() {
             <Footer />
         </>
     )
+}
+
+export async function getServerSideProps(context: { req: any; query: any }) {
+    const { req, query } = context
+    const valueFromRouter = query.id
+    const data = await fetch(
+        `http://localhost:3000/api/events/${valueFromRouter}`
+    )
+    const jsonData = await data.json()
+    return {
+        props: {
+            data: jsonData[0],
+        },
+    }
 }
 
 export default EventInfo

@@ -19,6 +19,7 @@ interface CardInfoProps {
 }
 
 export default function CardInfo(props: CardInfoProps) {
+    console.log(props)
     const [storeName, setStoreName] = useState(`Example ${props.type}`)
     const [description, setDescription] = useState(
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis distinctio nostrum aliquid enim facere obcaecati in vero quia? Maxime nam dolore perspiciatis expedita quia tempora, consectetur deserunt. Mollitia, veritatis maiores?'
