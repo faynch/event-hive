@@ -28,7 +28,7 @@ export default function CardInfo(props: CardInfoProps) {
     )
     const [phone, setPhone] = useState(props.data.telephone || '000-111111')
     const [email, setEmail] = useState(
-        props.data.shopOwner.email || 'admin@eventhive'
+        props.data.shopOwner?.email || 'admin@eventhive'
     )
     const [editMode, setEditMode] = useState(false)
     const [like, setLike] = useState(false)
