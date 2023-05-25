@@ -10,6 +10,8 @@ import { useState, useEffect } from 'react'
 import Right from '../pages/assets/right.svg'
 import Left from '../pages/assets/left.svg'
 import { useRouter } from 'next/router'
+import { getServerSession } from 'next-auth'
+import { authOptions } from './api/auth/[...nextauth]'
 
 function Home({ eventdata, shopdata }: any) {
     const slides = eventdata
@@ -188,7 +190,8 @@ function Home({ eventdata, shopdata }: any) {
     )
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context: any) {
+    const session = await getServerSession(context.req, context.res, authOptions)
     const res1 = await fetch('http://localhost:3000/api/events/') // Replace with your API endpoint URL
     const data1 = await res1.json()
     const res2 = await fetch('http://localhost:3000/api/shops/') // Replace with your API endpoint URL
@@ -196,6 +199,7 @@ export async function getServerSideProps() {
 
     return {
         props: {
+            session,
             eventdata: data1,
             shopdata: data2,
         },
