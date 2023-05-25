@@ -4,7 +4,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
     const prisma = new PrismaClient();
     const { id, firstName, lastName, email } = req.body;
-    const deleteUser = await prisma.event.deleteMany({
+    const deleteUser = await prisma.user.deleteMany({
         where: {
             OR: {
                 id: {
