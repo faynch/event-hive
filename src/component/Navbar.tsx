@@ -2,12 +2,14 @@ import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useSession, signIn, signOut } from 'next-auth/react'
 
 import Account from '../pages/assets/account.svg'
 import Menu from '../pages/assets/menu.svg'
 import EventHive from '../pages/assets/eventHive.svg'
 
 const Navbar = () => {
+    const {data:session} = useSession()
     const [navbar, setNavbar] = useState(false)
     // const [account, setAccount] = useState(false)
     const account = false
@@ -107,27 +109,40 @@ const Navbar = () => {
                     </div>
                 </div>
                 <div className="hidden basis-1/3 justify-end space-x-3 md:flex">
-                    <button className={account ? 'block' : 'hidden'}>
-                        <a href="/login2">
-                            <Image
-                                className="w-6"
-                                src={Account}
-                                alt={'account'}
-                            />
-                        </a>
-                    </button>
-                    <div className={`flex flex-row items-center gap-6 ${account ? 'hidden' : 'block'}`}>
-                    <Link href="/login2">
-                        <div className="justify-end rounded-lg font-extrabold hover:text-primary text-md">
-                            Sign in
+                {session?.user? (
+                        <>
+                        <button>
+                            <a href="/login2">
+                                <Image
+                                    className="w-6"
+                                    src={Account}
+                                    alt={'account'}
+                                />
+                            </a>
+                        </button>
+                        <div className="flex items-center gap-6">
+                            <div className="justify-end rounded-lg font-extrabold">
+                                Signed in as {session.user.email}
+                            </div>
+                            <div className="justify-end rounded-lg font-extrabold hover:text-primary text-md" onClick={() => signOut()}>
+                                Sign Out
+                            </div>
                         </div>
-                        </Link>
-                        <Link href="/register">
-                        <div className="rounded-md bg-[#FFB84C] hover:bg-gradient-to-r from-[#EF9323] to-[#5D3891] px-4 py-2.5 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">
-                            Register
+                        </>
+                    ): (
+                        <>
+                        <div className={`flex flex-row items-center gap-6 ${account ? 'hidden' : 'block'}`}>
+                            <div className="justify-end rounded-lg font-extrabold hover:text-primary text-md" onClick={() => signIn()}>
+                                Sign in
+                            </div>
+                            <Link href="/register">
+                                <div className="rounded-md bg-[#FFB84C] hover:bg-gradient-to-r from-[#EF9323] to-[#5D3891] px-4 py-2.5 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">
+                                    Register
+                                </div>
+                            </Link>
                         </div>
-                        </Link>
-                    </div>
+                        </>
+                    )}
                 </div>
             </div>
         </nav>
