@@ -19,13 +19,17 @@ interface CardInfoProps {
 }
 
 export default function CardInfo(props: CardInfoProps) {
-    console.log(props)
-    const [storeName, setStoreName] = useState(`Example ${props.type}`)
-    const [description, setDescription] = useState(
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis distinctio nostrum aliquid enim facere obcaecati in vero quia? Maxime nam dolore perspiciatis expedita quia tempora, consectetur deserunt. Mollitia, veritatis maiores?'
+    const [storeName, setStoreName] = useState(
+        props.data.shopName || `Example ${props.type}`
     )
-    const [phone, setPhone] = useState('000-111111')
-    const [email, setEmail] = useState('admin@eventhive')
+    const [description, setDescription] = useState(
+        props.data.about ||
+            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis distinctio nostrum aliquid enim facere obcaecati in vero quia? Maxime nam dolore perspiciatis expedita quia tempora, consectetur deserunt. Mollitia, veritatis maiores?'
+    )
+    const [phone, setPhone] = useState(props.data.telephone || '000-111111')
+    const [email, setEmail] = useState(
+        props.data.shopOwner.email || 'admin@eventhive'
+    )
     const [editMode, setEditMode] = useState(false)
     const [like, setLike] = useState(false)
     const handleSave = () => {
@@ -47,7 +51,8 @@ export default function CardInfo(props: CardInfoProps) {
         if (
             props.data.line == '' &&
             props.data.facebook == '' &&
-            props.data.instagram == ''
+            props.data.instagram == '' &&
+            props.data.tiktok == ''
         )
             return false
         return true
@@ -60,16 +65,30 @@ export default function CardInfo(props: CardInfoProps) {
             <div className="relative flex flex-row rounded-lg bg-white py-12 px-12 sm:px-20 lg:max-w-7xl xl:px-28">
                 <div className="flex flex-col items-center gap-8 lg:flex-row lg:gap-16">
                     {props.type === 'Shop' ? (
+                        props.data.picture === '' ? (
+                            <Image
+                                className="w-52 basis-1/3 self-center sm:self-start"
+                                src={defaultPic}
+                                alt=""
+                            />
+                        ) : (
+                            <img
+                                src={props.data.picture}
+                                className="h-52 w-52 self-center rounded-full bg-slate-400 sm:self-start"
+                                alt=""
+                            />
+                        )
+                    ) : props.data.picture === '' ? (
                         <Image
                             className="w-52 basis-1/3 self-center sm:self-start"
-                            src={Shop}
-                            alt={''}
+                            src={defaultPic}
+                            alt=""
                         />
                     ) : (
-                        <Image
-                            className="w-52 basis-1/3 self-center sm:self-start"
-                            src={Event}
-                            alt={''}
+                        <img
+                            src={props.data.picture}
+                            className="h-52 w-52 self-center rounded-full bg-slate-400 sm:self-start"
+                            alt=""
                         />
                     )}
 
@@ -102,7 +121,12 @@ export default function CardInfo(props: CardInfoProps) {
                             />
                         </div>
 
-                        <GroupButtonInput />
+                        <GroupButtonInput
+                            line={props.data.line}
+                            facebook={props.data.facebook}
+                            instagram={props.data.instagram}
+                            tiktok={props.data.tiktok}
+                        />
                         {showTagSelector && (
                             <TagSelector
                                 onClose={handleTagSelectorClose}
@@ -181,7 +205,7 @@ export default function CardInfo(props: CardInfoProps) {
                 ) : (
                     <img
                         src={props.data.picture}
-                        className="h-52 w-52 self-center rounded-full sm:self-start bg-slate-400"
+                        className="h-52 w-52 self-center rounded-full bg-slate-400 sm:self-start"
                         alt={''}
                     />
                 )}
@@ -205,37 +229,31 @@ export default function CardInfo(props: CardInfoProps) {
                 </div>
 
                 <div className="col-span-2 flex basis-2/3 flex-col items-center gap-4 sm:items-start">
-                    <h2 className="pr-4 text-2xl font-extrabold sm:text-4xl text-center sm:text-start">
-                    {props.type === 'Event' ? (
-                            <>
-                                {props.data.eventName}
-                            </>
+                    <h2 className="pr-4 text-center text-2xl font-extrabold sm:text-start sm:text-4xl">
+                        {props.type === 'Event' ? (
+                            <>{props.data.eventName}</>
                         ) : (
-                            <>
-                                {props.data.shopName}
-                            </>
+                            <>{props.data.shopName}</>
                         )}
                     </h2>
-                    <div className="flex flex-col sm:flex-row items-center gap-2">
+                    <div className="flex flex-col items-center gap-2 sm:flex-row">
                         <button className="flex flex-row items-center gap-2">
                             <Image className="h-8" src={Phone} alt={''} />
-                        {props.data.telephone}</button>
-                        
+                            {props.data.telephone}
+                        </button>
+
                         <button className="flex flex-row items-center gap-2">
                             <Image className="ml-2 h-8" src={Email} alt={''} />
-                        
-                        {props.type === 'Shop' ? (
-                            <>
-                                {props.data.shopOwner.email}
-                            </>
-                        ) : (
-                            <>
-                                {props.data.eventOrganizer.email}
-                            </>
-                        )}</button>
+
+                            {props.type === 'Shop' ? (
+                                <>{props.data.shopOwner.email}</>
+                            ) : (
+                                <>{props.data.eventOrganizer.email}</>
+                            )}
+                        </button>
                     </div>
                     <div
-                        className={`flex flex-col flex-wrap sm:flex-row items-center ${
+                        className={`flex flex-col flex-wrap items-center sm:flex-row ${
                             isAvailble() ? 'gap-4' : ''
                         }`}
                     >
