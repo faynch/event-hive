@@ -6,21 +6,15 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
-import { productList } from 'public/CarouselItem.json'
 import Product from '../pages/assets/product.svg'
 
 import Right from '../pages/assets/right.svg'
 import Left from '../pages/assets/left.svg'
 import Add from '../pages/assets/add.svg'
-import { useRouter } from 'next/router'
 
-function ShopInfo() {
+function ShopInfo({ data }: any) {
     const [curr, setCurr] = useState(0)
     const [edit, setEdit] = useState(false)
-
-    const router = useRouter()
-    const { data } = router.query
-    const item = data ? JSON.parse(String(data)) : null
 
     const [index, setIndex] = useState(String)
     const [image, setImage] = useState(String)
@@ -28,7 +22,7 @@ function ShopInfo() {
     const [description, setDescription] = useState(String)
     const [price, setPrice] = useState(String)
 
-    const [slides, setSlides] = useState(productList)
+    const [slides, setSlides] = useState(data.products)
 
     const prev = () =>
         setCurr((curr) => (curr === 0 ? slides.length - 1 : curr - 1))
@@ -55,7 +49,7 @@ function ShopInfo() {
             prev()
         }
         const delslides = slides.filter(
-            (x) => x.id.toString() !== id.toString()
+            (x: any) => x.id.toString() !== id.toString()
         )
         setSlides(delslides)
     }
@@ -64,7 +58,7 @@ function ShopInfo() {
         <>
             <Navbar />
             <div className="mt-12 grid justify-center px-8 md:py-8 md:px-20">
-                <CardInfo type={'Shop'} data={item} />
+                <CardInfo type={'Shop'} data={data} />
             </div>
             <div className="flex flex-col items-center justify-center gap-8 p-8 md:px-24">
                 {edit ? (
@@ -142,7 +136,7 @@ function ShopInfo() {
                     <>
                         <div className="flex flex-row justify-center gap-4">
                             <h3 className="text-center text-2xl font-extrabold text-primary ">
-                            PRODUCT HIGHLIGHTS
+                                PRODUCT HIGHLIGHTS
                             </h3>
                             <button>
                                 <Image
@@ -160,7 +154,7 @@ function ShopInfo() {
                                     transform: `translateX(-${curr * 100}%)`,
                                 }}
                             >
-                                {slides.map((items) => (
+                                {slides.map((items: any) => (
                                     <div className="flex w-full flex-none justify-center">
                                         <div className="grid grid-cols-1 content-center justify-items-center gap-4 lg:grid-cols-2 lg:justify-items-end lg:gap-12">
                                             {items.image != '' ? (
@@ -247,6 +241,20 @@ function ShopInfo() {
             <Footer />
         </>
     )
+}
+
+export async function getServerSideProps(context: { req: any; query: any }) {
+    const { req, query } = context
+    const valueFromRouter = query.id
+    const data = await fetch(
+        `http://localhost:3000/api/shops/${valueFromRouter}`
+    )
+    const jsonData = await data.json()
+    return {
+        props: {
+            data: jsonData[0],
+        },
+    }
 }
 
 export default ShopInfo

@@ -16,29 +16,15 @@ export default function Card(props: CardProps) {
     const [active, setActive] = useState(false)
 
     const router = useRouter()
+    const valueToSend = props.data.id
 
-    function sendEventData(data: any) {
-        // console.log(props.data)
-        // console.log(data)
-        router.push({
-            pathname: '/eventInfo',
-            query: { data: JSON.stringify(data) },
-        })
+    const sendEventValue = () => {
+        router.push(`/eventInfo?id=${valueToSend}`)
     }
 
-    function sendShopData(data: any) {
-        router.push({
-            pathname: '/shopInfo',
-            query: { data: JSON.stringify(data) },
-        })
+    const sendShopValue = () => {
+        router.push(`/shopInfo?id=${valueToSend}`)
     }
-
-    const sendValue = () => {
-        const valueToSend = props.data.id;
-    
-        // Navigate to the receiving page with the value as a query parameter
-        router.push(`/eventInfo?id=${valueToSend}`);
-      };
 
     function isAvailble() {
         if (
@@ -54,7 +40,7 @@ export default function Card(props: CardProps) {
         <div className="relative flex w-96 flex-col items-center gap-3 rounded-lg bg-white px-9 pb-12 text-center">
             {props.type === 'Event' ? (
                 <div
-                    onClick={sendValue}
+                    onClick={sendEventValue}
                     className="flex flex-col items-center gap-3"
                 >
                     {props.data.picture === '' ? (
@@ -72,9 +58,7 @@ export default function Card(props: CardProps) {
                 </div>
             ) : (
                 <div
-                    // id="eventLink"
-                    onClick={() => sendShopData(props.data)}
-                    // data-json={props.data}
+                    onClick={sendShopValue}
                     className="flex flex-col items-center gap-3"
                 >
                     {props.data.picture === '' ? (
