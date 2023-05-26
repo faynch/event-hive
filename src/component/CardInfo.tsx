@@ -271,7 +271,7 @@ export default function CardInfo(props: CardInfoProps) {
     }
 
     return (
-        <div className="relative flex flex-row rounded-lg bg-white py-12 px-12 sm:px-20 lg:max-w-7xl xl:px-28">
+        <div className="relative flex flex-row rounded-lg bg-white py-12 px-12 sm:px-20 xl:w-[72rem]">
             <div className="flex flex-col items-center gap-8 lg:flex-row lg:gap-16">
                 {props.data.picture === '' ? (
                     <Image
@@ -305,7 +305,7 @@ export default function CardInfo(props: CardInfoProps) {
                     </button>
                 </div>
 
-                <div className="col-span-2 flex basis-2/3 flex-col items-center gap-4 sm:items-start">
+                <div className="col-span-2 flex basis-2/3 xl:w-[52rem] flex-col items-center gap-4 sm:items-start">
                     <h2 className="pr-4 text-center text-2xl font-extrabold sm:text-start sm:text-4xl">
                         {props.type === 'Event' ? (
                             <>{props.data.eventName}</>

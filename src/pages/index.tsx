@@ -155,11 +155,11 @@ function Home({ eventdata, shopdata }: any) {
                 </div>
             </section>
 
-            <section className="my-8 grid justify-center">
-                <h3 className="py-4 text-center text-2xl font-extrabold text-primary">
+            <section className="my-12 grid justify-center gap-8">
+                <h3 className="text-center text-2xl font-extrabold text-primary">
                     TOP STORES
                 </h3>
-                <div className="my-3 grid grid-cols-1 gap-8 lg:grid-cols-4 lg:gap-x-16 xl:max-w-7xl xl:grid-cols-6 xl:gap-12">
+                <div className="grid grid-cols-1 gap-8 lg:grid-cols-4 lg:gap-x-16 xl:max-w-7xl xl:grid-cols-6 xl:gap-12">
                     {shopdata.length > 0 ? (
                         <>
                             {shopdata[1] && (

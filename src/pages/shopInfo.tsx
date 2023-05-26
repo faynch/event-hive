@@ -128,7 +128,7 @@ function ShopInfo({ data }: any) {
                                 onClick={() => setEdit(false)}
                                 className="rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-8 py-2 text-center font-extrabold text-white hover:bg-gradient-to-r"
                             >
-                                Exit
+                                Back
                             </button>
                         </div>
                     </>
