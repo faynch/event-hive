@@ -5,13 +5,16 @@ import Event from '../pages/assets/event.svg'
 import Like from '../pages/assets/like.svg'
 import Unlike from '../pages/assets/unlike.svg'
 import Edit from '../pages/assets/edit.svg'
+import Instagram from '../pages/assets/instagram.svg'
+import Twitter from '../pages/assets/twitter.svg'
+import Facebook from '../pages/assets/facebook.svg'
+import Tiktok from '../pages/assets/tiktok.svg'
 import { useState } from 'react'
 import TagSelector, { Tag } from '../component/TagSelector'
 
 import Phone from '../pages/assets/phone.svg'
 import Email from '../pages/assets/email.svg'
 import Add from '@/pages/assets/add.svg'
-import GroupButtonInput from './GroupButtonInput'
 
 interface CardInfoProps {
     type: string
@@ -30,6 +33,10 @@ export default function CardInfo(props: CardInfoProps) {
     const [email, setEmail] = useState(
         props.data.shopOwner?.email || 'admin@eventhive'
     )
+    const [instagram, setInstagram] = useState(props.data.instagram || null)
+    const [facebook, setFacebook] = useState(props.data.facebook || null)
+    const [line, setLine] = useState(props.data.line || null)
+    const [tiktok, setTiktok] = useState(props.data.tiktok || null)
     const [editMode, setEditMode] = useState(false)
     const [like, setLike] = useState(false)
     const [showTagSelector, setShowTagSelector] = useState(false)
@@ -53,6 +60,8 @@ export default function CardInfo(props: CardInfoProps) {
             about: description,
             email: email,
             telephone: phone,
+            instagram: instagram,
+            facebook: facebook,
             tags: tagId,
         }
         const jsonData = JSON.stringify(formData)
@@ -135,12 +144,66 @@ export default function CardInfo(props: CardInfoProps) {
                             />
                         </div>
 
-                        <GroupButtonInput
-                            line={props.data.line}
-                            facebook={props.data.facebook}
-                            instagram={props.data.instagram}
-                            tiktok={props.data.tiktok}
-                        />
+                        <div className="flex w-full flex-row items-center gap-2">
+                            <button>
+                                <Image
+                                    className="h-8"
+                                    src={Instagram}
+                                    alt={''}
+                                />
+                            </button>
+                            <input
+                                className="rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                placeholder="Instagram"
+                                type="url"
+                                name="Instagram"
+                                value={instagram}
+                                onChange={(e) => setInstagram(e.target.value)}
+                            />
+                        </div>
+                        <div className="flex w-full flex-row items-center gap-2">
+                            <button>
+                                <Image
+                                    className="h-8"
+                                    src={Facebook}
+                                    alt={''}
+                                />
+                            </button>
+                            <input
+                                className="rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                placeholder="Facebook"
+                                type="url"
+                                name="Facebook"
+                                value={facebook}
+                                onChange={(e) => setFacebook(e.target.value)}
+                            />
+                        </div>
+                        <div className="flex w-full flex-row items-center gap-2">
+                            <button>
+                                <Image className="h-8" src={Twitter} alt={''} />
+                            </button>
+                            <input
+                                className="rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                placeholder="Line"
+                                type="url"
+                                name="Line"
+                                value={line}
+                                onChange={(e) => setLine(e.target.value)}
+                            />
+                        </div>
+                        <div className="flex w-full flex-row items-center gap-2">
+                            <button>
+                                <Image className="h-8" src={Tiktok} alt={''} />
+                            </button>
+                            <input
+                                className="rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                placeholder="TikTok"
+                                type="url"
+                                name="TikTok"
+                                value={tiktok}
+                                onChange={(e) => setTiktok(e.target.value)}
+                            />
+                        </div>
                         {showTagSelector && (
                             <TagSelector
                                 onClose={handleTagSelectorClose}
