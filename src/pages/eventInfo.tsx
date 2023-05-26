@@ -11,6 +11,7 @@ import Shop from '../pages/assets/product.svg'
 import Right from '../pages/assets/right.svg'
 import Left from '../pages/assets/left.svg'
 import Add from '../pages/assets/add.svg'
+import { useRouter } from 'next/router'
 
 function EventInfo({ data }: any) {
     const [curr, setCurr] = useState(0)
@@ -50,6 +51,11 @@ function EventInfo({ data }: any) {
             (x: any) => x.id.toString() !== id.toString()
         )
         setSlides(delslides)
+    }
+    
+    const router = useRouter()
+    const sendShopValue = (id: string) => {
+        router.push(`/shopInfo?id=${id}`)
     }
 
     return (
@@ -144,7 +150,7 @@ function EventInfo({ data }: any) {
                                 {slides.map((items: any) => (
                                     <div className="flex w-full flex-none justify-center">
                                         <div className="grid grid-cols-1 content-center justify-items-center gap-4 lg:grid-cols-2 lg:justify-items-end lg:gap-12">
-                                            <a href="/shopInfo">
+                                        <button onClick={() => sendShopValue(items.id)}>
                                                 {items.picture != '' ? (
                                                     <img
                                                         src={items.picture}
@@ -158,13 +164,13 @@ function EventInfo({ data }: any) {
                                                         alt={''}
                                                     />
                                                 )}
-                                            </a>
+                                            </button>
                                             <div className="flex flex-col gap-2 pb-2 lg:items-start lg:pt-8 lg:pr-24 xl:pr-36">
-                                                <a href="/shopInfo">
+                                            <button onClick={() => sendShopValue(items.id)}>
                                                     <h4 className="text-center text-xl font-extrabold">
                                                         {items.shopName}
                                                     </h4>
-                                                </a>
+                                                </button>
                                                 <p className="text-center text-[#989898] lg:text-start ">
                                                     {items.about.length > 130
                                                         ? items.about.slice(
