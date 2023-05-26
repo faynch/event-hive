@@ -26,11 +26,9 @@ function Home({ eventdata, shopdata }: any) {
     }
 
     const router = useRouter()
-    function sendEventData(data: any) {
-        router.push({
-            pathname: '/eventInfo',
-            query: { data: JSON.stringify(data) },
-        })
+
+    const sendEventValue = (id: string) => {
+        router.push(`/eventInfo?id=${id}`)
     }
 
     useEffect(() => {
@@ -63,7 +61,7 @@ function Home({ eventdata, shopdata }: any) {
                         {slides.map((item: any) => (
                             <div className="flex w-full flex-none justify-center">
                                 <div className="grid grid-cols-1 content-center justify-items-center gap-4 lg:grid-cols-2 lg:justify-items-end lg:gap-12">
-                                    <button onClick={() => sendEventData(item)}>
+                                    <button onClick={() => sendEventValue(item.id)}>
                                         {item.picture === '' ? (
                                             <Image
                                                 src={Upcoming}
@@ -80,7 +78,7 @@ function Home({ eventdata, shopdata }: any) {
                                     </button>
                                     <div className="flex flex-col items-center gap-2 pb-2 lg:items-start lg:pt-8 lg:pr-24 xl:pr-36">
                                         <button
-                                            onClick={() => sendEventData(item)}
+                                            onClick={() => sendEventValue(item.id)}
                                         >
                                             <h4 className="text-center text-xl font-extrabold">
                                                 {item.eventName}
