@@ -3,6 +3,7 @@ import Instagram from '../pages/assets/instagram.svg'
 import Twitter from '../pages/assets/twitter.svg'
 import Facebook from '../pages/assets/facebook.svg'
 import Tiktok from '../pages/assets/tiktok.svg'
+import { useState } from 'react'
 
 interface GroupButtonInputProps {
     line: any
@@ -12,6 +13,10 @@ interface GroupButtonInputProps {
 }
 
 function GroupButtonInput(props: GroupButtonInputProps) {
+    const [instagram, setInstagram] = useState(props.instagram)
+    const [facebook, setFacebook] = useState(props.facebook)
+    const [line, setLine] = useState(props.line)
+    const [tiktok, setTiktok] = useState(props.tiktok)
     return (
         <>
             <div className="flex w-full flex-row items-center gap-2">
@@ -23,7 +28,8 @@ function GroupButtonInput(props: GroupButtonInputProps) {
                     placeholder="Instagram"
                     type="url"
                     name="Instagram"
-                    value={props.instagram}
+                    value={instagram}
+                    onChange={(e) => setInstagram(e.target.value)}
                 />
             </div>
             <div className="flex w-full flex-row items-center gap-2">
@@ -35,7 +41,8 @@ function GroupButtonInput(props: GroupButtonInputProps) {
                     placeholder="Facebook"
                     type="url"
                     name="Facebook"
-                    value={props.facebook}
+                    value={facebook}
+                    onChange={(e) => setFacebook(e.target.value)}
                 />
             </div>
             <div className="flex w-full flex-row items-center gap-2">
@@ -47,7 +54,8 @@ function GroupButtonInput(props: GroupButtonInputProps) {
                     placeholder="Line"
                     type="url"
                     name="Line"
-                    value={props.line}
+                    value={line}
+                    onChange={(e) => setLine(e.target.value)}
                 />
             </div>
             <div className="flex w-full flex-row items-center gap-2">
@@ -59,7 +67,8 @@ function GroupButtonInput(props: GroupButtonInputProps) {
                     placeholder="TikTok"
                     type="url"
                     name="TikTok"
-                    value={props.tiktok}
+                    value={tiktok}
+                    onChange={(e) => setTiktok(e.target.value)}
                 />
             </div>
         </>
