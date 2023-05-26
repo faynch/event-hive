@@ -32,12 +32,10 @@ export default function CardInfo(props: CardInfoProps) {
     )
     const [editMode, setEditMode] = useState(false)
     const [like, setLike] = useState(false)
-    const handleSave = () => {
-        // logic to save changes made by the user
-        setEditMode(false) // switch back to view mode
-    }
     const [showTagSelector, setShowTagSelector] = useState(false)
-    const [selectedTags, setSelectedTags] = useState<Tag[]>([])
+    const [selectedTags, setSelectedTags] = useState<Tag[]>(
+        props.data.tags || []
+    )
 
     const handleTagSelectorClose = () => {
         setShowTagSelector(false)
@@ -45,6 +43,22 @@ export default function CardInfo(props: CardInfoProps) {
 
     const handleShowTagSelector = () => {
         setShowTagSelector(true)
+    }
+    const tagId = selectedTags.map((tag) => {
+        return tag.id
+    })
+    const handleSave = () => {
+        const formData = {
+            shopName: storeName,
+            about: description,
+            email: email,
+            telephone: phone,
+            tags: tagId,
+        }
+        const jsonData = JSON.stringify(formData)
+        console.log(jsonData)
+        // logic to save changes made by the user
+        setEditMode(false) // switch back to view mode
     }
 
     function isAvailble() {
@@ -140,9 +154,9 @@ export default function CardInfo(props: CardInfoProps) {
                                     <div className="mx-1 flex">
                                         <button
                                             className="flex items-center rounded-xl bg-[#F5EAEA] px-3 text-[#F16767]"
-                                            // key={tag}
+                                            key={tag.id}
                                         >
-                                            {/* {tag} */}
+                                            {tag.tagName}
                                         </button>
                                         <button
                                             className="ml-[-0.5rem] h-4 w-4 items-center justify-center rounded-full bg-[#F16767] align-middle text-[10px] font-bold text-white"
