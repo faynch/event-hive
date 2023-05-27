@@ -9,7 +9,7 @@ import Menu from '../pages/assets/menu.svg'
 import EventHive from '../pages/assets/eventHive.svg'
 
 const Navbar = () => {
-    const {data:session} = useSession()
+    const { data: session } = useSession()
     const [navbar, setNavbar] = useState(false)
     // const [account, setAccount] = useState(false)
     const account = false
@@ -55,7 +55,7 @@ const Navbar = () => {
                 </div>
                 <div className="md:basis-1/2 ">
                     <div
-                        className={`pb-8 pt-4 md:flex md:pt-0 md:pb-0 md:justify-center ${
+                        className={`pb-8 pt-4 md:flex md:justify-center md:pt-0 md:pb-0 ${
                             navbar ? 'block' : 'hidden'
                         }`}
                     >
@@ -98,49 +98,78 @@ const Navbar = () => {
                                 </a>
                             </li>
                             <li className="text-xl font-extrabold">
-                                <a
-                                    href="/login2"
-                                    className={`rounded-lg hover:underline decoration-2 underline-offset-2 md:hidden ${account? 'text-[#F16767]' : 'text-primary' }`}
-                                >
-                                    {account? 'Log out' : 'Sign in'}
-                                </a>
+                                {session?.user ? (
+                                    <a
+                                        href="/"
+                                        onClick={() => signOut()}
+                                        className={`rounded-lg decoration-2 underline-offset-2 hover:underline md:hidden ${
+                                            session?.user
+                                                ? 'text-[#F16767]'
+                                                : 'text-primary'
+                                        }`}
+                                    >
+                                        Sign out
+                                    </a>
+                                ) : (
+                                    <a
+                                        href="/"
+                                        onClick={() => signIn()}
+                                        className={`rounded-lg decoration-2 underline-offset-2 hover:underline md:hidden ${
+                                            session?.user
+                                                ? 'text-[#F16767]'
+                                                : 'text-primary'
+                                        }`}
+                                    >
+                                        Sign in
+                                    </a>
+                                )}
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div className="hidden basis-1/3 justify-end space-x-3 md:flex">
-                {session?.user? (
+                    {session?.user ? (
                         <>
-                        <button>
-                            <a href="/login2">
-                                <Image
-                                    className="w-6"
-                                    src={Account}
-                                    alt={'account'}
-                                />
-                            </a>
-                        </button>
-                        <div className="flex items-center gap-6">
-                            <div className="justify-end rounded-lg font-extrabold">
-                                Signed in as {session.user.email}
-                            </div>
-                            <div className="justify-end rounded-lg font-extrabold hover:text-primary text-md" onClick={() => signOut()}>
-                                Sign Out
-                            </div>
-                        </div>
-                        </>
-                    ): (
-                        <>
-                        <div className={`flex flex-row items-center gap-6 ${account ? 'hidden' : 'block'}`}>
-                            <div className="justify-end rounded-lg font-extrabold hover:text-primary text-md" onClick={() => signIn()}>
-                                Sign in
-                            </div>
-                            <Link href="/register">
-                                <div className="rounded-md bg-[#FFB84C] hover:bg-gradient-to-r from-[#EF9323] to-[#5D3891] px-4 py-2.5 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">
-                                    Register
+                            <button>
+                                <a href="/login2">
+                                    <Image
+                                        className="w-6"
+                                        src={Account}
+                                        alt={'account'}
+                                    />
+                                </a>
+                            </button>
+                            <div className="flex items-center gap-6">
+                                <div className="justify-end rounded-lg font-extrabold">
+                                    Signed in as {session.user.email}
                                 </div>
-                            </Link>
-                        </div>
+                                <div
+                                    className="text-md justify-end rounded-lg font-extrabold hover:text-primary"
+                                    onClick={() => signOut()}
+                                >
+                                    Sign Out
+                                </div>
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <div
+                                className={`flex flex-row items-center gap-6 ${
+                                    account ? 'hidden' : 'block'
+                                }`}
+                            >
+                                <div
+                                    className="text-md justify-end rounded-lg font-extrabold hover:text-primary"
+                                    onClick={() => signIn()}
+                                >
+                                    Sign in
+                                </div>
+                                <Link href="/register">
+                                    <div className="rounded-md bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gradient-to-r focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">
+                                        Register
+                                    </div>
+                                </Link>
+                            </div>
                         </>
                     )}
                 </div>
