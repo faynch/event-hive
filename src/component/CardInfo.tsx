@@ -101,11 +101,13 @@ export default function CardInfo(props: CardInfoProps) {
         if (
             props.data.line == '' &&
             props.data.facebook == '' &&
-            props.data.instagram == '' &&
-            props.data.tiktok == ''
+            props.data.instagram == '' 
+            // &&
+            // props.data.tiktok == ''
         )
             return false
         return true
+        
     }
 
     const defaultPic = props.type === 'Shop' ? Shop : Event

@@ -1,14 +1,13 @@
 import Navbar from '../component/Navbar'
 import Card from '../component/Card'
 import Footer from '../component/Footer'
-import Navigator from '../component/Navigator'
 
 function stores({ shopdata }: any) {
     return (
         <>
             <Navbar />
             <div className="my-12 mx-auto flex flex-col justify-center lg:max-w-7xl">
-                <Navigator />
+                {/* <Navigator /> */}
                 <h4 className="m-8 mx-auto text-xl font-extrabold text-primary">
                     SEARCH FOR :
                 </h4>
