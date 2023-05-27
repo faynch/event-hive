@@ -39,6 +39,9 @@ export default function CardInfo(props: CardInfoProps) {
     const [selectedTags, setSelectedTags] = useState<Tag[]>(props.data?.tags)
     const [pictureFile, setPictureFile] = useState<File | null>(null)
 
+    const shopOwnerAccount = false
+    const [request, setRequest] = useState(false)
+
     const handleTagSelectorClose = () => {
         setShowTagSelector(false)
     }
@@ -102,13 +105,12 @@ export default function CardInfo(props: CardInfoProps) {
         if (
             props.data.line == '' &&
             props.data.facebook == '' &&
-            props.data.instagram == '' 
+            props.data.instagram == ''
             // &&
             // props.data.tiktok == ''
         )
             return false
         return true
-        
     }
 
     const defaultPic = props.type === 'Shop' ? Shop : Event
@@ -288,7 +290,7 @@ export default function CardInfo(props: CardInfoProps) {
     }
 
     return (
-        <div className="relative flex flex-row rounded-lg bg-white py-12 px-12 sm:px-20 xl:w-[72rem]">
+        <div className="relative flex flex-col rounded-lg bg-white py-12 px-12 sm:px-20 xl:w-[72rem]">
             <div className="flex flex-col items-center gap-8 lg:flex-row lg:gap-16">
                 {props.data.picture === '' ? (
                     <Image
@@ -306,7 +308,9 @@ export default function CardInfo(props: CardInfoProps) {
                 <div className="absolute top-8 right-8 flex items-center">
                     <button
                         onClick={() => setEditMode(!editMode)}
-                        className={`mx-3 w-7 md:w-9 ${props.edit ? "": "hidden"}`}
+                        className={`mx-3 w-7 md:w-9 ${
+                            props.edit ? '' : 'hidden'
+                        }`}
                     >
                         <Image src={Edit} alt={''} />
                     </button>
@@ -373,6 +377,16 @@ export default function CardInfo(props: CardInfoProps) {
                     </p>
                 </div>
             </div>
+            {shopOwnerAccount ? (
+                <button
+                    onClick={() => setRequest(!request)}
+                    className="mx-3 w-32 justify-end self-center rounded-lg mt-4 bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-6 py-2 font-extrabold text-white hover:bg-gradient-to-r lg:self-end"
+                >
+                    {request ? 'Requested' : 'Join'}
+                </button>
+            ) : (
+                ''
+            )}
         </div>
     )
 }
