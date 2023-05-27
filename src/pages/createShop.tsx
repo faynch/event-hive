@@ -78,190 +78,211 @@ export default function createShop() {
 
     return (
         <>
-            <Navbar />
-            <div className="my-12 grid justify-center px-8 md:py-8 md:px-20">
-                <div className="relative flex flex-row rounded-lg bg-white py-12 px-12 sm:px-20 lg:max-w-5xl xl:px-28">
-                    <div className="flex flex-col gap-8 lg:flex-row lg:gap-16">
-                        <div className="h-full">
-                            <ImageUploader
-                                onImageChange={handleImageChange}
-                                type={'Shop'}
-                            />
-                        </div>
-                        <div className="col-span-2 flex basis-2/3 flex-col gap-4 sm:items-start">
-                            <input
-                                className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 text-2xl font-extrabold shadow-sm placeholder:text-slate-400 sm:text-4xl"
-                                placeholder="Shop Name"
-                                value={storeName}
-                                onChange={(e) => setStoreName(e.target.value)}
-                            />
-                            <div className="flex flex-col gap-2 sm:flex-row sm:gap-2">
-                                <div className="flex flex-row gap-2">
-                                    <button>
-                                        <Image
-                                            className="h-8"
-                                            src={Phone}
-                                            alt={''}
-                                        />
-                                    </button>
-                                    <input
-                                        className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
-                                        value={phone}
-                                        placeholder="Phone number"
-                                        onChange={(e) =>
-                                            setPhone(e.target.value)
-                                        }
+            <div className="flex min-h-screen flex-col">
+                <Navbar />
+                <div className="flex-grow">
+                    <div className="my-12 grid justify-center px-8 md:py-8 md:px-20">
+                        <div className="relative flex flex-row rounded-lg bg-white py-12 px-12 sm:px-20 lg:max-w-5xl xl:px-28">
+                            <div className="flex flex-col gap-8 lg:flex-row lg:gap-16">
+                                <div className="h-full">
+                                    <ImageUploader
+                                        onImageChange={handleImageChange}
+                                        type={'Shop'}
                                     />
                                 </div>
-                                <div className="flex flex-row gap-2">
-                                    <button>
-                                        <Image
-                                            className="ml-2 h-8"
-                                            src={Email}
-                                            alt={''}
-                                        />
-                                    </button>
+                                <div className="col-span-2 flex basis-2/3 flex-col gap-4 sm:items-start">
                                     <input
-                                        className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
-                                        value={email}
-                                        placeholder="Email"
+                                        className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 text-2xl font-extrabold shadow-sm placeholder:text-slate-400 sm:text-4xl"
+                                        placeholder="Shop Name"
+                                        value={storeName}
                                         onChange={(e) =>
-                                            setEmail(e.target.value)
+                                            setStoreName(e.target.value)
                                         }
                                     />
-                                </div>
-                            </div>
-
-                            <div className="flex w-full flex-row items-center gap-2">
-                                <button>
-                                    <Image
-                                        className="h-8"
-                                        src={Instagram}
-                                        alt={''}
-                                    />
-                                </button>
-                                <input
-                                    className="rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
-                                    placeholder="Instagram"
-                                    value={instagram}
-                                    onChange={(e) =>
-                                        setInstagram(e.target.value)
-                                    }
-                                />
-                            </div>
-                            <div className="flex w-full flex-row items-center gap-2">
-                                <button>
-                                    <Image
-                                        className="h-8"
-                                        src={Facebook}
-                                        alt={''}
-                                    />
-                                </button>
-                                <input
-                                    className="rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
-                                    placeholder="Facebook"
-                                    value={facebook}
-                                    onChange={(e) =>
-                                        setFacebook(e.target.value)
-                                    }
-                                />
-                            </div>
-                            <div className="flex w-full flex-row items-center gap-2">
-                                <button>
-                                    <Image
-                                        className="h-8"
-                                        src={Twitter}
-                                        alt={''}
-                                    />
-                                </button>
-                                <input
-                                    className="rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
-                                    placeholder="Line"
-                                    value={line}
-                                    onChange={(e) => setLine(e.target.value)}
-                                />
-                            </div>
-                            <div className="flex w-full flex-row items-center gap-2">
-                                <button>
-                                    <Image
-                                        className="h-8"
-                                        src={Tiktok}
-                                        alt={''}
-                                    />
-                                </button>
-                                <input
-                                    className="rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
-                                    placeholder="TikTok"
-                                    value={tiktok}
-                                    onChange={(e) => setTiktok(e.target.value)}
-                                />
-                            </div>
-                            {showTagSelector && (
-                                <TagSelector
-                                    onClose={handleTagSelectorClose}
-                                    selectTags={selectedTags}
-                                    setSelectTags={setSelectedTags}
-                                />
-                            )}
-                            <div className="ml-5 flex flex-wrap">
-                                {selectedTags.length > 0 ? (
-                                    selectedTags.map((tag) => (
-                                        <div className="mx-1 flex" key={tag.id}>
-                                            <button
-                                                className="flex items-center rounded-xl bg-[#F5EAEA] px-3 text-[#F16767]"
-                                                key={tag.id}
-                                            >
-                                                {tag.tagName}
+                                    <div className="flex flex-col gap-2 sm:flex-row sm:gap-2">
+                                        <div className="flex flex-row gap-2">
+                                            <button>
+                                                <Image
+                                                    className="h-8"
+                                                    src={Phone}
+                                                    alt={''}
+                                                />
                                             </button>
-                                            <button
-                                                className="ml-[-0.5rem] h-4 w-4 items-center justify-center rounded-full bg-[#F16767] align-middle text-[10px] font-bold text-white"
-                                                onClick={() =>
-                                                    setSelectedTags(
-                                                        selectedTags.filter(
-                                                            (t) => t !== tag
-                                                        )
-                                                    )
+                                            <input
+                                                className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                                value={phone}
+                                                placeholder="Phone number"
+                                                onChange={(e) =>
+                                                    setPhone(e.target.value)
                                                 }
-                                            >
-                                                X
-                                            </button>
+                                            />
                                         </div>
-                                    ))
-                                ) : (
-                                    <button
-                                        className="items-center rounded-xl bg-[#F5EAEA] px-3 text-[#F16767] sm:self-start"
-                                        onClick={handleShowTagSelector}
-                                    >
-                                        catagories
-                                    </button>
-                                )}
-                                <button
-                                    className="ml-2"
-                                    onClick={handleShowTagSelector}
-                                >
-                                    <Image width={25} src={Add} alt={'add'} />
-                                </button>
-                            </div>
+                                        <div className="flex flex-row gap-2">
+                                            <button>
+                                                <Image
+                                                    className="ml-2 h-8"
+                                                    src={Email}
+                                                    alt={''}
+                                                />
+                                            </button>
+                                            <input
+                                                className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                                value={email}
+                                                placeholder="Email"
+                                                onChange={(e) =>
+                                                    setEmail(e.target.value)
+                                                }
+                                            />
+                                        </div>
+                                    </div>
 
-                            <textarea
-                                className="block w-full rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
-                                rows={5}
-                                cols={100}
-                                placeholder="Description"
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
-                            />
-                            <button
-                                onClick={handleSave}
-                                className="mx-3 justify-end self-end rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-6 py-2 font-extrabold text-white hover:bg-gradient-to-r"
-                            >
-                                Save
-                            </button>
+                                    <div className="flex w-full flex-row items-center gap-2">
+                                        <button>
+                                            <Image
+                                                className="h-8"
+                                                src={Instagram}
+                                                alt={''}
+                                            />
+                                        </button>
+                                        <input
+                                            className="rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                            placeholder="Instagram"
+                                            value={instagram}
+                                            onChange={(e) =>
+                                                setInstagram(e.target.value)
+                                            }
+                                        />
+                                    </div>
+                                    <div className="flex w-full flex-row items-center gap-2">
+                                        <button>
+                                            <Image
+                                                className="h-8"
+                                                src={Facebook}
+                                                alt={''}
+                                            />
+                                        </button>
+                                        <input
+                                            className="rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                            placeholder="Facebook"
+                                            value={facebook}
+                                            onChange={(e) =>
+                                                setFacebook(e.target.value)
+                                            }
+                                        />
+                                    </div>
+                                    <div className="flex w-full flex-row items-center gap-2">
+                                        <button>
+                                            <Image
+                                                className="h-8"
+                                                src={Twitter}
+                                                alt={''}
+                                            />
+                                        </button>
+                                        <input
+                                            className="rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                            placeholder="Line"
+                                            value={line}
+                                            onChange={(e) =>
+                                                setLine(e.target.value)
+                                            }
+                                        />
+                                    </div>
+                                    <div className="flex w-full flex-row items-center gap-2">
+                                        <button>
+                                            <Image
+                                                className="h-8"
+                                                src={Tiktok}
+                                                alt={''}
+                                            />
+                                        </button>
+                                        <input
+                                            className="rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                            placeholder="TikTok"
+                                            value={tiktok}
+                                            onChange={(e) =>
+                                                setTiktok(e.target.value)
+                                            }
+                                        />
+                                    </div>
+                                    {showTagSelector && (
+                                        <TagSelector
+                                            onClose={handleTagSelectorClose}
+                                            selectTags={selectedTags}
+                                            setSelectTags={setSelectedTags}
+                                        />
+                                    )}
+                                    <div className="ml-5 flex flex-wrap">
+                                        {selectedTags.length > 0 ? (
+                                            selectedTags.map((tag) => (
+                                                <div
+                                                    className="mx-1 flex"
+                                                    key={tag.id}
+                                                >
+                                                    <button
+                                                        className="flex items-center rounded-xl bg-[#F5EAEA] px-3 text-[#F16767]"
+                                                        key={tag.id}
+                                                    >
+                                                        {tag.tagName}
+                                                    </button>
+                                                    <button
+                                                        className="ml-[-0.5rem] h-4 w-4 items-center justify-center rounded-full bg-[#F16767] align-middle text-[10px] font-bold text-white"
+                                                        onClick={() =>
+                                                            setSelectedTags(
+                                                                selectedTags.filter(
+                                                                    (t) =>
+                                                                        t !==
+                                                                        tag
+                                                                )
+                                                            )
+                                                        }
+                                                    >
+                                                        X
+                                                    </button>
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <button
+                                                className="items-center rounded-xl bg-[#F5EAEA] px-3 text-[#F16767] sm:self-start"
+                                                onClick={handleShowTagSelector}
+                                            >
+                                                catagories
+                                            </button>
+                                        )}
+                                        <button
+                                            className="ml-2"
+                                            onClick={handleShowTagSelector}
+                                        >
+                                            <Image
+                                                width={25}
+                                                src={Add}
+                                                alt={'add'}
+                                            />
+                                        </button>
+                                    </div>
+
+                                    <textarea
+                                        className="block w-full rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                        rows={5}
+                                        cols={100}
+                                        placeholder="Description"
+                                        value={description}
+                                        onChange={(e) =>
+                                            setDescription(e.target.value)
+                                        }
+                                    />
+                                    <button
+                                        onClick={handleSave}
+                                        className="mx-3 justify-end self-end rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-6 py-2 font-extrabold text-white hover:bg-gradient-to-r"
+                                    >
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <Footer />
             </div>
-            <Footer />
         </>
     )
 }
