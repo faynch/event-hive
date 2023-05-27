@@ -1,6 +1,7 @@
 import Navbar from '../component/Navbar'
 import Card from '../component/Card'
 import Footer from '../component/Footer'
+
 import { useState } from 'react'
 
 function favourites({ eventdata, shopdata }: any) {

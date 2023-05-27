@@ -20,6 +20,7 @@ import ImageUploader from './ImageUploader'
 
 interface CardInfoProps {
     type: string
+    edit: boolean
     data?: any
 }
 
@@ -305,7 +306,7 @@ export default function CardInfo(props: CardInfoProps) {
                 <div className="absolute top-8 right-8 flex items-center">
                     <button
                         onClick={() => setEditMode(!editMode)}
-                        className="mx-3 w-7 md:w-9"
+                        className={`mx-3 w-7 md:w-9 ${props.edit ? "": "hidden"}`}
                     >
                         <Image src={Edit} alt={''} />
                     </button>
