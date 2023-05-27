@@ -9,7 +9,7 @@ import Filter from '../pages/assets/filter.svg'
 
 import { useState } from 'react'
 
-function stores({ shopdata, tags }: any) {
+function shops({ shopdata, tags }: any) {
     const [filter, setFilter] = useState(false)
     const [items, setItems] = useState(shopdata)
     const [searchTag, setSearchtag] = useState(0)
@@ -117,4 +117,4 @@ export async function getServerSideProps() {
     }
 }
 
-export default stores
+export default shops
