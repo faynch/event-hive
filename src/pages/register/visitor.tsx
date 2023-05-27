@@ -218,7 +218,10 @@ export default function RegisterVisitor() {
                                 <div className="ml-5 flex flex-wrap">
                                     {selectedTags.length > 0 ? (
                                         selectedTags.map((tag) => (
-                                            <div className="m-1 flex">
+                                            <div
+                                                className="m-1 flex"
+                                                key={tag.id}
+                                            >
                                                 <button
                                                     className="flex items-center rounded-xl bg-[#FFFFFF] px-3 text-[#F16767]"
                                                     key={tag.id}

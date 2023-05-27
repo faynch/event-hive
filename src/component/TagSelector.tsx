@@ -84,7 +84,7 @@ const TagSelector: React.FC<Props> = ({ onClose, setSelectTags }) => {
                 <div className="mb-4 grid grid-cols-4">
                     {tags.map((tag) => (
                         <button
-                            key={tag.id}
+                            key={tag.id} // Add the key prop here
                             className={`mr-2 mb-2 rounded-full py-1 px-3 ${
                                 selectedTags.find(
                                     (selectedTag) => selectedTag.id === tag.id
