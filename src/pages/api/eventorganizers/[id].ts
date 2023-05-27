@@ -15,7 +15,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     }
                 }
             ]
-        }
+        },include: {
+            events: true,   
+        },
     })
 
     if(eventOrganizer === undefined || eventOrganizer.length == 0){
