@@ -36,7 +36,9 @@ function EventInfo({ data }: any) {
             <div className="mt-12 grid justify-center px-8 md:py-8 md:px-20">
                 <CardInfo type="Event" edit={false} data={data} />
             </div>
-            <div className="flex flex-col items-center justify-center gap-8 p-8 md:px-24">
+            <div className={`flex flex-col items-center justify-center gap-8 p-8 md:px-24 ${
+                    slides.length == 0 ? 'hidden' : ''
+                }`}>
                 <div className="flex flex-row justify-center gap-4">
                     <h3 className="text-center text-2xl font-extrabold text-primary ">
                         STORE HIGHLIGHTS
