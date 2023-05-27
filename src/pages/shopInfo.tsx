@@ -12,7 +12,7 @@ import Left from '../pages/assets/left.svg'
 function ShopInfo({ data }: any) {
     const [curr, setCurr] = useState(0)
 
-    const [slides, setSlides] = useState(data.products)
+    const slides = data.products
 
     const prev = () =>
         setCurr((curr) => (curr === 0 ? slides.length - 1 : curr - 1))
@@ -21,16 +21,6 @@ function ShopInfo({ data }: any) {
 
     function handleClick(i: number) {
         setCurr(i)
-    }
-
-    const deleteSlide = (id: any) => {
-        if (curr === slides.length - 1) {
-            prev()
-        }
-        const delslides = slides.filter(
-            (x: any) => x.id.toString() !== id.toString()
-        )
-        setSlides(delslides)
     }
 
     return (
@@ -46,11 +36,10 @@ function ShopInfo({ data }: any) {
                             slides.length == 0 ? 'hidden' : ''
                         }`}
                     >
-                        <div className="flex flex-row justify-center gap-4">
-                            <h3 className="text-center text-2xl font-extrabold text-primary ">
-                                PRODUCT HIGHLIGHTS
-                            </h3>
-                        </div>
+                        <h3 className="text-center text-2xl font-extrabold text-primary ">
+                            PRODUCT HIGHLIGHTS
+                        </h3>
+
                         <div className="relative overflow-hidden lg:max-w-5xl">
                             <div
                                 className="flex transition-transform duration-500 ease-out"
@@ -91,14 +80,6 @@ function ShopInfo({ data }: any) {
                                                 <p className="text-center font-extrabold">
                                                     {items.price} ฿
                                                 </p>
-                                                <button
-                                                    className="rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-8 py-2 text-center font-extrabold text-white hover:bg-gradient-to-r"
-                                                    onClick={() =>
-                                                        deleteSlide(items.id)
-                                                    }
-                                                >
-                                                    Delete
-                                                </button>
                                             </div>
                                         </div>
                                     </div>

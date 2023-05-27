@@ -34,19 +34,18 @@ function EventInfo({ data }: any) {
             <div className="flex min-h-screen flex-col">
                 <Navbar />
                 <div className="flex-grow">
-                    <div className="mt-12 grid justify-center px-8 md:py-8 md:px-20">
+                    <div className="my-12 grid justify-center px-8 md:py-8 md:px-20">
                         <CardInfo type="Event" edit={false} data={data} />
                     </div>
                     <div
-                        className={`flex flex-col items-center justify-center gap-8 p-8 md:px-24 ${
+                        className={`flex flex-col items-center justify-center gap-8 pb-12 md:px-24 ${
                             slides.length == 0 ? 'hidden' : ''
                         }`}
                     >
-                        <div className="flex flex-row justify-center gap-4">
-                            <h3 className="text-center text-2xl font-extrabold text-primary ">
-                                STORE HIGHLIGHTS
-                            </h3>
-                        </div>
+                        <h3 className="text-center text-2xl font-extrabold text-primary ">
+                            STORE HIGHLIGHTS
+                        </h3>
+
                         <div className="relative overflow-hidden lg:max-w-5xl">
                             <div
                                 className="flex transition-transform duration-500 ease-out"
