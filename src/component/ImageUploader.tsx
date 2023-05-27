@@ -42,7 +42,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
                 />
             ) : (
                 <div>
-                    {data.picture === '' ? (
+                    {data?.picture == null ? (
                         <Image
                             className="w-52 basis-1/3 self-center sm:self-start"
                             src={defaultPic}
@@ -51,7 +51,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
                     ) : (
                         <img
                             className="h-52 w-52 self-center rounded-full bg-slate-400 sm:self-start"
-                            src={data.picture}
+                            src={data?.picture}
                             alt=""
                         />
                     )}
