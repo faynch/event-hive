@@ -1,7 +1,6 @@
 import Navbar from '../component/Navbar'
 import Card from '../component/Card'
 import Footer from '../component/Footer'
-import Navigator from '../component/Navigator'
 import { useState } from 'react'
 
 function favourites({ eventdata, shopdata }: any) {
@@ -11,7 +10,6 @@ function favourites({ eventdata, shopdata }: any) {
         <>
             <Navbar />
             <div className="my-12 mx-auto flex flex-col justify-center lg:max-w-7xl">
-                <Navigator />
                 <h4 className="mx-auto mt-8 text-xl font-extrabold text-primary">
                     SEARCH FOR :
                 </h4>
