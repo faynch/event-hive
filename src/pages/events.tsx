@@ -49,7 +49,7 @@ function events({ eventdata, tags }: any) {
                         name="text"
                         type="text"
                         placeholder="Type event name..."
-                        className="max-w input-bordered input w-full rounded-md rounded-r-none border-r-0 bg-white py-2 pl-4"
+                        className="max-w input-bordered outline-none input w-full rounded-md rounded-r-none border-r-0 bg-white py-2 pl-4"
                     />
                     <button className="bg-white">
                         <Image className="w-6" src={Search} alt={'Search'} />
