@@ -13,12 +13,15 @@ import Left from '../pages/assets/left.svg'
 import Add from '../pages/assets/add.svg'
 import { useRouter } from 'next/router'
 
+import supabase from 'lib/supabase'
+import ImageUploader from '../component/ImageUploader'
+
 function EventInfo({ data }: any) {
     const [curr, setCurr] = useState(0)
     const [edit, setEdit] = useState(false)
-    
+
     const [index, setIndex] = useState(String)
-    const [image, setImage] = useState(String)
+    const [pictureFile, setPictureFile] = useState<File | null>(null)
     const [storeName, setStoreName] = useState(String)
     const [description, setDescription] = useState(String)
 
@@ -37,7 +40,7 @@ function EventInfo({ data }: any) {
         setIndex(uuidv4())
         slides.push({
             id: index,
-            image: image,
+            image: pictureFile,
             shopName: storeName,
             description: description,
         })
@@ -52,10 +55,14 @@ function EventInfo({ data }: any) {
         )
         setSlides(delslides)
     }
-    
+
     const router = useRouter()
     const sendShopValue = (id: string) => {
         router.push(`/shopInfo?id=${id}`)
+    }
+
+    const handleImageChange = (file: File | null) => {
+        setPictureFile(file) // Store the selected image file
     }
 
     return (
@@ -72,15 +79,11 @@ function EventInfo({ data }: any) {
                         </h3>
 
                         <div className="flex w-full flex-col items-center gap-4 rounded-lg bg-[#F5EAEA] p-12 drop-shadow-xl lg:max-w-5xl lg:gap-8">
-                            <div className="flex w-full flex-row items-center">
-                                <h5 className="mr-8 text-xl font-extrabold text-[#A459D1] md:text-2xl">
-                                    Image
-                                </h5>
-                                <input
-                                    className="w-full rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
-                                    placeholder="Image URL"
-                                    value={image}
-                                    onChange={(e) => setImage(e.target.value)}
+                            <div className="h-full">
+                                <ImageUploader
+                                    onImageChange={handleImageChange}
+                                    type={'Shop'}
+                                    data={data}
                                 />
                             </div>
                             <div className="flex w-full flex-row items-center">
@@ -150,7 +153,11 @@ function EventInfo({ data }: any) {
                                 {slides.map((items: any) => (
                                     <div className="flex w-full flex-none justify-center">
                                         <div className="grid grid-cols-1 content-center justify-items-center gap-4 lg:grid-cols-2 lg:justify-items-end lg:gap-12">
-                                        <button onClick={() => sendShopValue(items.id)}>
+                                            <button
+                                                onClick={() =>
+                                                    sendShopValue(items.id)
+                                                }
+                                            >
                                                 {items.picture != '' ? (
                                                     <img
                                                         src={items.picture}
@@ -166,7 +173,11 @@ function EventInfo({ data }: any) {
                                                 )}
                                             </button>
                                             <div className="flex flex-col gap-2 pb-2 lg:items-start lg:pt-8 lg:pr-24 xl:pr-36">
-                                            <button onClick={() => sendShopValue(items.id)}>
+                                                <button
+                                                    onClick={() =>
+                                                        sendShopValue(items.id)
+                                                    }
+                                                >
                                                     <h4 className="text-center text-xl font-extrabold">
                                                         {items.shopName}
                                                     </h4>
@@ -251,75 +262,4 @@ export async function getServerSideProps(context: { req: any; query: any }) {
 
 export default EventInfo
 
-// (
-//     <>
-//         <h3 className="text-center text-2xl font-extrabold text-primary ">
-//             ADD HIGHLIGHT PRODUCT
-//         </h3>
 
-//         <div className="flex w-full flex-col items-center gap-4 rounded-lg bg-[#F5EAEA] p-12 drop-shadow-xl lg:max-w-5xl lg:gap-8">
-//             <div className="flex w-full flex-row items-center">
-//                 <h5 className="mr-8 text-xl font-extrabold text-[#A459D1] md:text-2xl">
-//                     Image
-//                 </h5>
-//                 <input
-//                     className="w-full rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
-//                     placeholder="Image URL"
-//                     value={image}
-//                     onChange={(e) => setImage(e.target.value)}
-//                 />
-//             </div>
-//             <div className="flex w-full flex-row items-center">
-//                 <h5 className="mr-8 text-xl font-extrabold text-[#A459D1] md:text-2xl">
-//                     Name
-//                 </h5>
-//                 <input
-//                     className="w-full rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
-//                     value={productName}
-//                     placeholder="Store Name"
-//                     onChange={(e) =>
-//                         setProductName(e.target.value)
-//                     }
-//                 />
-//             </div>
-//             <div className="flex w-full flex-col items-start gap-4">
-//                 <h5 className="mr-8 text-xl font-extrabold text-[#A459D1] md:text-2xl">
-//                     Description
-//                 </h5>
-//                 <textarea
-//                     className="h-32 w-full rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
-//                     value={description}
-//                     placeholder="description"
-//                     onChange={(e) =>
-//                         setDescription(e.target.value)
-//                     }
-//                 />
-//             </div>
-//             <div className="flex w-full flex-row items-center">
-//                 <h5 className="mr-8 text-xl font-extrabold text-[#A459D1] md:text-2xl">
-//                     Price
-//                 </h5>
-//                 <input
-//                     className="w-full rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
-//                     placeholder="price"
-//                     value={price}
-//                     onChange={(e) => setPrice(e.target.value)}
-//                 />
-//             </div>
-//         </div>
-//         <div className="flex w-full justify-center gap-4 px-12 lg:max-w-5xl lg:justify-end">
-//             <button
-//                 onClick={() => addSlide()}
-//                 className="rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-8 py-2 text-center font-extrabold text-white hover:bg-gradient-to-r"
-//             >
-//                 Add
-//             </button>
-//             <button
-//                 onClick={() => setEdit(false)}
-//                 className="rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-8 py-2 text-center font-extrabold text-white hover:bg-gradient-to-r"
-//             >
-//                 Back
-//             </button>
-//         </div>
-//     </>
-// ) 
