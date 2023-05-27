@@ -36,7 +36,7 @@ const Navbar = () => {
                         </a>
                         <div className="flex items-center space-x-3 md:hidden">
                             <button>
-                                <a href="/test" >
+                                <a href="/shopowneracc" >
                                     <Image
                                         className="w-6"
                                         src={Account}
@@ -64,9 +64,9 @@ const Navbar = () => {
                         <ul className="justify-center space-y-8 text-center md:flex md:space-x-12 md:space-y-0 ">
                             <li className="text-xl font-extrabold">
                                 <a
-                                    href="/stores"
+                                    href="/shops"
                                     className={`hover:text-secondary ${
-                                        currentRoute === '/stores'
+                                        currentRoute === '/shops'
                                             ? 'text-secondary'
                                             : 'text-black'
                                     }`}
@@ -133,7 +133,7 @@ const Navbar = () => {
                     {session?.user ? (
                         <>
                             <button>
-                                <a href="/test">
+                                <a href="/shopowneracc">
                                     <Image
                                         className="w-6"
                                         src={Account}
