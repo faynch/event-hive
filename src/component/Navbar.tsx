@@ -35,12 +35,14 @@ const Navbar = () => {
                             </div>
                         </a>
                         <div className="flex items-center space-x-3 md:hidden">
-                            <button className={account ? 'block' : 'hidden'}>
-                                <Image
-                                    className="w-6"
-                                    src={Account}
-                                    alt={'account'}
-                                />
+                            <button>
+                                <a href="/test" >
+                                    <Image
+                                        className="w-6"
+                                        src={Account}
+                                        alt={'account'}
+                                    />
+                                </a>
                             </button>
 
                             <button onClick={() => setNavbar(!navbar)}>
@@ -131,7 +133,7 @@ const Navbar = () => {
                     {session?.user ? (
                         <>
                             <button>
-                                <a href="/login2">
+                                <a href="/test">
                                     <Image
                                         className="w-6"
                                         src={Account}
