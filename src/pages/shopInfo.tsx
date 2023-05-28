@@ -3,6 +3,7 @@ import CardInfo from '../component/CardInfo'
 import Footer from '../component/Footer'
 
 import { useState } from 'react'
+import { useSession } from 'next-auth/react'
 
 import Image from 'next/image'
 import Product from '../pages/assets/product.svg'
@@ -11,7 +12,10 @@ import Left from '../pages/assets/left.svg'
 
 function ShopInfo({ data }: any) {
     const [curr, setCurr] = useState(0)
+    const { data: session } = useSession()
 
+    console.log(session?.user?.image)
+    const owner = session?.user?.name === data.shopOwnerId ? true : false
     const slides = data.products
 
     const prev = () =>
@@ -29,7 +33,7 @@ function ShopInfo({ data }: any) {
                 <Navbar />
                 <div className="flex-grow">
                     <div className="mt-12 grid justify-center px-8 md:py-8 md:px-20">
-                        <CardInfo type={'Shop'} edit={false} data={data} />
+                        <CardInfo type={'Shop'} edit={owner} data={data} />
                     </div>
                     <div
                         className={`flex flex-col items-center justify-center gap-8 p-8 md:px-24 ${
