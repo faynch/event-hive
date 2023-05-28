@@ -9,7 +9,7 @@ export default class ModelSelector {
         console.log('Hi there chaos im in lmao')
         switch (modelName) {
             case 'user':
-                return new ModelUser()
+                return new ModelVisitor()
             case 'shopOwner':
                 return new ModelShopOwner()
             case 'eventOrganizer':
@@ -28,9 +28,9 @@ export default class ModelSelector {
     }
 }
 
-export class ModelUser extends ModelSelector {
+export class ModelVisitor extends ModelSelector {
     findMany(fieldValues: string) {
-        const existingModel = prisma.user.findMany({
+        const existingModel = prisma.visitor.findMany({
             where: {
                 id: {
                     in: fieldValues,

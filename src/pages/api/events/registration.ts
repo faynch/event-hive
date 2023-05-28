@@ -28,7 +28,7 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
         // wonder if these supposed to be initialized later
         const eventShopApplications = await validateInput(shopApplications, 'shop');
         const eventShopParticipations = await validateInput(shopParticipations, 'shop');
-        const eventFavouriteByUsers = await validateInput(favouriteByUsers, 'user');
+        const eventFavouriteByVisitors = await validateInput(favouriteByUsers, 'user');
         
         const event = await prisma.event.create({
             data: {
@@ -46,14 +46,14 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
                 eventOrganizer: eventOrganizer,
                 shopApplications: eventShopApplications,
                 shopParticipations: eventShopParticipations,
-                favouriteByUsers: eventFavouriteByUsers,
+                favouriteByVisitors: eventFavouriteByVisitors,
             },
             include: {
                 tags: true,
                 eventOrganizer: true,
                 shopApplications: true,
                 shopParticipations: true,
-                favouriteByUsers: true,
+                favouriteByVisitors: true,
             }
         });
         return res.status(200).json(event);

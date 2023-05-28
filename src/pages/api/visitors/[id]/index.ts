@@ -5,7 +5,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { query } = req;
     const { id } = query;
     const prisma = new PrismaClient();
-    const user = await prisma.user.findMany({
+    const visitor = await prisma.visitor.findMany({
         where: {
             OR: [
                 {
@@ -25,9 +25,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     },
     );
 
-    if(user === undefined || user.length == 0){
+    if(visitor === undefined || visitor.length == 0){
         return res.status(404).json({message: 'The page does not exist'});
     }
     
-    return res.json(user);
+    if(req.method == 'GET'){
+        return res.json(visitor);
+    }
 }

@@ -7,7 +7,7 @@ export default async function checkExist(email: string){
     
     const prisma = new PrismaClient();
 
-    const existingUser = await prisma.user.findFirst({
+    const existingUser = await prisma.visitor.findFirst({
         where: {
             email: email,
         },
@@ -26,7 +26,7 @@ export default async function checkExist(email: string){
     });
 
     if(existingUser){
-        return {query: existingUser, role: "user"};
+        return {query: existingUser, role: "visitor"};
     }else if(existingShopOwner){
         return {query: existingShopOwner, role: "shopOwner"};
     }else if(existingShopOwner){

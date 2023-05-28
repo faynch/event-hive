@@ -8,26 +8,26 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
         return res.status(405).json({message: 'Method is not allowed'});
     }
     try{
-        const { tagName, users, shops, events } = req.body;
+        const { tagName, visitors, shops, events } = req.body;
         const prisma = new PrismaClient;
 
         if(!tagName){
                 return res.status(400).json({message: 'Please provide all required fields'});
         }
 
-        const tagUsers = await validateInput(users, 'user');
+        const tagVisitors = await validateInput(visitors, 'visitor');
         const tagShops = await validateInput(shops, 'shop');
         const tagEvents = await validateInput(events, 'event');
 
         const shop = await prisma.tag.create({
             data: {
                 tagName: tagName,
-                users: tagUsers,
+                visitors: tagVisitors,
                 shops: tagShops,
                 events: tagEvents,
             },
             include: {
-                users: true,
+                visitors: true,
                 shops: true,
                 events: true,
             },

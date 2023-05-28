@@ -28,7 +28,7 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
         const validOwnerId = await validateInput(shopOwnerId, 'shopOwner');
         const shopEventApplications = await validateInput(eventApplications, 'event');
         const shopEventParticipations = await validateInput(eventParticipations, 'event');
-        const shopFavouriteByUsers = await validateInput(favouriteByUsers, 'user');
+        const shopFavouriteByVisitors = await validateInput(favouriteByUsers, 'user');
 
         const shop = await prisma.shop.create({
             data: {
@@ -44,14 +44,14 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
                 shopOwner: validOwnerId,
                 eventApplications: shopEventApplications,
                 eventParticipations: shopEventParticipations,
-                favouriteByUsers: shopFavouriteByUsers,
+                favouriteByVisitors: shopFavouriteByVisitors,
                 // products: products,
             },
             include: {
                 tags: true,
                 eventApplications: true,
                 eventParticipations: true,
-                favouriteByUsers: true,
+                favouriteByVisitors: true,
                 products: true,
             }
         });

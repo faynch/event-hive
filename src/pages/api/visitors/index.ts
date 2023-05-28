@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
     const prisma = new PrismaClient();
-    const user = await prisma.user.findMany({
+    const visitor = await prisma.visitor.findMany({
         include: {
             tags: true,
             favouriteShops: true,
@@ -11,6 +11,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
     });
 
-    return res.json(user);
+    return res.json(visitor);
     // return res.status(200).json('works well from users index api');
 }

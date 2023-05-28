@@ -5,7 +5,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { query } = req;
     const { id } = query;
     const prisma = new PrismaClient();
-    const favouriteShops = await prisma.user.findMany({
+    const favouriteShops = await prisma.visitor.findMany({
         where: {
             id: {
                 contains: Array.isArray(id)

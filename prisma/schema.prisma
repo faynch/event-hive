@@ -10,19 +10,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id              String    @id @default(cuid())
+model Visitor {
+  id              String  @id @default(cuid())
   firstName       String
   lastName        String
   image           String?
-  email           String    @unique
-  emailVerified   DateTime? @map("email_verrified")
+  email           String  @unique
   password        String
-  tags            Tag[]     @relation("UserTag")
-  favouriteShops  Shop[]    @relation("FollowedShop")
-  favouriteEvents Event[]   @relation("FollowedEvent")
-
-  @@map("users")
+  tags            Tag[]   @relation("VisitorTag")
+  favouriteShops  Shop[]  @relation("FollowedShop")
+  favouriteEvents Event[] @relation("FollowedEvent")
 }
 
 model ShopOwner {
@@ -60,29 +57,29 @@ model Shop {
   shopOwnerId         String    @unique
   eventApplications   Event[]   @relation("Application")
   eventParticipations Event[]   @relation("Participation")
-  favouriteByUsers    User[]    @relation("FollowedShop")
+  favouriteByVisitors Visitor[] @relation("FollowedShop")
   products            Product[]
 }
 
 model Event {
-  id                 String         @id @default(cuid())
-  eventName          String
-  about              String
-  location           String
-  picture            String
-  tags               Tag[]          @relation("EventTag")
-  startDate          String
-  endDate            String
-  telephone          String
-  facebook           String?
-  instagram          String?
-  line               String?
-  tiktok             String?
-  eventOrganizer     EventOrganizer @relation("EventOrganizer", fields: [eventOrganizerId], references: [id])
-  eventOrganizerId   String
-  shopApplications   Shop[]         @relation("Application")
-  shopParticipations Shop[]         @relation("Participation")
-  favouriteByUsers   User[]         @relation("FollowedEvent")
+  id                  String         @id @default(cuid())
+  eventName           String
+  about               String
+  location            String
+  picture             String
+  tags                Tag[]          @relation("EventTag")
+  startDate           String
+  endDate             String
+  telephone           String
+  facebook            String?
+  instagram           String?
+  line                String?
+  tiktok              String?
+  eventOrganizer      EventOrganizer @relation("EventOrganizer", fields: [eventOrganizerId], references: [id])
+  eventOrganizerId    String
+  shopApplications    Shop[]         @relation("Application")
+  shopParticipations  Shop[]         @relation("Participation")
+  favouriteByVisitors Visitor[]      @relation("FollowedEvent")
 }
 
 model Product {
@@ -95,9 +92,9 @@ model Product {
 }
 
 model Tag {
-  id      Int     @id @default(autoincrement())
-  tagName String
-  users   User[]  @relation("UserTag")
-  shops   Shop[]  @relation("ShopTag")
-  events  Event[] @relation("EventTag")
+  id       Int       @id @default(autoincrement())
+  tagName  String
+  visitors Visitor[] @relation("VisitorTag")
+  shops    Shop[]    @relation("ShopTag")
+  events   Event[]   @relation("EventTag")
 }

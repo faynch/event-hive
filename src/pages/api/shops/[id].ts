@@ -22,7 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             shopOwner: true,
             eventApplications: true,
             eventParticipations: true,
-            favouriteByUsers: true,
+            favouriteByVisitors: true,
             products: true,
         },
     },

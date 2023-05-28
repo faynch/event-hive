@@ -5,7 +5,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { query } = req;
     const { id } = query;
     const prisma = new PrismaClient();
-    const favouriteShops = await prisma.user.findMany({
+    const favouriteEvents = await prisma.visitor.findMany({
         where: {
             id: {
                 contains: Array.isArray(id)
@@ -23,9 +23,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     },
     );
 
-    if(favouriteShops === undefined || favouriteShops.length == 0){
+    if(favouriteEvents === undefined || favouriteEvents.length == 0){
         return res.status(404).json({message: 'The page does not exist'});
     }
     
-    return res.json(favouriteShops);
+    return res.json(favouriteEvents);
 }

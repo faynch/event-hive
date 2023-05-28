@@ -15,7 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             ],
         },
         include: {
-            users: {
+            visitors: {
                 include: {
                     favouriteShops: true,
                     favouriteEvents: true,
@@ -28,7 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     shopOwner: true,
                     eventApplications: true,
                     eventParticipations: true,
-                    favouriteByUsers:true,
+                    favouriteByVisitors:true,
                     products: true,
                 }
             },
@@ -38,7 +38,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     eventOrganizer: true,
                     shopApplications: true,
                     shopParticipations:true,
-                    favouriteByUsers: true,
+                    favouriteByVisitors: true,
                 }
             },
         },

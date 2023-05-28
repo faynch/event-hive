@@ -5,7 +5,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const prisma = new PrismaClient();
     const tags = await prisma.tag.findMany({
         include: {
-            users: true,
+            visitors: true,
             shops: true,
             events: true,
         },

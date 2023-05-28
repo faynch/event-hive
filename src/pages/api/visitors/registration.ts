@@ -11,10 +11,10 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
     return res.status(405).json({ message: 'Method is not allowed' })
   }
   try {
-    const { firstName, lastName, name, image, email, password, tags, favouriteShopIds, favouriteEventIds } = req.body;
+    const { firstName, lastName, image, email, password, tags, favouriteShopIds, favouriteEventIds } = req.body;
     const prisma = new PrismaClient();
 
-    if (!firstName || !lastName || !name || !email || !password) {
+    if (!firstName || !lastName || !email || !password) {
       return res.status(400).json({ message: 'Please provide all required fields' });
     }
     const existingEmail = await checkExist(email);
@@ -22,21 +22,20 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
     if (existingEmail) {
       return res.status(400).json({ message: 'The email has already been taken. Please try another email.' })
     }
-    const userTags = await validateInput(tags, 'tag');
-    const userFavouriteShops = await validateInput(favouriteShopIds, 'shop');
-    const userFavouriteEvents = await validateInput(favouriteEventIds, 'event');
+    const visitorTags = await validateInput(tags, 'tag');
+    const visitorFavouriteShops = await validateInput(favouriteShopIds, 'shop');
+    const visitorFavouriteEvents = await validateInput(favouriteEventIds, 'event');
 
-    const user = await prisma.user.create({
+    const visitor = await prisma.visitor.create({
       data: {
         firstName: firstName,
         lastName: lastName,
-        name: name,
         image: image,
         email: email,
         password: password,
-        tags: userTags,
-        favouriteShops: userFavouriteShops,
-        favouriteEvents: userFavouriteEvents,
+        tags: visitorTags,
+        favouriteShops: visitorFavouriteShops,
+        favouriteEvents: visitorFavouriteEvents,
       },
       include: {
         tags: true,
@@ -44,7 +43,7 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
         favouriteEvents: true,
       }
     });
-    return res.status(200).json(user);
+    return res.status(200).json(visitor);
   } catch (error) {
     console.log(error)
     return res.status(400).json({ message: 'Something went wrong' });

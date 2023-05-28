@@ -21,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             eventOrganizer: true,
             shopApplications: true,
             shopParticipations: true,
-            favouriteByUsers: true,
+            favouriteByVisitors: true,
         },
     })
 
