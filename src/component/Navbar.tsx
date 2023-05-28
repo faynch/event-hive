@@ -135,7 +135,7 @@ const Navbar = () => {
                             <button>
                                 {session.user.image === 'shopOwner' ||
                                 session.user.image === 'eventOrganizer' ? (
-                                    <a href="/createShop">
+                                    <a href="/createPage">
                                         <Image
                                             className="w-6"
                                             src={Account}
