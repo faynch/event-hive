@@ -14,7 +14,6 @@ function ShopInfo({ data }: any) {
     const [curr, setCurr] = useState(0)
     const { data: session } = useSession()
 
-    console.log(session?.user?.image)
     const owner = session?.user?.name === data.shopOwnerId ? true : false
     const slides = data.products
 
