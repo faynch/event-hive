@@ -6,21 +6,21 @@ import { Prisma, PrismaClient } from "@prisma/client"
 import validateInput from "utils/validateInput";
 import checkExist from "utils/checkExist";
 
-export default async function register(req: NextApiRequest, res: NextApiResponse){
-  if(req.method !== 'POST'){
-    return res.status(405).json({message: 'Method is not allowed'})
+export default async function register(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ message: 'Method is not allowed' })
   }
   try {
-    const { firstName, lastName, email, password, tags, favouriteShopIds, favouriteEventIds } = req.body;
+    const { firstName, lastName, name, image, email, password, tags, favouriteShopIds, favouriteEventIds } = req.body;
     const prisma = new PrismaClient();
 
-    if(!firstName || !lastName || !email || !password){
-      return res.status(400).json({message: 'Please provide all required fields'});
+    if (!firstName || !lastName || !name || !email || !password) {
+      return res.status(400).json({ message: 'Please provide all required fields' });
     }
     const existingEmail = await checkExist(email);
 
-    if(existingEmail){
-      return res.status(400).json({message: 'The email has already been taken. Please try another email.'})
+    if (existingEmail) {
+      return res.status(400).json({ message: 'The email has already been taken. Please try another email.' })
     }
     const userTags = await validateInput(tags, 'tag');
     const userFavouriteShops = await validateInput(favouriteShopIds, 'shop');
@@ -30,6 +30,8 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
       data: {
         firstName: firstName,
         lastName: lastName,
+        name: name,
+        image: image,
         email: email,
         password: password,
         tags: userTags,
@@ -44,6 +46,7 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
     });
     return res.status(200).json(user);
   } catch (error) {
-    return res.status(400).json({message: 'Something went wrong'});
+    console.log(error)
+    return res.status(400).json({ message: 'Something went wrong' });
   }
 }
