@@ -10,7 +10,7 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
     try{
         // need to give defaut parameter for picture (like default pic of the event)
         const { eventName, about, location, picture, tags, startDate, endDate, telephone, facebook, instagram
-            , line, eventOrganizerId, shopApplications, shopParticipations, favouriteByUsers } = req.body;
+            , line, tiktok, eventOrganizerId, shopApplications, shopParticipations, favouriteByUsers } = req.body;
         const prisma = new PrismaClient;
         
         if(!eventName || !about || !location || !tags || !startDate || !endDate || !telephone || !eventOrganizerId){
@@ -43,6 +43,7 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
                 facebook: facebook,
                 instagram: instagram,
                 line: line,
+                tiktok: tiktok,
                 eventOrganizer: eventOrganizer,
                 shopApplications: eventShopApplications,
                 shopParticipations: eventShopParticipations,
