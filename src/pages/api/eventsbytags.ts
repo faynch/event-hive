@@ -8,39 +8,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if(typeof tags === 'undefined'){
     return res.status(400).json("The tags is not provided")
   }
-  
+
   const tagIds = Array.isArray(tags) ? tags.map((tag) => parseInt(tag)) : [parseInt(tags)];
   const prisma = new PrismaClient();
   
-  const tag = await prisma.tag.findMany({
+  const tag = await prisma.event.findMany({
     where: {
-      OR: tagIds.map((tagId) => ({
-        id: tagId,
-      })),
+        tags: {
+            some:{
+                id: {
+                    in: tagIds,
+                },
+            },
+        },
     },
     include: {
-      shops: {
-        where: {
-          tags: {
-            some: {
-              id: {
-                in: tagIds,
-              },
-            },
-          },
-        },
-      },
-      events: {
-        where: {
-          tags: {
-            some: {
-              id: {
-                in: tagIds,
-              },
-            },
-          },
-        },
-      },
+        tags: true,
+        eventOrganizer: true,
+        shopApplications: true,
+        shopParticipations: true,
+        favouriteByUsers: true,
     },
   });
 
