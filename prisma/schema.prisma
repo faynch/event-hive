@@ -10,38 +10,42 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-//draw diagram
-
 model User {
-  id              String  @id @default(uuid())
+  id              String    @id @default(cuid())
   firstName       String
   lastName        String
-  email           String
+  image           String?
+  email           String    @unique
+  emailVerified   DateTime? @map("email_verrified")
   password        String
-  tags            Tag[]   @relation("UserTag")
-  favouriteShops  Shop[]  @relation("FollowedShop")
-  favouriteEvents Event[] @relation("FollowedEvent")
+  tags            Tag[]     @relation("UserTag")
+  favouriteShops  Shop[]    @relation("FollowedShop")
+  favouriteEvents Event[]   @relation("FollowedEvent")
+
+  @@map("users")
 }
 
 model ShopOwner {
-  id        String @id @default(uuid())
+  id        String  @id @default(cuid())
   firstName String
   lastName  String
+  image     String?
   email     String
   password  String
-  shop      Shop?  @relation("ShopOwner")
+  shop      Shop?   @relation("ShopOwner")
 }
 
 model EventOrganizer {
-  id          String  @id @default(uuid())
+  id          String  @id @default(cuid())
   companyName String
+  image       String?
   email       String
   password    String
   events      Event[] @relation("EventOrganizer")
 }
 
 model Shop {
-  id                  String    @id @default(uuid())
+  id                  String    @id @default(cuid())
   shopName            String
   about               String
   address             String
@@ -51,6 +55,7 @@ model Shop {
   facebook            String?
   instagram           String?
   line                String?
+  tiktok              String?
   shopOwner           ShopOwner @relation("ShopOwner", fields: [shopOwnerId], references: [id])
   shopOwnerId         String    @unique
   eventApplications   Event[]   @relation("Application")
@@ -60,27 +65,28 @@ model Shop {
 }
 
 model Event {
-  id                 String          @id @default(uuid())
+  id                 String         @id @default(cuid())
   eventName          String
   about              String
   location           String
   picture            String
-  tags               Tag[]           @relation("EventTag")
+  tags               Tag[]          @relation("EventTag")
   startDate          String
   endDate            String
   telephone          String
   facebook           String?
   instagram          String?
   line               String?
+  tiktok             String?
   eventOrganizer     EventOrganizer @relation("EventOrganizer", fields: [eventOrganizerId], references: [id])
-  eventOrganizerId   String          
-  shopApplications   Shop[]          @relation("Application")
-  shopParticipations Shop[]          @relation("Participation")
-  favouriteByUsers   User[]          @relation("FollowedEvent")
+  eventOrganizerId   String
+  shopApplications   Shop[]         @relation("Application")
+  shopParticipations Shop[]         @relation("Participation")
+  favouriteByUsers   User[]         @relation("FollowedEvent")
 }
 
 model Product {
-  id          String @id @default(uuid())
+  id          String @id @default(cuid())
   productName String
   description String
   price       Int
