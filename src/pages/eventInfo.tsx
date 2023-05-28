@@ -2,6 +2,7 @@ import Navbar from '../component/Navbar'
 import CardInfo from '../component/CardInfo'
 import Footer from '../component/Footer'
 
+import { useSession } from 'next-auth/react'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 
@@ -12,8 +13,10 @@ import Left from '../pages/assets/left.svg'
 
 function EventInfo({ data }: any) {
     const [curr, setCurr] = useState(0)
+    const { data: session } = useSession()
 
     const slides = data.shopParticipations
+    const owner = session?.user?.name === data.shopOwnerId ? true : false
 
     const prev = () =>
         setCurr((curr) => (curr === 0 ? slides.length - 1 : curr - 1))
@@ -35,7 +38,7 @@ function EventInfo({ data }: any) {
                 <Navbar />
                 <div className="flex-grow">
                     <div className="my-12 grid justify-center px-8 md:py-8 md:px-20">
-                        <CardInfo type="Event" edit={false} data={data} />
+                        <CardInfo type="Event" edit={owner} data={data} />
                     </div>
                     <div
                         className={`flex flex-col items-center justify-center gap-8 pb-12 md:px-24 ${
