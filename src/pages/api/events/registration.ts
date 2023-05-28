@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
+import checkExistName from "utils/checkExistName";
 import validateInput from "utils/validateInput";
 
 export default async function register(req: NextApiRequest, res: NextApiResponse){
@@ -15,6 +16,12 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
         if(!eventName || !about || !location || !tags || !startDate || !endDate || !telephone || !eventOrganizerId){
             return res.status(400).json({message: 'Please provide all required fields'});
         }
+        
+        const existingEvent = await checkExistName(eventName);
+        
+        if(existingEvent){
+            return res.status(400).json({message: 'This event name has already taken'})
+        }
 
         const eventTags = await validateInput(tags, 'tag');
         const eventOrganizer = await validateInput(eventOrganizerId, 'eventOrganizer');
@@ -23,10 +30,6 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
         const eventShopParticipations = await validateInput(shopParticipations, 'shop');
         const eventFavouriteByUsers = await validateInput(favouriteByUsers, 'user');
         
-        console.log(eventTags)
-        console.log(eventShopApplications)
-        console.log(eventShopParticipations)
-        console.log(eventFavouriteByUsers)
         const event = await prisma.event.create({
             data: {
                 eventName: eventName,
