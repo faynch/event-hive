@@ -1,10 +1,15 @@
 import NextAuth, { NextAuthOptions } from 'next-auth'
-import GithubProvider from 'next-auth/providers/github'
 import CredentialsProvider from 'next-auth/providers/credentials'
+import { PrismaAdapter } from '@next-auth/prisma-adapter'
+import { PrismaClient } from '@prisma/client'
+import { NextApiRequest } from 'next';
+
+const prisma = new PrismaClient();
 
 export const authOptions: NextAuthOptions = {
     secret: process.env.AUTH_SECRET,
     // Configure one or more authentication providers
+    adapter: PrismaAdapter(prisma),
     providers: [
         CredentialsProvider({
             // The name to display on the sign in form (e.g. "Sign in with...")
@@ -31,24 +36,17 @@ export const authOptions: NextAuthOptions = {
                     }),
                 })
 
-                const user = await res.json()
-                
-                const returnSession = {
-                    id: user.existingEmail.id,
-                    name: user.existingEmail.firstName,
-                    email: user.existingEmail.email,
-                    image: null,
-                }
-                console.log(returnSession)
-                // const user = {
-                //     id: '1',
-                //     name: 'J Smith',
-                //     email: 'jsmith@example.com',
-                // }
-
+                const user = await res.json()                
                 console.log("here is the user/n", user)
+                
                 if (user) {
-                    // Any object returned will be saved in `user` property of the JWT
+                    const returnSession = {
+                        id: user.existingEmail.id,
+                        name: user.existingEmail.firstName + ' ' + user.existingEmail.lastName,
+                        email: user.existingEmail.email,
+                        image: null,
+                    }
+                    console.log(returnSession)
                     console.log('log in successed')
                     return returnSession
                 } else {
@@ -70,16 +68,16 @@ export const authOptions: NextAuthOptions = {
         error: '/login2'
     },
 
-    // callbacks: {
-    //     async session({ session, token, user }: any) {
-    //         console.log(
-    //             '---------------------session in [...nextauth]---------------------'
-    //         )
-    //         console.log(session)
-    //         session.accessToken = token.accessToken
-    //         session.user = user
-    //         return session // The return type will match the one returned in `useSession()`
-    //     },
-    // },
-}
+    callbacks: {
+        // async session({ session, token, user }: any) {
+        //     console.log(
+        //         '---------------------session in [...nextauth]---------------------'
+        //     )
+        //     console.log(session)
+        //     session.accessToken = token.accessToken
+        //     session.user = user
+        //     return session // The return type will match the one returned in `useSession()`
+        // },
+    },
+};
 export default NextAuth(authOptions)
