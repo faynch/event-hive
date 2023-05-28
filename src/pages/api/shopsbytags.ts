@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const tagIds = Array.isArray(tags) ? tags.map((tag) => parseInt(tag)) : [parseInt(tags)];
   const prisma = new PrismaClient();
   
-  const tag = await prisma.shop.findMany({
+  const shops = await prisma.shop.findMany({
     where: {
         tags: {
             some:{
@@ -32,9 +32,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     },
   });
 
-  if (tag === undefined || tag.length === 0) {
+  if (shops === undefined || shops.length === 0) {
     return res.status(404).json({ message: 'The page does not exist' });
   }
 
-  return res.json(tag);
+  return res.json(shops);
 }
