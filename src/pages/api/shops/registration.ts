@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { ADDRCONFIG } from "dns";
 import { NextApiRequest, NextApiResponse } from "next";
+import checkExistName from "utils/checkExistName";
 import validateInput from "utils/validateInput";
 
 export default async function register(req: NextApiRequest, res: NextApiResponse){
@@ -15,6 +16,12 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
 
         if(!shopName || !about || !address || !tags || !telephone || !shopOwnerId){
                 return res.status(400).json({message: 'Please provide all required fields'});
+        }
+
+        const existingShop = await checkExistName(shopName);
+        
+        if(existingShop){
+            return res.status(400).json({message: 'This event name has already taken'})
         }
 
         const shopTags = await validateInput(tags, 'tag');
