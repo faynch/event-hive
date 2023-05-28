@@ -36,7 +36,7 @@ const Navbar = () => {
                         </a>
                         <div className="flex items-center space-x-3 md:hidden">
                             <button>
-                                <a href="/shopowneracc" >
+                                <a href="/shopowneracc">
                                     <Image
                                         className="w-6"
                                         src={Account}
@@ -132,36 +132,59 @@ const Navbar = () => {
                 <div className="hidden basis-1/3 justify-end space-x-3 md:flex">
                     {session?.user ? (
                         <>
-                        <button>
-                            <a href="/login2">
-                                <Image
-                                    className="w-6"
-                                    src={Account}
-                                    alt={'account'}
-                                />
-                            </a>
-                        </button>
-                        <div className="flex items-center gap-6">
-                            <div className="justify-end rounded-lg font-extrabold">
-                                Signed in as {session.user.name}
-                            </div>
-                            <div className="justify-end rounded-lg font-extrabold hover:text-primary text-md" onClick={() => signOut({callbackUrl: `${window.location.origin}`})}>
-                                Sign Out
-                            </div>
-                        </div>
-                        </>
-                    ): (
-                        <>
-                        <div className={`flex flex-row items-center gap-6 ${account ? 'hidden' : 'block'}`}>
-                            <div className="justify-end rounded-lg font-extrabold hover:text-primary text-md" onClick={() => signIn()}>
-                                Sign in
-                            </div>
-                            <Link href="/register">
-                                <div className="rounded-md bg-[#FFB84C] hover:bg-gradient-to-r from-[#EF9323] to-[#5D3891] px-4 py-2.5 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">
-                                    Register
+                            <button>
+                                {session.user.image === 'shopOwner' ||
+                                session.user.image === 'eventOrganizer' ? (
+                                    <a href="/createShop">
+                                        <Image
+                                            className="w-6"
+                                            src={Account}
+                                            alt={'account'}
+                                        />
+                                    </a>
+                                ) : (
+                                    <Image
+                                        className="w-6"
+                                        src={Account}
+                                        alt={'account'}
+                                    />
+                                )}
+                            </button>
+                            <div className="flex items-center gap-6">
+                                <div className="justify-end rounded-lg font-extrabold">
+                                    Signed in as {session.user.name}
                                 </div>
-                            </Link>
-                        </div>
+                                <div
+                                    className="text-md justify-end rounded-lg font-extrabold hover:text-primary"
+                                    onClick={() =>
+                                        signOut({
+                                            callbackUrl: `${window.location.origin}`,
+                                        })
+                                    }
+                                >
+                                    Sign Out
+                                </div>
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <div
+                                className={`flex flex-row items-center gap-6 ${
+                                    account ? 'hidden' : 'block'
+                                }`}
+                            >
+                                <div
+                                    className="text-md justify-end rounded-lg font-extrabold hover:text-primary"
+                                    onClick={() => signIn()}
+                                >
+                                    Sign in
+                                </div>
+                                <Link href="/register">
+                                    <div className="rounded-md bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gradient-to-r focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">
+                                        Register
+                                    </div>
+                                </Link>
+                            </div>
                         </>
                     )}
                 </div>
