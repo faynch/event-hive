@@ -56,13 +56,12 @@ export default function login() {
                         onChange={(e) => {password.current = e.target.value}}
                     />
                 </div>
-                <Link
-                    href="/"
+                <div
                     className="w-full rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] p-2 text-center font-extrabold text-white hover:bg-gradient-to-r"
                     onClick={onSubmit}
                 >
                     Sign in
-                </Link>
+                </div>
                 <hr className="w-full my-4 bg-[#989898] h-0.5" />
                 <div className="flex flex-row items-center">
                     <p>
