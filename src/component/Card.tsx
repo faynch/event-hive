@@ -37,7 +37,7 @@ export default function Card(props: CardProps) {
     }
 
     return (
-        <div className="relative flex w-96 flex-col items-center gap-3 rounded-lg bg-white px-9 pb-12 text-center">
+        <div className="relative flex w-96 h-[27.75rem] flex-col items-center gap-3 rounded-lg bg-white px-9 pb-12 text-center">
             {props.type === 'Event' ? (
                 <div
                     onClick={sendEventValue}
@@ -90,7 +90,7 @@ export default function Card(props: CardProps) {
                 instagram={props.data.instagram}
                 tiktok={props.data.tiktok}
             />
-            <p className={isAvailble() ? '' : 'mb-4'}>
+            <p className={`h-[4.875rem] grid place-content-center ${isAvailble() ? '' : 'mb-4'}`}>
                 {props.data.about.length > 100
                     ? props.data.about.slice(0, 100) + '...'
                     : props.data.about}

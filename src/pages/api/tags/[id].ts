@@ -17,7 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             users: true,
             shops: true,
             events: true,
-        }
+        },
     },
     );
 

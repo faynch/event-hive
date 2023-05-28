@@ -9,7 +9,7 @@ import Menu from '../pages/assets/menu.svg'
 import EventHive from '../pages/assets/eventHive.svg'
 
 const Navbar = () => {
-    const {data:session} = useSession()
+    const { data: session } = useSession()
     const [navbar, setNavbar] = useState(false)
     // const [account, setAccount] = useState(false)
     const account = false
@@ -35,12 +35,14 @@ const Navbar = () => {
                             </div>
                         </a>
                         <div className="flex items-center space-x-3 md:hidden">
-                            <button className={account ? 'block' : 'hidden'}>
-                                <Image
-                                    className="w-6"
-                                    src={Account}
-                                    alt={'account'}
-                                />
+                            <button>
+                                <a href="/shopowneracc" >
+                                    <Image
+                                        className="w-6"
+                                        src={Account}
+                                        alt={'account'}
+                                    />
+                                </a>
                             </button>
 
                             <button onClick={() => setNavbar(!navbar)}>
@@ -55,16 +57,16 @@ const Navbar = () => {
                 </div>
                 <div className="md:basis-1/2 ">
                     <div
-                        className={`pb-8 pt-4 md:flex md:pt-0 md:pb-0 md:justify-center ${
+                        className={`pb-8 pt-4 md:flex md:justify-center md:pt-0 md:pb-0 ${
                             navbar ? 'block' : 'hidden'
                         }`}
                     >
                         <ul className="justify-center space-y-8 text-center md:flex md:space-x-12 md:space-y-0 ">
                             <li className="text-xl font-extrabold">
                                 <a
-                                    href="/stores"
+                                    href="/shops"
                                     className={`hover:text-secondary ${
-                                        currentRoute === '/stores'
+                                        currentRoute === '/shops'
                                             ? 'text-secondary'
                                             : 'text-black'
                                     }`}
@@ -98,18 +100,37 @@ const Navbar = () => {
                                 </a>
                             </li>
                             <li className="text-xl font-extrabold">
-                                <a
-                                    href="/login2"
-                                    className={`rounded-lg hover:underline decoration-2 underline-offset-2 md:hidden ${account? 'text-[#F16767]' : 'text-primary' }`}
-                                >
-                                    {account? 'Log out' : 'Sign in'}
-                                </a>
+                                {session?.user ? (
+                                    <a
+                                        href="/"
+                                        onClick={() => signOut()}
+                                        className={`rounded-lg decoration-2 underline-offset-2 hover:underline md:hidden ${
+                                            session?.user
+                                                ? 'text-[#F16767]'
+                                                : 'text-primary'
+                                        }`}
+                                    >
+                                        Sign out
+                                    </a>
+                                ) : (
+                                    <a
+                                        href="/"
+                                        onClick={() => signIn()}
+                                        className={`rounded-lg decoration-2 underline-offset-2 hover:underline md:hidden ${
+                                            session?.user
+                                                ? 'text-[#F16767]'
+                                                : 'text-primary'
+                                        }`}
+                                    >
+                                        Sign in
+                                    </a>
+                                )}
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div className="hidden basis-1/3 justify-end space-x-3 md:flex">
-                {session?.user? (
+                    {session?.user ? (
                         <>
                         <button>
                             <a href="/login2">

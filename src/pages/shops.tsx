@@ -8,11 +8,10 @@ import Search from '../pages/assets/search.svg'
 import Filter from '../pages/assets/filter.svg'
 
 import { useState } from 'react'
-import { useRouter } from 'next/router'
 
-function events({ eventdata, tags }: any) {
+function shops({ shopdata, tags }: any) {
     const [filter, setFilter] = useState(false)
-    const [items, setItems] = useState(eventdata)
+    const [items, setItems] = useState(shopdata)
     const [searchTag, setSearchtag] = useState(0)
 
     const onSearch = async (value: string) => {
@@ -23,7 +22,7 @@ function events({ eventdata, tags }: any) {
             const data = await res.json()
             setItems(data)
         } else {
-            setItems(eventdata)
+            setItems(shopdata)
         }
     }
 
@@ -32,8 +31,8 @@ function events({ eventdata, tags }: any) {
         setSearchtag(value)
         const res = await fetch('http://localhost:3000/api/tags/' + value) // Replace with your API endpoint URL
         const data = await res.json()
-        console.log(data[0].events)
-        setItems(data[0].events)
+        console.log(data[0].shops)
+        setItems(data[0].shops)
     }
 
     return (
@@ -41,7 +40,7 @@ function events({ eventdata, tags }: any) {
             <div className="flex min-h-screen flex-col">
                 <Navbar />
                 <div className="flex-grow">
-                    <div className="my-12 mx-auto flex flex-col justify-center lg:max-w-7xl ">
+                    <div className="my-12 mx-auto flex flex-col justify-center lg:max-w-7xl">
                         <div className="mx-12 flex flex-row rounded-lg bg-gradient-to-r from-[#EF9323] to-[#5D3891] p-1 md:mx-36 xl:mx-4">
                             <input
                                 onChange={(event) =>
@@ -93,7 +92,7 @@ function events({ eventdata, tags }: any) {
                         </h4>
                         <div className="mb-8 grid grid-cols-1 gap-8 place-self-center lg:max-w-7xl lg:grid-cols-2 xl:grid-cols-3">
                             {items.map((item: any) => (
-                                <Card type="Event" data={item} />
+                                <Card type="Shop" data={item} />
                             ))}
                         </div>
                     </div>
@@ -105,18 +104,17 @@ function events({ eventdata, tags }: any) {
 }
 
 export async function getServerSideProps() {
-    const res1 = await fetch('http://localhost:3000/api/events/') // Replace with your API endpoint URL
+    const res1 = await fetch('http://localhost:3000/api/shops/') // Replace with your API endpoint URL
     const data1 = await res1.json()
 
     const res2 = await fetch('http://localhost:3000/api/tags/') // Replace with your API endpoint URL
     const data2 = await res2.json()
-
     return {
         props: {
-            eventdata: data1,
+            shopdata: data1,
             tags: data2,
         },
     }
 }
 
-export default events
+export default shops

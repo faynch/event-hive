@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Instagram from '../pages/assets/instagram.svg'
-import Twitter from '../pages/assets/twitter.svg'
+import Line from '../pages/assets/line.svg'
 import Facebook from '../pages/assets/facebook.svg'
 import Tiktok from '../pages/assets/tiktok.svg'
 import Link from 'next/link'
@@ -42,7 +42,7 @@ function GroupButton(props: GroupButtonProps) {
                     rel="noopener noreferrer"
                     target="_blank"
                 >
-                    <Image className="h-8" src={Twitter} alt={''} />
+                    <Image className="h-8" src={Line} alt={''} />
                 </Link>
             </button>
             <button className={props.line != "" ? 'block' : 'hidden'}>

@@ -1,43 +1,46 @@
 import Image from 'next/image'
+import TagSelector, { Tag } from '../component/TagSelector'
 import GroupButton from './GroupButton'
 import Shop from '../pages/assets/shop.svg'
 import Event from '../pages/assets/event.svg'
 import Like from '../pages/assets/like.svg'
 import Unlike from '../pages/assets/unlike.svg'
 import Edit from '../pages/assets/edit.svg'
-import { useState } from 'react'
-import TagSelector, { Tag } from '../component/TagSelector'
-
+import Instagram from '../pages/assets/instagram.svg'
+import Twitter from '../pages/assets/twitter.svg'
+import Facebook from '../pages/assets/facebook.svg'
+import Tiktok from '../pages/assets/tiktok.svg'
 import Phone from '../pages/assets/phone.svg'
 import Email from '../pages/assets/email.svg'
 import Add from '@/pages/assets/add.svg'
-import GroupButtonInput from './GroupButtonInput'
+import { useState } from 'react'
+import { v4 as uuid } from 'uuid'
+import supabase from 'lib/supabase'
+import ImageUploader from './ImageUploader'
 
 interface CardInfoProps {
     type: string
-    data: any
+    edit: boolean
+    data?: any
 }
 
 export default function CardInfo(props: CardInfoProps) {
-    const [storeName, setStoreName] = useState(
-        props.data.shopName || `Example ${props.type}`
-    )
-    const [description, setDescription] = useState(
-        props.data.about ||
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis distinctio nostrum aliquid enim facere obcaecati in vero quia? Maxime nam dolore perspiciatis expedita quia tempora, consectetur deserunt. Mollitia, veritatis maiores?'
-    )
-    const [phone, setPhone] = useState(props.data.telephone || '000-111111')
-    const [email, setEmail] = useState(
-        props.data.shopOwner?.email || 'admin@eventhive'
-    )
+    const [storeName, setStoreName] = useState(props.data?.shopName)
+    const [description, setDescription] = useState(props.data?.about)
+    const [phone, setPhone] = useState(props.data?.telephone)
+    const [email, setEmail] = useState(props.data?.shopOwner?.email)
+    const [instagram, setInstagram] = useState(props.data?.instagram)
+    const [facebook, setFacebook] = useState(props.data?.facebook)
+    const [line, setLine] = useState(props.data?.line)
+    const [tiktok, setTiktok] = useState(props.data?.tiktok)
     const [editMode, setEditMode] = useState(false)
     const [like, setLike] = useState(false)
-    const handleSave = () => {
-        // logic to save changes made by the user
-        setEditMode(false) // switch back to view mode
-    }
     const [showTagSelector, setShowTagSelector] = useState(false)
-    const [selectedTags, setSelectedTags] = useState<Tag[]>([])
+    const [selectedTags, setSelectedTags] = useState<Tag[]>(props.data?.tags)
+    const [pictureFile, setPictureFile] = useState<File | null>(null)
+
+    const shopOwnerAccount = false
+    const [request, setRequest] = useState(false)
 
     const handleTagSelectorClose = () => {
         setShowTagSelector(false)
@@ -46,13 +49,65 @@ export default function CardInfo(props: CardInfoProps) {
     const handleShowTagSelector = () => {
         setShowTagSelector(true)
     }
+    const tagId = selectedTags.map((tag) => {
+        return tag.id
+    })
+
+    const handleImageChange = (file: File | null) => {
+        setPictureFile(file) // Store the selected image file
+    }
+
+    const handleSave = async () => {
+        let storageName
+        if (props.type === 'Shop') {
+            storageName = 'ShopImage'
+        } else if (props.type === 'Event') {
+            storageName = 'EventImage'
+        } else {
+            console.error('Invalid type')
+            return
+        }
+
+        if (pictureFile) {
+            const fileName = uuid()
+            const { data, error } = await supabase.storage
+                .from(storageName)
+                .upload(fileName, pictureFile)
+            if (error) {
+                console.error('Error uploading image:', error.message)
+                return
+            }
+
+            const imageUrl = supabase.storage
+                .from(storageName)
+                .getPublicUrl(fileName)
+            console.log('Image URL:', imageUrl.data.publicUrl)
+
+            const formData = {
+                shopName: storeName,
+                about: description,
+                email: email,
+                telephone: phone,
+                instagram: instagram,
+                facebook: facebook,
+                tags: tagId,
+                picture: imageUrl.data.publicUrl,
+            }
+
+            const jsonData = JSON.stringify(formData)
+            console.log(jsonData)
+        }
+        // logic to save changes made by the user
+        setEditMode(false) // switch back to view mode
+    }
 
     function isAvailble() {
         if (
             props.data.line == '' &&
             props.data.facebook == '' &&
-            props.data.instagram == '' &&
-            props.data.tiktok == ''
+            props.data.instagram == ''
+            // &&
+            // props.data.tiktok == ''
         )
             return false
         return true
@@ -64,69 +119,110 @@ export default function CardInfo(props: CardInfoProps) {
         return (
             <div className="relative flex flex-row rounded-lg bg-white py-12 px-12 sm:px-20 lg:max-w-7xl xl:px-28">
                 <div className="flex flex-col items-center gap-8 lg:flex-row lg:gap-16">
-                    {props.type === 'Shop' ? (
-                        props.data.picture === '' ? (
-                            <Image
-                                className="w-52 basis-1/3 self-center sm:self-start"
-                                src={defaultPic}
-                                alt=""
-                            />
-                        ) : (
-                            <img
-                                src={props.data.picture}
-                                className="h-52 w-52 self-center rounded-full bg-slate-400 sm:self-start"
-                                alt=""
-                            />
-                        )
-                    ) : props.data.picture === '' ? (
-                        <Image
-                            className="w-52 basis-1/3 self-center sm:self-start"
-                            src={defaultPic}
-                            alt=""
+                    <div className="h-full">
+                        <ImageUploader
+                            onImageChange={handleImageChange}
+                            type={'Shop'}
+                            data={props.data}
                         />
-                    ) : (
-                        <img
-                            src={props.data.picture}
-                            className="h-52 w-52 self-center rounded-full bg-slate-400 sm:self-start"
-                            alt=""
-                        />
-                    )}
-
+                    </div>
                     <div className="col-span-2 flex basis-2/3 flex-col items-center gap-4 sm:items-start">
                         <input
                             className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 text-2xl font-extrabold shadow-sm placeholder:text-slate-400 sm:text-4xl"
                             value={storeName}
                             onChange={(e) => setStoreName(e.target.value)}
                         />
-                        <div className="flex flex-row items-center gap-2">
-                            <button>
-                                <Image className="h-8" src={Phone} alt={''} />
-                            </button>
-                            <input
-                                className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
-                                value={phone}
-                                onChange={(e) => setPhone(e.target.value)}
-                            />
+                        <div className="flex flex-col gap-2 md:flex-row">
+                            <div className="flex flex-row gap-2">
+                                <button>
+                                    <Image
+                                        className="h-8"
+                                        src={Phone}
+                                        alt={''}
+                                    />
+                                </button>
+                                <input
+                                    className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                    value={phone}
+                                    onChange={(e) => setPhone(e.target.value)}
+                                />
+                            </div>
+                            <div className="flex flex-row gap-2">
+                                <button>
+                                    <Image
+                                        className="ml-2 h-8"
+                                        src={Email}
+                                        alt={''}
+                                    />
+                                </button>
+                                <input
+                                    className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="flex w-full flex-row items-center gap-2">
                             <button>
                                 <Image
-                                    className="ml-2 h-8"
-                                    src={Email}
+                                    className="h-8"
+                                    src={Instagram}
                                     alt={''}
                                 />
                             </button>
                             <input
-                                className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                className="rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                placeholder="Instagram"
+                                type="url"
+                                name="Instagram"
+                                value={instagram}
+                                onChange={(e) => setInstagram(e.target.value)}
                             />
                         </div>
-
-                        <GroupButtonInput
-                            line={props.data.line}
-                            facebook={props.data.facebook}
-                            instagram={props.data.instagram}
-                            tiktok={props.data.tiktok}
-                        />
+                        <div className="flex w-full flex-row items-center gap-2">
+                            <button>
+                                <Image
+                                    className="h-8"
+                                    src={Facebook}
+                                    alt={''}
+                                />
+                            </button>
+                            <input
+                                className="rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                placeholder="Facebook"
+                                type="url"
+                                name="Facebook"
+                                value={facebook}
+                                onChange={(e) => setFacebook(e.target.value)}
+                            />
+                        </div>
+                        <div className="flex w-full flex-row items-center gap-2">
+                            <button>
+                                <Image className="h-8" src={Twitter} alt={''} />
+                            </button>
+                            <input
+                                className="rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                placeholder="Line"
+                                type="url"
+                                name="Line"
+                                value={line}
+                                onChange={(e) => setLine(e.target.value)}
+                            />
+                        </div>
+                        <div className="flex w-full flex-row items-center gap-2">
+                            <button>
+                                <Image className="h-8" src={Tiktok} alt={''} />
+                            </button>
+                            <input
+                                className="rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                placeholder="TikTok"
+                                type="url"
+                                name="TikTok"
+                                value={tiktok}
+                                onChange={(e) => setTiktok(e.target.value)}
+                            />
+                        </div>
                         {showTagSelector && (
                             <TagSelector
                                 onClose={handleTagSelectorClose}
@@ -137,12 +233,12 @@ export default function CardInfo(props: CardInfoProps) {
                         <div className="ml-5 flex flex-wrap">
                             {selectedTags.length > 0 ? (
                                 selectedTags.map((tag) => (
-                                    <div className="mx-1 flex">
+                                    <div className="mx-1 flex" key={tag.id}>
                                         <button
                                             className="flex items-center rounded-xl bg-[#F5EAEA] px-3 text-[#F16767]"
-                                            // key={tag}
+                                            key={tag.id}
                                         >
-                                            {/* {tag} */}
+                                            {tag.tagName}
                                         </button>
                                         <button
                                             className="ml-[-0.5rem] h-4 w-4 items-center justify-center rounded-full bg-[#F16767] align-middle text-[10px] font-bold text-white"
@@ -194,7 +290,7 @@ export default function CardInfo(props: CardInfoProps) {
     }
 
     return (
-        <div className="relative flex flex-row rounded-lg bg-white py-12 px-12 sm:px-20 lg:max-w-7xl xl:px-28">
+        <div className="relative flex flex-col rounded-lg bg-white py-12 px-12 sm:px-20 xl:w-[72rem]">
             <div className="flex flex-col items-center gap-8 lg:flex-row lg:gap-16">
                 {props.data.picture === '' ? (
                     <Image
@@ -212,7 +308,9 @@ export default function CardInfo(props: CardInfoProps) {
                 <div className="absolute top-8 right-8 flex items-center">
                     <button
                         onClick={() => setEditMode(!editMode)}
-                        className="mx-3 w-7 md:w-9"
+                        className={`mx-3 w-7 md:w-9 ${
+                            props.edit ? '' : 'hidden'
+                        }`}
                     >
                         <Image src={Edit} alt={''} />
                     </button>
@@ -228,7 +326,7 @@ export default function CardInfo(props: CardInfoProps) {
                     </button>
                 </div>
 
-                <div className="col-span-2 flex basis-2/3 flex-col items-center gap-4 sm:items-start">
+                <div className="col-span-2 flex basis-2/3 flex-col items-center gap-4 sm:items-start xl:w-[52rem]">
                     <h2 className="pr-4 text-center text-2xl font-extrabold sm:text-start sm:text-4xl">
                         {props.type === 'Event' ? (
                             <>{props.data.eventName}</>
@@ -279,6 +377,16 @@ export default function CardInfo(props: CardInfoProps) {
                     </p>
                 </div>
             </div>
+            {shopOwnerAccount ? (
+                <button
+                    onClick={() => setRequest(!request)}
+                    className="mx-3 w-32 justify-end self-center rounded-lg mt-4 bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-6 py-2 font-extrabold text-white hover:bg-gradient-to-r lg:self-end"
+                >
+                    {request ? 'Requested' : 'Join'}
+                </button>
+            ) : (
+                ''
+            )}
         </div>
     )
 }
