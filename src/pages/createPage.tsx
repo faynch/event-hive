@@ -1,7 +1,6 @@
 import Navbar from '../component/Navbar'
 import Footer from '../component/Footer'
 import Image from 'next/image'
-
 import Phone from '../pages/assets/phone.svg'
 import Email from '../pages/assets/email.svg'
 import Add from '@/pages/assets/add.svg'
@@ -9,13 +8,14 @@ import Instagram from '../pages/assets/instagram.svg'
 import Twitter from '../pages/assets/twitter.svg'
 import Facebook from '../pages/assets/facebook.svg'
 import Tiktok from '../pages/assets/tiktok.svg'
-import { useState } from 'react'
 import TagSelector, { Tag } from '../component/TagSelector'
 import ImageUploader from '@/component/ImageUploader'
+import { useSession } from 'next-auth/react'
 import { v4 as uuid } from 'uuid'
+import { useState } from 'react'
 import supabase from 'lib/supabase'
 
-export default function createShop() {
+export default function createPage() {
     const [storeName, setStoreName] = useState('')
     const [description, setDescription] = useState('')
     const [phone, setPhone] = useState('')
@@ -27,6 +27,10 @@ export default function createShop() {
     const [showTagSelector, setShowTagSelector] = useState(false)
     const [selectedTags, setSelectedTags] = useState<Tag[]>([])
     const [pictureFile, setPictureFile] = useState<File | null>(null)
+    const { data: session } = useSession()
+
+    const userId = session?.user?.name
+
     const handleTagSelectorClose = () => {
         setShowTagSelector(false)
     }
@@ -69,6 +73,7 @@ export default function createShop() {
                 facebook: facebook,
                 tags: tagId,
                 picture: imageUrl.data.publicUrl,
+                ro: userId,
             }
 
             const jsonData = JSON.stringify(formData)
@@ -93,7 +98,11 @@ export default function createShop() {
                                 <div className="col-span-2 flex basis-2/3 flex-col gap-4 sm:items-start">
                                     <input
                                         className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 text-2xl font-extrabold shadow-sm placeholder:text-slate-400 sm:text-4xl"
-                                        placeholder="Shop Name"
+                                        placeholder={
+                                            userId == 'shopOwner'
+                                                ? 'Shop Name'
+                                                : 'Event Name'
+                                        }
                                         value={storeName}
                                         onChange={(e) =>
                                             setStoreName(e.target.value)
