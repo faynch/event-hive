@@ -29,8 +29,6 @@ export default function createPage() {
     const [pictureFile, setPictureFile] = useState<File | null>(null)
     const { data: session } = useSession()
 
-    const userId = session?.user?.name
-
     const handleTagSelectorClose = () => {
         setShowTagSelector(false)
     }
@@ -64,20 +62,77 @@ export default function createPage() {
                 .getPublicUrl(fileName)
             console.log('Image URL:', imageUrl.data.publicUrl)
 
-            const formData = {
-                shopName: storeName,
-                about: description,
-                email: email,
-                telephone: phone,
-                instagram: instagram,
-                facebook: facebook,
-                tags: tagId,
-                picture: imageUrl.data.publicUrl,
-                ro: userId,
-            }
+            if (session?.user?.image == 'shopOwner') {
+                const formData = {
+                    shopName: storeName,
+                    about: description,
+                    address: 'test',
+                    telephone: phone,
+                    line: line,
+                    instagram: instagram,
+                    facebook: facebook,
+                    tags: tagId,
+                    picture: imageUrl.data.publicUrl,
+                    shopOwnerId: session?.user?.name,
+                }
+                const jsonData = JSON.stringify(formData)
+                console.log(jsonData)
+                try {
+                    const response = await fetch(
+                        'http://localhost:3000/api/shops/registration',
+                        {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: jsonData,
+                        }
+                    )
 
-            const jsonData = JSON.stringify(formData)
-            console.log(jsonData)
+                    if (response.ok) {
+                        console.log('Data successfully submitted!')
+                    } else {
+                        console.log('Failed to submit data')
+                    }
+                } catch (error) {
+                    console.error('Error:', error)
+                }
+            } else {
+                const formData = {
+                    shopName: storeName,
+                    about: description,
+                    address: 'test',
+                    telephone: phone,
+                    line: line,
+                    instagram: instagram,
+                    facebook: facebook,
+                    tags: tagId,
+                    picture: imageUrl.data.publicUrl,
+                    eventOrganizerId: session?.user?.name,
+                }
+                const jsonData = JSON.stringify(formData)
+                console.log(jsonData)
+                try {
+                    const response = await fetch(
+                        'http://localhost:3000/api/events/registration',
+                        {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: jsonData,
+                        }
+                    )
+
+                    if (response.ok) {
+                        console.log('Data successfully submitted!')
+                    } else {
+                        console.log('Failed to submit data')
+                    }
+                } catch (error) {
+                    console.error('Error:', error)
+                }
+            }
         }
     }
 
@@ -99,7 +154,7 @@ export default function createPage() {
                                     <input
                                         className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 text-2xl font-extrabold shadow-sm placeholder:text-slate-400 sm:text-4xl"
                                         placeholder={
-                                            userId == 'shopOwner'
+                                            session?.user?.image == 'shopOwner'
                                                 ? 'Shop Name'
                                                 : 'Event Name'
                                         }
