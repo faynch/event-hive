@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client'
+import { transformDocument } from '@prisma/client/runtime';
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
@@ -14,9 +15,32 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             ],
         },
         include: {
-            users: true,
-            shops: true,
-            events: true,
+            users: {
+                include: {
+                    favouriteShops: true,
+                    favouriteEvents: true,
+                },
+
+            },
+            shops: {
+                include:{ 
+                    tags: true,
+                    shopOwner: true,
+                    eventApplications: true,
+                    eventParticipations: true,
+                    favouriteByUsers:true,
+                    products: true,
+                }
+            },
+            events: {
+                include:{ 
+                    tags: true,
+                    eventOrganizer: true,
+                    shopApplications: true,
+                    shopParticipations:true,
+                    favouriteByUsers: true,
+                }
+            },
         },
     },
     );
