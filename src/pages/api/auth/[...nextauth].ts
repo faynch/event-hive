@@ -41,6 +41,7 @@ export const authOptions: NextAuthOptions = {
                 
                 if (user) {
                     const returnSession = {
+                        id: user.existingEmail.id,
                         name: user.existingEmail.id,
                         email: user.existingEmail.email,
                         image: user.role,
