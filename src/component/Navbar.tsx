@@ -122,9 +122,9 @@ const Navbar = () => {
                         </button>
                         <div className="flex items-center gap-6">
                             <div className="justify-end rounded-lg font-extrabold">
-                                Signed in as {session.user.email}
+                                Signed in as {session.user.name}
                             </div>
-                            <div className="justify-end rounded-lg font-extrabold hover:text-primary text-md" onClick={() => signOut()}>
+                            <div className="justify-end rounded-lg font-extrabold hover:text-primary text-md" onClick={() => signOut({callbackUrl: `${window.location.origin}`})}>
                                 Sign Out
                             </div>
                         </div>
