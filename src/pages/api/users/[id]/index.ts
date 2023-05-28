@@ -17,6 +17,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 },
             ],
         },
+        include: {
+            tags: true,
+            favouriteShops: true,
+            favouriteEvents: true,
+        }
     },
     );
 
