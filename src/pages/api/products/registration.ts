@@ -24,7 +24,7 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
                 shop: productShop,
             },
         });
-        return res.status(200).json(shop);
+        return res.status(200).json(product);
     } catch (error) {
         return res.status(400).json({message: 'Something went wrong'});
     }
