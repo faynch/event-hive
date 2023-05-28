@@ -36,15 +36,14 @@ export const authOptions: NextAuthOptions = {
                     }),
                 })
 
-                const user = await res.json()                
+                const user = await res.json()               
                 console.log("here is the user/n", user)
                 
                 if (user) {
                     const returnSession = {
-                        id: user.existingEmail.id,
-                        name: user.existingEmail.firstName + ' ' + user.existingEmail.lastName,
+                        name: user.existingEmail.id,
                         email: user.existingEmail.email,
-                        image: null,
+                        image: user.role,
                     }
                     console.log(returnSession)
                     console.log('log in successed')
