@@ -1,6 +1,7 @@
 import Navbar from '../component/Navbar'
 import CardInfo from '../component/CardInfo'
 import Footer from '../component/Footer'
+import Create from '../component/comp'
 
 import { useState } from 'react'
 
@@ -62,7 +63,9 @@ function ShopInfo({ data }: any) {
     const handleImageChange = (file: File | null) => {
         setPictureFile(file) // Store the selected image file
     }
-
+    if (data == null) {
+        return <Create />
+    }
     return (
         <>
             <div className="flex min-h-screen flex-col">
@@ -80,12 +83,12 @@ function ShopInfo({ data }: any) {
 
                                 <div className="flex w-full flex-col items-center gap-4 rounded-lg bg-[#F5EAEA] p-12 drop-shadow-xl lg:max-w-5xl lg:gap-8">
                                     <div className="h-full">
-                                <ImageUploader
-                                    onImageChange={handleImageChange}
-                                    type={'Shop'}
-                                    data={data}
-                                />
-                            </div>
+                                        <ImageUploader
+                                            onImageChange={handleImageChange}
+                                            type={'Shop'}
+                                            data={data}
+                                        />
+                                    </div>
                                     <div className="flex w-full flex-row items-center">
                                         <h5 className="mr-8 text-xl font-extrabold text-[#A459D1] md:text-2xl">
                                             Name
@@ -148,13 +151,13 @@ function ShopInfo({ data }: any) {
                                         PRODUCT HIGHLIGHTS
                                     </h3>
                                     <button>
-                                <Image
-                                    className="w-6"
-                                    src={Add}
-                                    alt={''}
-                                    onClick={() => setEdit(true)}
-                                />
-                            </button>
+                                        <Image
+                                            className="w-6"
+                                            src={Add}
+                                            alt={''}
+                                            onClick={() => setEdit(true)}
+                                        />
+                                    </button>
                                 </div>
                                 <div className="relative overflow-hidden lg:max-w-5xl">
                                     <div
@@ -165,13 +168,13 @@ function ShopInfo({ data }: any) {
                                             }%)`,
                                         }}
                                     >
-                                        {slides.map((items: any) => (
+                                        {slides == undefined? "" :slides.map((items: any) => (
                                             <div className="flex w-full flex-none justify-center">
                                                 <div className="grid grid-cols-1 content-center justify-items-center gap-4 lg:grid-cols-2 lg:justify-items-end lg:gap-12">
                                                     {items.image != '' ? (
                                                         <img
                                                             src={items.image}
-                                                            className="w-40 md:w-52"
+                                                            className="w-40 rounded-full md:w-52"
                                                             alt={''}
                                                         />
                                                     ) : (
@@ -198,7 +201,7 @@ function ShopInfo({ data }: any) {
                                                         <p className="text-center font-extrabold">
                                                             {items.price} ฿
                                                         </p>
-                                                        <button
+                                                        {/* <button
                                                             className="rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-8 py-2 text-center font-extrabold text-white hover:bg-gradient-to-r"
                                                             onClick={() =>
                                                                 deleteSlide(
@@ -207,7 +210,7 @@ function ShopInfo({ data }: any) {
                                                             }
                                                         >
                                                             Delete
-                                                        </button>
+                                                        </button> */}
                                                     </div>
                                                 </div>
                                             </div>
@@ -215,7 +218,7 @@ function ShopInfo({ data }: any) {
                                     </div>
                                     <div
                                         className={`absolute left-5 top-1/3 hidden md:flex ${
-                                            slides.length <= 1
+                                            (slides == undefined || slides.length <= 1 )
                                                 ? 'invisible'
                                                 : ''
                                         }`}
@@ -226,7 +229,7 @@ function ShopInfo({ data }: any) {
                                     </div>
                                     <div
                                         className={`absolute right-5 top-1/3 hidden md:flex ${
-                                            slides.length <= 1
+                                            (slides == undefined || slides.length <= 1 )
                                                 ? 'invisible'
                                                 : ''
                                         }`}
@@ -238,10 +241,10 @@ function ShopInfo({ data }: any) {
                                 </div>
                                 <div
                                     className={`flex items-center justify-center gap-2 py-4 ${
-                                        slides.length <= 1 ? 'invisible' : ''
+                                        (slides == undefined || slides.length <= 1 ) ? 'invisible' : ''
                                     }`}
                                 >
-                                    {slides.map((_: any, i: number) => (
+                                    {slides == undefined? "" :slides.map((_: any, i: number) => (
                                         <button
                                             key={i}
                                             onClick={() => handleClick(i)}
@@ -265,13 +268,15 @@ function ShopInfo({ data }: any) {
 export async function getServerSideProps(context: { req: any; query: any }) {
     const { req, query } = context
     const valueFromRouter = query.id
+    console.log(valueFromRouter)
     const data = await fetch(
-        `http://localhost:3000/api/shops/3ae40f23-f2f1-43f6-82ca-d7449730109f`
+        `http://localhost:3000/api/shopowners/${valueFromRouter}`
     )
     const jsonData = await data.json()
+    console.log(jsonData[0].shop)
     return {
         props: {
-            data: jsonData[0],
+            data: jsonData[0].shop,
         },
     }
 }
