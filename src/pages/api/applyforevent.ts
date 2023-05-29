@@ -25,7 +25,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const updatedEvent = await prisma.event.update({
       where: { id: eventId },
-      data: { shopApplications: { connect: { id: shopId } } },
+      data: { shopApplications: { connect: { id: shopId } }},
+      include: { shopApplications: true }
     });
 
     return res.status(200).json(updatedEvent);
