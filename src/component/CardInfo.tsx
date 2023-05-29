@@ -21,6 +21,7 @@ import supabase from 'lib/supabase'
 import ImageUploader from './ImageUploader'
 import { DatePicker } from 'antd'
 const { RangePicker } = DatePicker
+import { useSession } from 'next-auth/react'
 
 interface CardInfoProps {
     type: string
@@ -29,6 +30,7 @@ interface CardInfoProps {
 }
 
 export default function CardInfo(props: CardInfoProps) {
+    const { data: session } = useSession()
     const [storeName, setStoreName] = useState(props.data?.shopName || '')
     const [eventName, setEventName] = useState(props.data?.eventName || '')
     const [description, setDescription] = useState(props.data?.about || '')
@@ -411,6 +413,7 @@ export default function CardInfo(props: CardInfoProps) {
                     >
                         <Image src={Edit} alt={''} />
                     </button>
+                    {session?.user ? 
                     <button
                         onClick={() => setLike(!like)}
                         className="w-6 md:w-8"
@@ -420,7 +423,7 @@ export default function CardInfo(props: CardInfoProps) {
                         ) : (
                             <Image src={Unlike} alt={''} />
                         )}
-                    </button>
+                    </button> : ""}
                 </div>
 
                 <div className="col-span-2 flex basis-2/3 flex-col items-center gap-4 sm:items-start xl:w-[52rem]">
