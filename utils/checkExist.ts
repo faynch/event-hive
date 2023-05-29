@@ -29,7 +29,7 @@ export default async function checkExist(email: string){
         return {query: existingUser, role: "visitor"};
     }else if(existingShopOwner){
         return {query: existingShopOwner, role: "shopOwner"};
-    }else if(existingShopOwner){
+    }else if(existingEventOrganizer){
         return {query: existingEventOrganizer, role: "eventOrganizer"};
     }else{
         return null;
