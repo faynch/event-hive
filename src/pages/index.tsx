@@ -7,7 +7,7 @@ import Card from '../component/Card'
 import Footer from '../component/Footer'
 import { useState, useEffect } from 'react'
 
-import Calendar from '../pages/assets/Calendar.svg'
+import Calendar from '../pages/assets/calendar.svg'
 import Right from '../pages/assets/right.svg'
 import Left from '../pages/assets/left.svg'
 import { useRouter } from 'next/router'
