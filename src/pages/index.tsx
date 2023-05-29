@@ -38,7 +38,7 @@ function Home({ eventdata, shopdata }: any) {
     }, [])
 
     function isAvailble(item: any) {
-        if (item.line == '' && item.facebook == '' && item.instagram == '')
+        if (item.line == '' && item.facebook == '' && item.instagram == '' && item.tiktok == '')
             return false
         return true
     }

@@ -14,6 +14,7 @@ interface CardProps {
 }
 
 export default function Card(props: CardProps) {
+    console.log(props.data)
     const [active, setActive] = useState(false)
 
     const { data: session } = useSession()
@@ -33,7 +34,8 @@ export default function Card(props: CardProps) {
         if (
             props.data.line == '' &&
             props.data.facebook == '' &&
-            props.data.instagram == ''
+            props.data.instagram == '' &&
+            props.data.tiktok == ''
         )
             return false
         return true
