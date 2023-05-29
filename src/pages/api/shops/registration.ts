@@ -11,7 +11,7 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
     try{
         // what will the website be, will the shop owner create product when they create shop
         const { shopName, about, address, picture, tags, telephone, facebook, instagram, line
-            , tiktok, shopOwnerId, eventApplications, eventParticipations, favouriteByUsers, products } = req.body;
+            , tiktok, shopOwnerId, eventApplications, eventParticipations, favouriteByVisitors, products } = req.body;
         const prisma = new PrismaClient;
 
         if(!shopName || !about || !address || !tags || !telephone || !shopOwnerId){
@@ -28,7 +28,7 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
         const validOwnerId = await validateInput(shopOwnerId, 'shopOwner');
         const shopEventApplications = await validateInput(eventApplications, 'event');
         const shopEventParticipations = await validateInput(eventParticipations, 'event');
-        const shopFavouriteByVisitors = await validateInput(favouriteByUsers, 'user');
+        const shopFavouriteByVisitors = await validateInput(favouriteByVisitors, 'visitor');
 
         const shop = await prisma.shop.create({
             data: {

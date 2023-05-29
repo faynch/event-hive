@@ -14,6 +14,10 @@ export default async function validateInput(fieldValues: any, modelName: string)
         throw new Error(`${modelName}  does not exist`)
     }
 
+    if (!Array.isArray(fieldValues)) {
+        fieldValues = [fieldValues];
+    }
+
     if (fieldValues.length == 1) {
         return {
             connect: {

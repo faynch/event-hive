@@ -12,11 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   //need to be in session before using the follows feature
   const session = await getSession({ req });
 
-  if (!session) {
-    return res.status(401).json({ message: 'Unauthorized' });
-  }
-
-  if(!session.user){
+  if (!session || !session.user || !session.user.name) {
     return res.status(401).json({ message: 'Unauthorized' });
   }
 

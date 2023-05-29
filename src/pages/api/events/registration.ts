@@ -10,7 +10,7 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
     try{
         // need to give defaut parameter for picture (like default pic of the event)
         const { eventName, about, location, picture, tags, startDate, endDate, telephone, facebook, instagram
-            , line, tiktok, eventOrganizerId, shopApplications, shopParticipations, favouriteByUsers } = req.body;
+            , line, tiktok, eventOrganizerId, shopApplications, shopParticipations, favouriteByVisitors } = req.body;
         const prisma = new PrismaClient;
         
         if(!eventName || !about || !location || !tags || !startDate || !endDate || !telephone || !eventOrganizerId){
@@ -28,7 +28,7 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
         // wonder if these supposed to be initialized later
         const eventShopApplications = await validateInput(shopApplications, 'shop');
         const eventShopParticipations = await validateInput(shopParticipations, 'shop');
-        const eventFavouriteByVisitors = await validateInput(favouriteByUsers, 'user');
+        const eventFavouriteByVisitors = await validateInput(favouriteByVisitors, 'visitor');
         
         const event = await prisma.event.create({
             data: {

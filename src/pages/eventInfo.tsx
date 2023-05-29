@@ -15,6 +15,8 @@ function EventInfo({ data }: any) {
     const [curr, setCurr] = useState(0)
     const { data: session } = useSession()
 
+    const [request, setRequest] = useState(false)
+
     const slides = data.shopParticipations
     const owner = session?.user?.name === data.shopOwnerId ? true : false
 
@@ -25,6 +27,41 @@ function EventInfo({ data }: any) {
 
     function handleClick(i: number) {
         setCurr(i)
+    }
+
+    
+
+    const handleRequest = async () => {
+        
+        const formData = {
+            shopId : session?.user?.name,
+            eventId : data.id
+        }
+
+        try {
+            const response = await fetch(
+                `http://localhost:3000/api/applyforevent`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                }
+            )
+
+            if (response.ok) {
+                // Successful response, handle accordingly
+                console.log('Data successfully submitted!')
+                // window.location.reload()
+            } else {
+                // Error response, handle accordingly
+                console.log('Failed to submit data')
+            }
+        } catch (error) {
+            // Error occurred during the request, handle accordingly
+            console.error('Error:', error)
+        }
     }
 
     const router = useRouter()
@@ -38,7 +75,21 @@ function EventInfo({ data }: any) {
                 <Navbar />
                 <div className="flex-grow">
                     <div className="my-12 grid justify-center px-8 md:py-8 md:px-20">
-                        <CardInfo type="Event" edit={owner} data={data} />
+                        <CardInfo
+                            type="Event"
+                            edit={owner}
+                            data={data}
+                        />
+                        {session?.user?.image == 'shopOwner' ? (
+                            <button
+                                onClick={() => handleRequest()}
+                                className="mx-3 mt-4 w-32 justify-end self-center rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-6 py-2 font-extrabold text-white hover:bg-gradient-to-r lg:self-end"
+                            >
+                                {request ? 'Requested' : 'Join'}
+                            </button>
+                        ) : (
+                            ''
+                        )}
                     </div>
                     <div
                         className={`flex flex-col items-center justify-center gap-8 pb-12 md:px-24 ${
