@@ -15,7 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const events = await prisma.event.findMany({
     where: {
         tags: {
-            some:{
+            every:{
                 id: {
                     in: tagIds,
                 },
