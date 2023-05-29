@@ -16,7 +16,7 @@ import ImageUploader from '../component/ImageUploader'
 
 import { v4 as uuidv4 } from 'uuid'
 
-function ShopInfo({ data }: any) {
+function shopowneracc({ data }: any) {
     const [curr, setCurr] = useState(0)
 
     const [edit, setEdit] = useState(false)
@@ -281,4 +281,4 @@ export async function getServerSideProps(context: { req: any; query: any }) {
     }
 }
 
-export default ShopInfo
+export default shopowneracc

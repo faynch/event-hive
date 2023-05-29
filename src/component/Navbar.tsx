@@ -18,7 +18,12 @@ const Navbar = () => {
     const valueToSend = session?.user?.name
 
     const sendAccValue = () => {
-        router.push(`/shopowneracc?id=${valueToSend}`)
+        if (session?.user?.image == "shopOwner") {
+            router.push(`/shopowneracc?id=${valueToSend}`)
+        }
+        else if (session?.user?.image == "eventOrganizer") {
+            router.push(`/eventorganizeracc`)
+        }
     }
 
     return (
