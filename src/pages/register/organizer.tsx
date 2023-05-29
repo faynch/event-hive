@@ -5,7 +5,7 @@ import Footer from '../../component/Footer'
 import Link from 'next/link'
 import { useState } from 'react'
 
-export default function organizer() {
+export default function Organizer() {
     const [password, setPassword] = useState('')
     const [companyName, setCompanyName] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')

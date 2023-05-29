@@ -16,7 +16,7 @@ import { v4 as uuid } from 'uuid'
 import { useState } from 'react'
 import supabase from 'lib/supabase'
 
-export default function createPage() {
+export default function CreatePage() {
     const [storeName, setStoreName] = useState('')
     const [description, setDescription] = useState('')
     const [address, setAddress] = useState('')

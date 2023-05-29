@@ -5,7 +5,7 @@ import Footer from '../../component/Footer'
 import Link from 'next/link'
 import { useState } from 'react'
 
-export default function shop() {
+export default function Shop() {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [password, setPassword] = useState('')

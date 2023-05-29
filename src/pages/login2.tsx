@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import EventHive from '../pages/assets/eventHive.svg'
 
-export default function login() {
+export default function Login() {
     const email = useRef("")
     const password = useRef("")
 
@@ -20,7 +20,7 @@ export default function login() {
     return (
         <>
             <div className="mx-auto my-24 flex flex-col items-center gap-8 rounded-lg bg-[#F5EAEA] p-12 drop-shadow-xl max-w-md lg:max-w-lg">
-            <a href="/">
+            <Link href="/">
                 <div className="flex flex-row items-center py-4">
                     <Image
                         className="mr-3 w-8"
@@ -31,7 +31,7 @@ export default function login() {
                         EVENT HIVE
                     </span>
                 </div>
-                </a>
+                </Link>
                 <div className="flex w-full flex-row items-center">
                     <h5 className="mr-8 text-xl font-extrabold text-[#A459D1] md:text-2xl">
                         EMAIL
@@ -65,7 +65,7 @@ export default function login() {
                 <hr className="w-full my-4 bg-[#989898] h-0.5" />
                 <div className="flex flex-row items-center">
                     <p>
-                    Don't have an account? </p>
+                    Don&rsquo;t have an account?</p>
                     <Link
                         href="/register"
                         className="justify-end rounded-lg hover:underline decoration-2 underline-offset-2 font-extrabold text-primary pl-4 text-xl"

@@ -11,7 +11,7 @@ import { useState } from 'react'
 import { getServerSession } from 'next-auth'
 import { authOptions } from './api/auth/[...nextauth]'
 
-function shops({ shopdata, tags }: any) {
+function Shops({ shopdata, tags }: any) {
     const [filter, setFilter] = useState(false)
     const [items, setItems] = useState(shopdata)
     const [searchTag, setSearchtag] = useState(0)
@@ -82,6 +82,7 @@ function shops({ shopdata, tags }: any) {
                             <div className="grid grid-cols-3 gap-4 lg:grid-cols-5">
                                 {tags.map((tag: any) => (
                                     <Button
+                                        key={tag.id}
                                         id={tag.id}
                                         data={tag.tagName}
                                         onValue={handleValue}
@@ -94,7 +95,7 @@ function shops({ shopdata, tags }: any) {
                         </h4>
                         <div className="mb-8 grid grid-cols-1 gap-8 place-self-center lg:max-w-7xl lg:grid-cols-2 xl:grid-cols-3">
                             {items.map((item: any) => (
-                                <Card type="Shop" data={item} />
+                                <Card key={item.id} type="Shop" data={item} />
                             ))}
                         </div>
                     </div>
@@ -125,4 +126,4 @@ export async function getServerSideProps(context: any) {
     }
 }
 
-export default shops
+export default Shops

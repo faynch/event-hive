@@ -111,7 +111,7 @@ function EventInfo({ data }: any) {
                                 }}
                             >
                                 {slides.map((items: any) => (
-                                    <div className="flex w-full flex-none justify-center">
+                                    <div key={items.id} className="flex w-full flex-none justify-center">
                                         <div className="grid grid-cols-1 content-center justify-items-center gap-4 lg:grid-cols-2 lg:justify-items-end lg:gap-12">
                                             <button
                                                 onClick={() =>
@@ -132,7 +132,7 @@ function EventInfo({ data }: any) {
                                                     />
                                                 )}
                                             </button>
-                                            <div className="flex flex-col gap-2 pb-2 lg:items-start lg:pt-8 lg:pr-24 xl:pr-36">
+                                            <div key={items.id} className="flex flex-col gap-2 pb-2 lg:items-start lg:pt-8 lg:pr-24 xl:pr-36">
                                                 <button
                                                     onClick={() =>
                                                         sendShopValue(items.id)

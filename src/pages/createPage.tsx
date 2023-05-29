@@ -18,7 +18,7 @@ import supabase from 'lib/supabase'
 import { DatePicker } from 'antd'
 const { RangePicker } = DatePicker
 
-export default function createPage() {
+export default function CreatePage() {
     const [storeName, setStoreName] = useState('')
     const [eventName, setEventName] = useState('')
     const [description, setDescription] = useState('')

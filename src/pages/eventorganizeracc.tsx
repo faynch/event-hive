@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 
-function eventorganizeracc({ data, id }: any) {
+function Eventorganizeracc({ data, id }: any) {
     const router = useRouter()
 
     const handleCreateClick = () => {
@@ -57,4 +57,4 @@ export async function getServerSideProps(context: { req: any; query: any }) {
     }
 }
 
-export default eventorganizeracc
+export default Eventorganizeracc

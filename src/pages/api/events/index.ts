@@ -7,7 +7,7 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
     const events = await prisma.event.findMany({
         where: {
             endDate: {
-              gte: currentDate,
+              gte: currentDate.toISOString(),
             },
         },
         orderBy: {

@@ -38,7 +38,7 @@ export default function Register() {
                         </Link>
                     </div>
                     <div className="mt-8 flex flex-col-reverse gap-x-12 lg:flex-row items-center">
-                        <a href="/">
+                        <Link href="/">
                             <div className="flex flex-row items-center py-8">
                                 <Image
                                     className="mr-3 w-8"
@@ -49,7 +49,7 @@ export default function Register() {
                                     EVENT HIVE
                                 </span>
                             </div>
-                        </a>
+                        </Link>
                         <div className="flex flex-row items-center ">
                             <p className="text-xl">Have an account already?</p>
                             <Link

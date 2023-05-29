@@ -30,7 +30,7 @@ const Navbar = () => {
             <div className="justify-stretch mx-auto px-8 md:flex md:items-center lg:max-w-7xl">
                 <div className="md:basis-1/3">
                     <div className="flex py-5 md:block">
-                        <a href="/" className="w-48 grow">
+                        <Link href="/" className="w-48 grow">
                             <div className="flex flex-row">
                                 <Image
                                     className="mr-3 w-6"
@@ -41,7 +41,7 @@ const Navbar = () => {
                                     EVENT HIVE
                                 </span>
                             </div>
-                        </a>
+                        </Link>
                         <div className="flex items-center space-x-3 md:hidden">
                             {session?.user ? (
                                 <button onClick={sendAccValue}>
@@ -73,7 +73,7 @@ const Navbar = () => {
                     >
                         <ul className="justify-center space-y-8 text-center md:flex md:space-x-12 md:space-y-0 ">
                             <li className="text-xl font-extrabold">
-                                <a
+                                <Link
                                     href="/shops"
                                     className={`hover:text-secondary ${
                                         currentRoute === '/shops'
@@ -82,11 +82,11 @@ const Navbar = () => {
                                     }`}
                                 >
                                     Stores
-                                </a>
+                                </Link>
                             </li>
 
                             <li className="text-xl font-extrabold">
-                                <a
+                                <Link
                                     href="/events"
                                     className={`hover:text-secondary ${
                                         currentRoute === '/events'
@@ -95,11 +95,11 @@ const Navbar = () => {
                                     }`}
                                 >
                                     Events
-                                </a>
+                                </Link>
                             </li>
                             {session?.user ? (
                                 <li className="text-xl font-extrabold">
-                                    <a
+                                    <Link
                                         href="/favourites"
                                         className={`hover:text-secondary ${
                                             currentRoute === '/favourites'
@@ -108,14 +108,14 @@ const Navbar = () => {
                                         }`}
                                     >
                                         Favourites
-                                    </a>
+                                    </Link>
                                 </li>
                             ) : (
                                 ''
                             )}
                             <li className="text-xl font-extrabold">
                                 {session?.user ? (
-                                    <a
+                                    <Link
                                         href="/"
                                         onClick={() => signOut()}
                                         className={`rounded-lg decoration-2 underline-offset-2 hover:underline md:hidden ${
@@ -125,9 +125,9 @@ const Navbar = () => {
                                         }`}
                                     >
                                         Sign out
-                                    </a>
+                                    </Link>
                                 ) : (
-                                    <a
+                                    <Link
                                         href="/"
                                         onClick={() => signIn()}
                                         className={`rounded-lg decoration-2 underline-offset-2 hover:underline md:hidden ${
@@ -137,7 +137,7 @@ const Navbar = () => {
                                         }`}
                                     >
                                         Sign in
-                                    </a>
+                                    </Link>
                                 )}
                             </li>
                         </ul>

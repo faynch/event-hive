@@ -16,7 +16,7 @@ import ImageUploader from '../component/ImageUploader'
 
 import { v4 as uuid } from 'uuid'
 
-function shopowneracc({ data }: any) {
+function Shopowneracc({ data }: any) {
     const [curr, setCurr] = useState(0)
 
     const [edit, setEdit] = useState(false)
@@ -248,7 +248,7 @@ function shopowneracc({ data }: any) {
                                         {slides == undefined
                                             ? ''
                                             : slides.map((items: any) => (
-                                                  <div className="flex w-full flex-none justify-center">
+                                                  <div key={items.id} className="flex w-full flex-none justify-center">
                                                       <div className="grid grid-cols-1 content-center justify-items-center gap-4 lg:grid-cols-2 lg:justify-items-end lg:gap-12">
                                                           {items.image != '' ? (
                                                               <img
@@ -266,7 +266,7 @@ function shopowneracc({ data }: any) {
                                                               />
                                                           )}
 
-                                                          <div className="flex flex-col gap-2 pb-2 lg:items-start lg:pt-8 lg:pr-24 xl:pr-36">
+                                                          <div key={items.id} className="flex flex-col gap-2 pb-2 lg:items-start lg:pt-8 lg:pr-24 xl:pr-36">
                                                               <h4 className="text-center text-xl font-extrabold">
                                                                   {
                                                                       items.productName
@@ -375,4 +375,4 @@ export async function getServerSideProps(context: { req: any; query: any }) {
     }
 }
 
-export default shopowneracc
+export default Shopowneracc

@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { getServerSession } from 'next-auth'
 import { authOptions } from './api/auth/[...nextauth]'
 
-function favourites({ eventdata, shopdata }: any) {
+function Favourites({ eventdata, shopdata }: any) {
     const [toggle, setToggle] = useState(false)
 
     return (
@@ -39,13 +39,13 @@ function favourites({ eventdata, shopdata }: any) {
                             {toggle ? (
                                 <>
                                     {shopdata.map((item: any) => (
-                                        <Card type="Shop" data={item} />
+                                        <Card key={item.id} type="Shop" data={item} />
                                     ))}
                                 </>
                             ) : (
                                 <>
                                     {eventdata.map((item: any) => (
-                                        <Card type="Event" data={item} />
+                                        <Card key={item.id} type="Event" data={item} />
                                     ))}
                                 </>
                             )}
@@ -78,4 +78,4 @@ export async function getServerSideProps(context: any) {
     }
 }
 
-export default favourites
+export default Favourites
