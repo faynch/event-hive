@@ -3,7 +3,7 @@ import CardInfo from '../component/CardInfo'
 import Footer from '../component/Footer'
 
 import { useSession } from 'next-auth/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 
 import Image from 'next/image'
@@ -13,14 +13,14 @@ import Left from '../pages/assets/left.svg'
 import { PrismaClient } from '@prisma/client'
 
 function EventInfo({ data }: any) {
-
     const [curr, setCurr] = useState(0)
     const { data: session } = useSession()
-
     const [request, setRequest] = useState(false)
+    
 
     const slides = data.shopParticipations
     const owner = session?.user?.name === data.eventOrganizerId ? true : false
+
 
     const prev = () =>
         setCurr((curr) => (curr === 0 ? slides.length - 1 : curr - 1))
@@ -30,20 +30,43 @@ function EventInfo({ data }: any) {
     function handleClick(i: number) {
         setCurr(i)
     }
+    useEffect(() => {
+            handleApplication()           
+      }, []);
+    
+    async function handleApplication() {
+        const shopOwnerId = session?.user?.name!
+        const endpoint = `http://localhost:3000/api/shopowners/${shopOwnerId}`
+        // var request = false
+        
+        const shopIdResponse = await fetch(endpoint)
+        const jsonData = await shopIdResponse.json()
+        const items = jsonData[0].shop.eventApplications
+        items.map((item: any) => {
+            // console.log(item.id == data.id)
+                if (item.id == data.id) {
+                    console.log(item.id == data.id)
+                    setRequest(true)
+                }        
+        })
+    }
 
     const handleRequest = async () => {
-        const shopOwnerId = session?.user?.name!;
-        const endpoint = `http://localhost:3000/api/shopowners/${shopOwnerId}`;
+        const shopOwnerId = session?.user?.name!
+        const endpoint = `http://localhost:3000/api/shopowners/${shopOwnerId}`
 
         try {
-            const shopIdResponse = await fetch(endpoint, {method: 'GET', headers:{'Content-Type': 'application/json'}})
+            const shopIdResponse = await fetch(endpoint, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+            })
 
-            if(shopIdResponse.ok){
-                const shopData = await shopIdResponse.json();
+            if (shopIdResponse.ok) {
+                const shopData = await shopIdResponse.json()
 
                 const formData = {
-                    shopId : shopData[0].shop.id,
-                    eventId : data.id
+                    shopId: shopData[0].shop.id,
+                    eventId: data.id,
                 }
                 const response = await fetch(
                     `http://localhost:3000/api/applyforevent`,
@@ -54,7 +77,7 @@ function EventInfo({ data }: any) {
                         },
                         body: JSON.stringify(formData),
                     }
-                    )
+                )
                 if (response.ok) {
                     // Successful response, handle accordingly
                     console.log('Data successfully submitted!')
@@ -64,7 +87,6 @@ function EventInfo({ data }: any) {
                     console.log('Failed to submit data')
                 }
             }
-            
         } catch (error) {
             // Error occurred during the request, handle accordingly
             console.error('Error:', error)
