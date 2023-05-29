@@ -65,6 +65,14 @@ export default function RegisterVisitor() {
     })
 
     async function handleSubmit() {
+        if (!passwordMatch) {
+            setPasswordMatch(false)
+            return
+        }
+        if (!firstName || !lastName || !email || !isValidEmail) {
+            return
+        }
+
         const formData = {
             firstName: firstName,
             lastName: lastName,
@@ -90,6 +98,7 @@ export default function RegisterVisitor() {
             if (response.ok) {
                 // Successful response, handle accordingly
                 console.log('Data successfully submitted!')
+                window.location.href = '/login2'
             } else {
                 // Error response, handle accordingly
                 console.log('Failed to submit data')
@@ -119,7 +128,7 @@ export default function RegisterVisitor() {
                                     />
                                 </div>
                                 <div className="max-w-[740px] rounded-lg bg-[#F5EAEA] p-10 drop-shadow-lg">
-                                    <div className="grid grid-cols-2 gap-3">
+                                    <div className="mb-3 grid grid-cols-2 gap-3">
                                         <div>
                                             <h5 className="mb-3 text-sm font-extrabold text-[#A459D1] lg:text-2xl">
                                                 FIRST NAME
@@ -147,8 +156,16 @@ export default function RegisterVisitor() {
                                             />
                                         </div>
                                     </div>
-                                    <div className="my-3">
-                                        <h5 className="my-3 mr-10 text-sm font-extrabold text-[#A459D1] lg:text-2xl">
+                                    <div className="flex justify-end">
+                                        {!firstName && !lastName && (
+                                            <p className="text-red-500">
+                                                Please enter a first name and
+                                                last name
+                                            </p>
+                                        )}
+                                    </div>
+                                    <div className="mb-3">
+                                        <h5 className="mb-3 mr-10 text-sm font-extrabold text-[#A459D1] lg:text-2xl">
                                             EMAIL
                                         </h5>
                                         <input
@@ -168,8 +185,8 @@ export default function RegisterVisitor() {
                                             </p>
                                         )}
                                     </div>
-                                    <div className="my-3">
-                                        <h5 className="my-3 mr-10 text-sm font-extrabold text-[#A459D1] lg:text-2xl">
+                                    <div className="mb-3">
+                                        <h5 className="mb-3 mr-10 text-sm font-extrabold text-[#A459D1] lg:text-2xl">
                                             PASSWORD
                                         </h5>
                                         <input
@@ -181,8 +198,8 @@ export default function RegisterVisitor() {
                                             onChange={handlePasswordChange}
                                         />
                                     </div>
-                                    <div className="my-3">
-                                        <h5 className="my-3 mr-10 text-sm font-extrabold text-[#A459D1] lg:text-2xl">
+                                    <div className="mb-3">
+                                        <h5 className="mb-3 mr-10 text-sm font-extrabold text-[#A459D1] lg:text-2xl">
                                             CONFIRM PASSWORD
                                         </h5>
                                         <input

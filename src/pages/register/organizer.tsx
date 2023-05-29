@@ -44,6 +44,14 @@ export default function organizer() {
     }
 
     async function handleSubmit() {
+        if (!passwordMatch) {
+            setPasswordMatch(false)
+            return
+        }
+        if (!companyName || !email || !isValidEmail) {
+            return
+        }
+
         const formData = {
             companyName: companyName,
             email: email,
@@ -71,6 +79,7 @@ export default function organizer() {
             if (response.ok) {
                 // Successful response, handle accordingly
                 console.log('Data successfully submitted!')
+                window.location.href = '/login2'
             } else {
                 // Error response, handle accordingly
                 console.log('Failed to submit data')
@@ -99,8 +108,8 @@ export default function organizer() {
                                     />
                                 </div>
                                 <div className="w-full max-w-[500px] rounded-lg bg-[#F5EAEA] p-10 drop-shadow-lg">
-                                    <div className="my-3">
-                                        <h5 className="text-sm font-extrabold text-[#A459D1] lg:text-2xl">
+                                    <div className="mb-3">
+                                        <h5 className="mb-3 text-sm font-extrabold text-[#A459D1] lg:text-2xl">
                                             COMPANY NAME
                                         </h5>
                                         <input
@@ -112,8 +121,15 @@ export default function organizer() {
                                             onChange={handleCompanyNameChange}
                                         />
                                     </div>
-                                    <div className="my-3">
-                                        <h5 className="my-3 mr-10 text-sm font-extrabold text-[#A459D1] lg:text-2xl">
+                                    <div className="flex justify-end">
+                                        {!companyName && (
+                                            <p className="text-red-500">
+                                                Please enter company name
+                                            </p>
+                                        )}
+                                    </div>
+                                    <div className="mb-3">
+                                        <h5 className="mb-3 mr-10 text-sm font-extrabold text-[#A459D1] lg:text-2xl">
                                             EMAIL
                                         </h5>
                                         <input
@@ -133,8 +149,8 @@ export default function organizer() {
                                             </p>
                                         )}
                                     </div>
-                                    <div className="my-3">
-                                        <h5 className="my-3 mr-10 text-sm font-extrabold text-[#A459D1] lg:text-2xl">
+                                    <div className="mb-3">
+                                        <h5 className="mb-3 mr-10 text-sm font-extrabold text-[#A459D1] lg:text-2xl">
                                             PASSWORD
                                         </h5>
                                         <input
@@ -168,7 +184,7 @@ export default function organizer() {
                                             </p>
                                         )}
                                     </div>
-                                    <div className="flex justify-end">
+                                    <div className="mt-3 flex justify-end">
                                         <button
                                             className="justify-end rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-6 py-2 font-extrabold text-white hover:bg-gradient-to-r"
                                             onClick={handleSubmit}
