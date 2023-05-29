@@ -102,7 +102,7 @@ function Home({ eventdata, shopdata }: any) {
                                                 <div className="flex flex-col items-center gap-2 sm:flex-row">
                                                     <div className="flex flex-row items-center gap-2">
                                                         <Image
-                                                            className="h-8"
+                                                            className="w-6"
                                                             src={Calendar}
                                                             alt={''}
                                                         />
