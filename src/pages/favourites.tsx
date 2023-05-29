@@ -15,9 +15,6 @@ function favourites({ eventdata, shopdata }: any) {
                 <Navbar />
                 <div className="flex-grow">
                     <div className="my-12 mx-auto flex flex-col justify-center lg:max-w-7xl">
-                        <h4 className="mx-auto mt-8 text-xl font-extrabold text-primary">
-                            SEARCH FOR :
-                        </h4>
                         <div className="mt-6 mb-10 flex justify-center">
                             <button onClick={() => setToggle(true)}>
                                 <div
