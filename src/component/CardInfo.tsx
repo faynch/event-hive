@@ -432,12 +432,12 @@ export default function CardInfo(props: CardInfoProps) {
                         )}
                     </h2>
                     <div className="flex flex-col items-center gap-2 sm:flex-row">
-                        <button className="flex flex-row items-center gap-2">
+                        <div className="flex flex-row items-center gap-2">
                             <Image className="h-8" src={Phone} alt={''} />
                             {props.data?.telephone}
-                        </button>
+                        </div>
 
-                        <button className="flex flex-row items-center gap-2">
+                        <div className="flex flex-row items-center gap-2">
                             <Image className="ml-2 h-8" src={Email} alt={''} />
 
                             {props.type === 'Shop' ? (
@@ -445,7 +445,7 @@ export default function CardInfo(props: CardInfoProps) {
                             ) : (
                                 <>{props.data?.eventOrganizer.email}</>
                             )}
-                        </button>
+                        </div>
                     </div>
                     <div className="flex flex-row items-center gap-2">
                         <Image className="h-8" src={Location} alt={''} />
@@ -457,17 +457,14 @@ export default function CardInfo(props: CardInfoProps) {
                     </div>
                     {props.type === 'Event' && (
                         <div className="flex flex-col items-center gap-2 sm:flex-row">
-                            <button className="flex flex-row items-center gap-2">
+                            <div className="flex flex-row items-center gap-2">
                                 <Image
                                     className="h-8"
                                     src={Calendar}
                                     alt={''}
                                 />
-                                {props.data?.startDate}
-                            </button>
-                            <button className="flex flex-row items-center gap-2">
-                                {props.data?.endDate}
-                            </button>
+                                {props.data?.startDate} - {props.data?.endDate}
+                            </div>
                         </div>
                     )}
                     <div
