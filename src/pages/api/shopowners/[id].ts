@@ -17,7 +17,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             ]
         },
         include: {
-            shop: true,
+            shop: {
+                include: {
+                    tags: true,
+                }
+            },
         }
     },
     );
