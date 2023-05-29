@@ -1,26 +1,35 @@
 import Navbar from '../component/Navbar'
 import Card from '../component/Card'
 import Footer from '../component/Footer'
-import Create from '../component/CreatePage'
-
+import Add from '@/pages/assets/add.svg'
+import Image from 'next/image'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 
-function eventorganizeracc({ data }: any) {
-    if (data == null) {
-        return <Create />
+function eventorganizeracc({ data, id }: any) {
+    const router = useRouter()
+
+    const handleCreateClick = () => {
+        router.push(`/createPage`)
     }
+
     return (
         <>
             <div className="flex min-h-screen flex-col">
                 <Navbar />
                 <div className="flex-grow">
-                    <div className="my-12 mx-auto flex flex-col justify-center lg:max-w-7xl">
-                        <h4 className="mx-auto mt-8 mb-12 text-xl font-extrabold text-primary">
-                            EVENT LIST
-                        </h4>
+                    <div className="flex flex-col items-center justify-center gap-8 p-8 md:px-24">
+                        <div className="flex flex-row justify-center gap-4">
+                            <h3 className="text-center text-2xl font-extrabold text-primary">
+                                EVENT LIST
+                            </h3>
+                            <button onClick={handleCreateClick}>
+                                <Image className="w-6" src={Add} alt={''} />
+                            </button>
+                        </div>
                         <div className="mb-8 grid grid-cols-1 gap-8 place-self-center lg:max-w-7xl lg:grid-cols-2 xl:grid-cols-3">
                             {data.map((item: any) => (
-                                <Card type="Event" data={item} />
+                                <Card type="Event" data={item} key={item.id} />
                             ))}
                         </div>
                     </div>
@@ -43,6 +52,7 @@ export async function getServerSideProps(context: { req: any; query: any }) {
     return {
         props: {
             data: jsonData[0].events,
+            id: jsonData[0].id,
         },
     }
 }
