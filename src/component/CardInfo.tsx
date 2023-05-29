@@ -21,7 +21,6 @@ import ImageUploader from './ImageUploader'
 
 interface CardInfoProps {
     type: string
-    role: any
     edit: boolean
     data?: any
 }
