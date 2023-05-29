@@ -2,7 +2,7 @@ import Navbar from '../component/Navbar'
 import Footer from '../component/Footer'
 import Image from 'next/image'
 import Phone from '../pages/assets/phone.svg'
-import Email from '../pages/assets/email.svg'
+import Calendar from '../pages/assets/Calendar.svg'
 import Add from '@/pages/assets/add.svg'
 import Instagram from '../pages/assets/instagram.svg'
 import Twitter from '../pages/assets/twitter.svg'
@@ -116,7 +116,7 @@ export default function createPage() {
                 const formData = {
                     eventName: eventName,
                     about: description,
-                    address: address,
+                    location: address,
                     telephone: phone,
                     startDate: startDate,
                     endDate: endDate,
@@ -144,7 +144,7 @@ export default function createPage() {
 
                     if (response.ok) {
                         console.log('Data successfully submitted!')
-                        window.location.reload()
+                        window.location.href = `http://localhost:3000/eventorganizeracc?id=${session?.user?.name}`
                     } else {
                         console.log('Failed to submit data')
                     }
@@ -185,7 +185,7 @@ export default function createPage() {
                                             placeholder="Event Name"
                                             value={eventName}
                                             onChange={(e) =>
-                                                setStoreName(e.target.value)
+                                                setEventName(e.target.value)
                                             }
                                         />
                                     )}
@@ -226,27 +226,14 @@ export default function createPage() {
                                             }
                                         />
                                     </div>
-                                    {session?.user?.image ==
-                                        'eventOrganizer' && (
-                                        <div className="flex flex-row gap-2">
-                                            <input
-                                                className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
-                                                placeholder="Start date"
-                                                value={startDate}
-                                                onChange={(e) =>
-                                                    setStartDate(e.target.value)
-                                                }
-                                            />
-                                            <input
-                                                className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
-                                                placeholder="End date"
-                                                value={endDate}
-                                                onChange={(e) =>
-                                                    setEndDate(e.target.value)
-                                                }
-                                            />
-                                        </div>
-                                    )}
+                                    <div className="flex flex-row items-center gap-2">
+                                        <Image
+                                            className="h-8"
+                                            src={Calendar}
+                                            alt={''}
+                                        />
+                                        <RangePicker onChange={onChange} />
+                                    </div>
 
                                     <div className="flex w-full flex-row items-center gap-2">
                                         <button>

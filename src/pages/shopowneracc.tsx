@@ -14,20 +14,21 @@ import Add from '../pages/assets/add.svg'
 import supabase from 'lib/supabase'
 import ImageUploader from '../component/ImageUploader'
 
-import { v4 as uuidv4 } from 'uuid'
+import { v4 as uuid } from 'uuid'
 
 function shopowneracc({ data }: any) {
     const [curr, setCurr] = useState(0)
 
     const [edit, setEdit] = useState(false)
 
-    const [index, setIndex] = useState(String)
+    const [index, setIndex] = useState(data.id)
+    const [picture, setPicture] = useState(String)
     const [pictureFile, setPictureFile] = useState<File | null>(null)
     const [productName, setProductName] = useState(String)
     const [description, setDescription] = useState(String)
-    const [price, setPrice] = useState(String)
+    const [price, setPrice] = useState<number>()
 
-    const [slides, setSlides] = useState(data.products)
+    const [slides, setSlides] = useState(data?.products)
 
     const prev = () =>
         setCurr((curr) => (curr === 0 ? slides.length - 1 : curr - 1))
@@ -38,27 +39,103 @@ function shopowneracc({ data }: any) {
         setCurr(i)
     }
 
-    const addSlide = () => {
-        setIndex(uuidv4())
-        slides.push({
-            id: index,
-            image: pictureFile,
-            productName: productName,
-            description: description,
-            price: price,
-        })
-        setEdit(false)
+
+
+    const handleSave = async () => {
+        // Upload the image to Supabase storage
+        if (pictureFile) {
+            const fileName = uuid()
+            const { data, error } = await supabase.storage
+                .from('ShopImage')
+                .upload(fileName, pictureFile)
+
+            if (error) {
+                console.error('Error uploading image:', error.message)
+                return
+            }
+
+            const imageUrl = supabase.storage
+                .from('ShopImage')
+                .getPublicUrl(fileName)
+            console.log('Image URL:', imageUrl.data.publicUrl)
+            setPicture(imageUrl.data.publicUrl)
+
+            const formData = {
+                productName: productName,
+                description: description,
+                price: price,
+                shop: index,
+            }
+
+            const jsonData = JSON.stringify(formData)
+            console.log(jsonData)
+            try {
+                const response = await fetch(
+                    'http://localhost:3000/api/products/registration',
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: jsonData,
+                    }
+                )
+
+                if (response.ok) {
+                    console.log('Data successfully submitted!')
+                    
+                    window.location.reload()
+                } else {
+                    console.log('Failed to submit data')
+                }
+            } catch (error) {
+                console.error('Error:', error)
+            }
+        }
     }
 
-    const deleteSlide = (id: any) => {
-        if (curr === slides.length - 1) {
-            prev()
+    // const deleteSlide = (id: any) => {
+    //     if (curr === slides.length - 1) {
+    //         prev()
+    //     }
+    //     const delslides = slides.filter(
+    //         (x: any) => x.id.toString() !== id.toString()
+    //     )
+    //     setSlides(delslides)
+    // }
+
+    const handleDelete = async (id:any) => {
+
+            const formData = {
+                id: id
+            }
+
+            const jsonData = JSON.stringify(formData)
+            console.log(jsonData)
+            try {
+                const response = await fetch(
+                    'http://localhost:3000/api/products/delete',
+                    {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: jsonData,
+                    }
+                )
+
+                if (response.ok) {
+                    console.log('Data successfully submitted!')
+                    
+                    window.location.reload()
+                } else {
+                    console.log('Failed to submit data')
+                }
+            } catch (error) {
+                console.error('Error:', error)
+            }
         }
-        const delslides = slides.filter(
-            (x: any) => x.id.toString() !== id.toString()
-        )
-        setSlides(delslides)
-    }
+    
 
     const handleImageChange = (file: File | null) => {
         setPictureFile(file) // Store the selected image file
@@ -124,14 +201,14 @@ function shopowneracc({ data }: any) {
                                             placeholder="price"
                                             value={price}
                                             onChange={(e) =>
-                                                setPrice(e.target.value)
+                                                setPrice(parseInt(e.target.value))
                                             }
-                                        />
+                                     />
                                     </div>
                                 </div>
                                 <div className="flex w-full justify-center gap-4 px-12 lg:max-w-5xl lg:justify-end">
                                     <button
-                                        onClick={() => addSlide()}
+                                        onClick={() => handleSave()}
                                         className="rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-8 py-2 text-center font-extrabold text-white hover:bg-gradient-to-r"
                                     >
                                         Add
@@ -211,16 +288,16 @@ function shopowneracc({ data }: any) {
                                                                   {items.price}{' '}
                                                                   ฿
                                                               </p>
-                                                              {/* <button
+                                                              <button
                                                             className="rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-8 py-2 text-center font-extrabold text-white hover:bg-gradient-to-r"
                                                             onClick={() =>
-                                                                deleteSlide(
+                                                                handleDelete(
                                                                     items.id
                                                                 )
                                                             }
                                                         >
                                                             Delete
-                                                        </button> */}
+                                                        </button>
                                                           </div>
                                                       </div>
                                                   </div>
@@ -285,7 +362,7 @@ function shopowneracc({ data }: any) {
 export async function getServerSideProps(context: { req: any; query: any }) {
     const { req, query } = context
     const valueFromRouter = query.id
-    console.log(valueFromRouter)
+
     const data = await fetch(
         `http://localhost:3000/api/shopowners/${valueFromRouter}`
     )
