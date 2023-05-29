@@ -14,7 +14,6 @@ interface CardProps {
 }
 
 export default function Card(props: CardProps) {
-    console.log(props.data)
     const [active, setActive] = useState(false)
 
     const { data: session } = useSession()
