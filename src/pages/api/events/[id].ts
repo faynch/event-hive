@@ -36,27 +36,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     if(req.method == 'PATCH'){
         try {
-            const { id, eventName, about, location, picture, tags, startDate, endDate, telephone, facebook, instagram
+            const { eventName, about, location, picture, tags, startDate, endDate, telephone, facebook, instagram
                 , line, tiktok, shopApplications, shopParticipations, favouriteByUsers} = req.body;
 
-            if (!id) {
-                return res.status(400).json({ message: 'Please provide the visitor ID' });
-            }
-             
-            const prisma = new PrismaClient();
-
-            const existingEvent = await prisma.event.findUnique({ where: { id },include: {tags: true,
-                eventOrganizer: true,
-                shopApplications: true,
-                shopParticipations: true,
-                favouriteByVisitors: true,}},);
-
-            if (!existingEvent) {
-                return res.status(404).json({ message: 'Event not found' });
-              }
-
+            const id = event[0].id
             const eventTags = await validateInput(tags, 'tag');
-            // wonder if these supposed to be initialized later
             const eventShopApplications = await validateInput(shopApplications, 'shop');
             const eventShopParticipations = await validateInput(shopParticipations, 'shop');
             const eventFavouriteByVisitors = await validateInput(favouriteByUsers, 'user');
@@ -64,21 +48,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             const updatedEvent = await prisma.event.update({
                 where: {id},
               data: {
-                eventName: eventName || existingEvent.eventName,
-                about: about || existingEvent.about,
-                location: location || existingEvent.location,
-                picture: picture || existingEvent.picture,
-                tags: eventTags || existingEvent.tags,
-                startDate: startDate || existingEvent.startDate,
-                endDate: endDate || existingEvent.endDate,
-                telephone: telephone || existingEvent.telephone,
-                facebook: facebook || existingEvent.facebook,
-                instagram: instagram || existingEvent.instagram,
-                line: line || existingEvent.line,
-                tiktok: tiktok || existingEvent.tiktok,
-                shopApplications: eventShopApplications || existingEvent.shopApplications,
-                shopParticipations: eventShopParticipations || existingEvent.shopParticipations,
-                favouriteByVisitors: eventFavouriteByVisitors || existingEvent.favouriteByVisitors,
+                eventName: eventName || event[0].eventName,
+                about: about || event[0].about,
+                location: location || event[0].location,
+                picture: picture || event[0].picture,
+                tags: eventTags || event[0].tags,
+                startDate: startDate || event[0].startDate,
+                endDate: endDate || event[0].endDate,
+                telephone: telephone || event[0].telephone,
+                facebook: facebook || event[0].facebook,
+                instagram: instagram || event[0].instagram,
+                line: line || event[0].line,
+                tiktok: tiktok || event[0].tiktok,
+                shopApplications: eventShopApplications || event[0].shopApplications,
+                shopParticipations: eventShopParticipations || event[0].shopParticipations,
+                favouriteByVisitors: eventFavouriteByVisitors || event[0].favouriteByVisitors,
               },
               include: {
                 tags: true,
