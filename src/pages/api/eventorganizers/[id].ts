@@ -17,7 +17,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             ]
         },
         include: {
-            events: true,
+            events: {
+                include: {
+                    tags: true,
+                    eventOrganizer: true,
+                }
+            },
         },
     })
 

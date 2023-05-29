@@ -14,10 +14,13 @@ import Phone from '../pages/assets/phone.svg'
 import Email from '../pages/assets/email.svg'
 import Add from '@/pages/assets/add.svg'
 import Location from '../pages/assets/location.svg'
+import Calendar from '../pages/assets/Calendar.svg'
 import { useState } from 'react'
 import { v4 as uuid } from 'uuid'
 import supabase from 'lib/supabase'
 import ImageUploader from './ImageUploader'
+import { DatePicker } from 'antd'
+const { RangePicker } = DatePicker
 
 interface CardInfoProps {
     type: string
@@ -27,12 +30,13 @@ interface CardInfoProps {
 
 export default function CardInfo(props: CardInfoProps) {
     const [storeName, setStoreName] = useState(props.data?.shopName || '')
+    const [eventName, setEventName] = useState(props.data?.eventName || '')
     const [description, setDescription] = useState(props.data?.about || '')
-    const [address, setAddress] = useState(props.data?.address || '')
-    const [startDate, setStartDate] = useState(props.data?.startDate || '')
-    const [endDate, setEndDate] = useState(props.data?.endDate || '')
+    const [address, setAddress] = useState(props.data?.address || props.data?.location || '')
     const [phone, setPhone] = useState(props.data?.telephone || '')
     const [email, setEmail] = useState(props.data?.shopOwner?.email || '')
+    const [startDate, setStartDate] = useState(props.data?.startDate || '')
+    const [endDate, setEndDate] = useState(props.data?.endDate || '')
     const [instagram, setInstagram] = useState(props.data?.instagram || '')
     const [facebook, setFacebook] = useState(props.data?.facebook || '')
     const [line, setLine] = useState(props.data?.line || '')
@@ -40,10 +44,17 @@ export default function CardInfo(props: CardInfoProps) {
     const [editMode, setEditMode] = useState(false)
     const [like, setLike] = useState(false)
     const [showTagSelector, setShowTagSelector] = useState(false)
-    const [selectedTags, setSelectedTags] = useState<Tag[]>(props.data?.tags || [])
+    const [selectedTags, setSelectedTags] = useState<Tag[]>(
+        props.data?.tags || []
+    )
     const [picture, setPicture] = useState(props.data?.picture || '')
     const [pictureFile, setPictureFile] = useState<File | null>(null)
 
+    function onChange(dates: any, dateString: [string, string]) {
+        const [start, end] = dates
+        setStartDate(start?.toString())
+        setEndDate(end?.toString())
+    }
 
     const handleTagSelectorClose = () => {
         setShowTagSelector(false)
@@ -52,7 +63,7 @@ export default function CardInfo(props: CardInfoProps) {
     const handleShowTagSelector = () => {
         setShowTagSelector(true)
     }
-    
+
     const tagId = selectedTags.map((tag) => {
         return tag.id
     })
@@ -88,45 +99,89 @@ export default function CardInfo(props: CardInfoProps) {
             console.log('Image URL:', imageUrl.data.publicUrl)
             setPicture(imageUrl.data.publicUrl)
         }
-        const formData = {
-            shopName: storeName,
-            about: description,
-            address: address,
-            email: email,
-            telephone: phone,
-            instagram: instagram,
-            facebook: facebook,
-            tiktok: tiktok,
-            tags: tagId,
-            picture: picture,
-        }
-
-        const jsonData = JSON.stringify(formData)
-        console.log(jsonData)
-
-        try {
-            const response = await fetch(
-                `http://localhost:3000/api/shops/${props.data.id}`,
-                {
-                    method: 'PATCH',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: jsonData,
-                }
-            )
-
-            if (response.ok) {
-                // Successful response, handle accordingly
-                console.log('Data successfully submitted!')
-                window.location.reload()
-            } else {
-                // Error response, handle accordingly
-                console.log('Failed to submit data')
+        if (props.type === 'Shop') {
+            const formData = {
+                shopName: storeName,
+                about: description,
+                address: address,
+                email: email,
+                telephone: phone,
+                instagram: instagram,
+                facebook: facebook,
+                tiktok: tiktok,
+                tags: tagId,
+                picture: picture,
             }
-        } catch (error) {
-            // Error occurred during the request, handle accordingly
-            console.error('Error:', error)
+
+            const jsonData = JSON.stringify(formData)
+            console.log(jsonData)
+
+            try {
+                const response = await fetch(
+                    `http://localhost:3000/api/shops/${props.data.id}`,
+                    {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: jsonData,
+                    }
+                )
+
+                if (response.ok) {
+                    // Successful response, handle accordingly
+                    console.log('Data successfully submitted!')
+                } else {
+                    // Error response, handle accordingly
+                    console.log('Failed to submit data')
+                }
+            } catch (error) {
+                // Error occurred during the request, handle accordingly
+                console.error('Error:', error)
+            }
+        } else {
+            const formData = {
+                eventName: eventName,
+                about: description,
+                address: address,
+                email: email,
+                telephone: phone,
+                startDate: startDate,
+                endDate: endDate,
+                line: line,
+                instagram: instagram,
+                facebook: facebook,
+                tiktok: tiktok,
+                tags: tagId,
+                picture: picture,
+            }
+
+            const jsonData = JSON.stringify(formData)
+            console.log(jsonData)
+
+            try {
+                const response = await fetch(
+                    `http://localhost:3000/api/events/${props.data.id}`,
+                    {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: jsonData,
+                    }
+                )
+
+                if (response.ok) {
+                    // Successful response, handle accordingly
+                    console.log('Data successfully submitted!')
+                } else {
+                    // Error response, handle accordingly
+                    console.log('Failed to submit data')
+                }
+            } catch (error) {
+                // Error occurred during the request, handle accordingly
+                console.error('Error:', error)
+            }
         }
         // logic to save changes made by the user
         setEditMode(false) // switch back to view mode
@@ -153,16 +208,24 @@ export default function CardInfo(props: CardInfoProps) {
                     <div className="h-full">
                         <ImageUploader
                             onImageChange={handleImageChange}
-                            type={'Shop'}
+                            type={props.type}
                             data={props.data}
                         />
                     </div>
                     <div className="col-span-2 flex basis-2/3 flex-col items-center gap-4 sm:items-start">
-                        <input
-                            className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 text-2xl font-extrabold shadow-sm placeholder:text-slate-400 sm:text-4xl"
-                            value={storeName}
-                            onChange={(e) => setStoreName(e.target.value)}
-                        />
+                        {props.type === 'Shop' ? (
+                            <input
+                                className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 text-2xl font-extrabold shadow-sm placeholder:text-slate-400 sm:text-4xl"
+                                value={storeName}
+                                onChange={(e) => setStoreName(e.target.value)}
+                            />
+                        ) : (
+                            <input
+                                className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 text-2xl font-extrabold shadow-sm placeholder:text-slate-400 sm:text-4xl"
+                                value={eventName}
+                                onChange={(e) => setEventName(e.target.value)}
+                            />
+                        )}
                         <div className="flex flex-col gap-2 md:flex-row">
                             <div className="flex flex-row gap-2">
                                 <button>
@@ -176,20 +239,6 @@ export default function CardInfo(props: CardInfoProps) {
                                     className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
                                     value={phone}
                                     onChange={(e) => setPhone(e.target.value)}
-                                />
-                            </div>
-                            <div className="flex flex-row gap-2">
-                                <button>
-                                    <Image
-                                        className="ml-2 h-8"
-                                        src={Email}
-                                        alt={''}
-                                    />
-                                </button>
-                                <input
-                                    className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
                                 />
                             </div>
                         </div>
@@ -207,21 +256,8 @@ export default function CardInfo(props: CardInfoProps) {
                                 onChange={(e) => setAddress(e.target.value)}
                             />
                         </div>
-                        {props.type == 'Event' && (
-                            <div className="flex flex-row gap-2">
-                                <input
-                                    className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
-                                    value={startDate}
-                                    onChange={(e) =>
-                                        setStartDate(e.target.value)
-                                    }
-                                />
-                                <input
-                                    className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
-                                    value={endDate}
-                                    onChange={(e) => setEndDate(e.target.value)}
-                                />
-                            </div>
+                        {props.type == 'Shop' && (
+                            <RangePicker onChange={onChange} />
                         )}
 
                         <div className="flex w-full flex-row items-center gap-2">
@@ -396,12 +432,12 @@ export default function CardInfo(props: CardInfoProps) {
                         )}
                     </h2>
                     <div className="flex flex-col items-center gap-2 sm:flex-row">
-                        <button className="flex flex-row items-center gap-2">
+                        <div className="flex flex-row items-center gap-2">
                             <Image className="h-8" src={Phone} alt={''} />
                             {props.data?.telephone}
-                        </button>
+                        </div>
 
-                        <button className="flex flex-row items-center gap-2">
+                        <div className="flex flex-row items-center gap-2">
                             <Image className="ml-2 h-8" src={Email} alt={''} />
 
                             {props.type === 'Shop' ? (
@@ -409,27 +445,26 @@ export default function CardInfo(props: CardInfoProps) {
                             ) : (
                                 <>{props.data?.eventOrganizer.email}</>
                             )}
-                        </button>
+                        </div>
                     </div>
                     <div className="flex flex-row items-center gap-2">
                         <Image className="h-8" src={Location} alt={''} />
                         {props.type === 'Shop' ? (
-                                <>{props.data?.address}</>
-                            ) : (
-                                <>{props.data?.location}</>
-                            )}
-                        
+                            <>{props.data?.address}</>
+                        ) : (
+                            <>{props.data?.location}</>
+                        )}
                     </div>
                     {props.type === 'Event' && (
                         <div className="flex flex-col items-center gap-2 sm:flex-row">
-                            <button className="flex flex-row items-center gap-2">
-                                <Image className="h-8" src={Phone} alt={''} />
-                                {props.data?.startDate}
-                            </button>
-                            <button className="flex flex-row items-center gap-2">
-                                <Image className="h-8" src={Phone} alt={''} />
-                                {props.data?.endDate}
-                            </button>
+                            <div className="flex flex-row items-center gap-2">
+                                <Image
+                                    className="h-8"
+                                    src={Calendar}
+                                    alt={''}
+                                />
+                                {props.data?.startDate} - {props.data?.endDate}
+                            </div>
                         </div>
                     )}
                     <div

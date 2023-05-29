@@ -13,13 +13,14 @@ import Left from '../pages/assets/left.svg'
 import { PrismaClient } from '@prisma/client'
 
 function EventInfo({ data }: any) {
+
     const [curr, setCurr] = useState(0)
     const { data: session } = useSession()
 
     const [request, setRequest] = useState(false)
 
     const slides = data.shopParticipations
-    const owner = session?.user?.name === data.shopOwnerId ? true : false
+    const owner = session?.user?.name === data.eventOrganizerId ? true : false
 
     const prev = () =>
         setCurr((curr) => (curr === 0 ? slides.length - 1 : curr - 1))
@@ -29,8 +30,6 @@ function EventInfo({ data }: any) {
     function handleClick(i: number) {
         setCurr(i)
     }
-
-    
 
     const handleRequest = async () => {
         const shopOwnerId = session?.user?.name!;
@@ -83,11 +82,7 @@ function EventInfo({ data }: any) {
                 <Navbar />
                 <div className="flex-grow">
                     <div className="my-12 grid justify-center px-8 md:py-8 md:px-20">
-                        <CardInfo
-                            type="Event"
-                            edit={owner}
-                            data={data}
-                        />
+                        <CardInfo type="Event" edit={owner} data={data} />
                         {session?.user?.image == 'shopOwner' ? (
                             <button
                                 onClick={() => handleRequest()}

@@ -7,6 +7,7 @@ import Card from '../component/Card'
 import Footer from '../component/Footer'
 import { useState, useEffect } from 'react'
 
+import Calendar from '../pages/assets/Calendar.svg'
 import Right from '../pages/assets/right.svg'
 import Left from '../pages/assets/left.svg'
 import { useRouter } from 'next/router'
@@ -61,7 +62,10 @@ function Home({ eventdata, shopdata }: any) {
                                 }}
                             >
                                 {slides.map((item: any) => (
-                                    <div key={item.id} className="flex w-full flex-none justify-center">
+                                    <div
+                                        key={item.id}
+                                        className="flex w-full flex-none justify-center"
+                                    >
                                         <div className="grid grid-cols-1 content-center justify-items-center gap-4 lg:grid-cols-2 lg:justify-items-end lg:gap-12">
                                             <button
                                                 onClick={() =>
@@ -82,7 +86,10 @@ function Home({ eventdata, shopdata }: any) {
                                                     />
                                                 )}
                                             </button>
-                                            <div key={item.id} className="flex flex-col items-center gap-2 pb-2 lg:items-start lg:pt-8 lg:pr-24 xl:pr-36">
+                                            <div
+                                                key={item.id}
+                                                className="flex flex-col items-center gap-2 pb-2 lg:items-start lg:pt-8 lg:pr-24 xl:pr-36"
+                                            >
                                                 <button
                                                     onClick={() =>
                                                         sendEventValue(item.id)
@@ -92,6 +99,17 @@ function Home({ eventdata, shopdata }: any) {
                                                         {item.eventName}
                                                     </h4>
                                                 </button>
+                                                <div className="flex flex-col items-center gap-2 sm:flex-row">
+                                                    <div className="flex flex-row items-center gap-2">
+                                                        <Image
+                                                            className="w-6"
+                                                            src={Calendar}
+                                                            alt={''}
+                                                        />
+                                                        {item.startDate} -{' '}
+                                                        {item.endDate}
+                                                    </div>
+                                                </div>
                                                 <p className="text-center text-[#989898] lg:text-start ">
                                                     {item.about.length > 130
                                                         ? item.about.slice(
@@ -231,9 +249,13 @@ export async function getServerSideProps(context: any) {
         context.res,
         authOptions
     )
-    const res1 = await fetch('http://localhost:3000/api/events/sortedbyfollowers') // Replace with your API endpoint URL
+    const res1 = await fetch(
+        'http://localhost:3000/api/events/sortedbyfollowers'
+    ) // Replace with your API endpoint URL
     const data1 = await res1.json()
-    const res2 = await fetch('http://localhost:3000/api/shops/sortedbyfollowers') // Replace with your API endpoint URL
+    const res2 = await fetch(
+        'http://localhost:3000/api/shops/sortedbyfollowers'
+    ) // Replace with your API endpoint URL
     const data2 = await res2.json()
 
     return {
