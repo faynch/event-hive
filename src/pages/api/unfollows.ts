@@ -30,31 +30,46 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     let user;
     if (type === 'shop') {
-        user = await prisma.visitor.update({
-        where: { id: userId },
+        const shop = await prisma.shop.update({
+        where: { id: id },
         data: {
-          favouriteShops: {
-            disconnect: { id },
+          favouriteByVisitors: {
+            disconnect: { id: userId },
           },
         },
     });
-    const deleteShop = await prisma.
+    user = await prisma.visitor.update({
+      where: {id: userId},
+      data: {
+        favouriteShops: {
+          disconnect: {id},
+        },
+      },
+    });
     } else if (type === 'event') {
-        user = await prisma.visitor.update({
-        where: { id: userId },
+        const event = await prisma.event.update({
+        where: { id: id },
+        data: {
+          favouriteByVisitors: {
+            disconnect: { id: userId },
+          },
+        },
+      });
+      user = await prisma.visitor.update({
+        where: {id: userId},
         data: {
           favouriteEvents: {
-            disconnect: { id },
+            disconnect: {id},
           },
         },
       });
     } else {
       return res.status(400).json({ message: 'Invalid Type' });
     }
-
-    res.status(200).json(user);
+    
+    return res.status(200).json(user);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Something went wrong' });
+    return res.status(500).json({ message: 'Something went wrong' });
   }
 }
