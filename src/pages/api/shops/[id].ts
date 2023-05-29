@@ -39,25 +39,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     if(req.method == 'PATCH'){
         try {
-            const { id, shopName, about, address, picture, tags, telephone, facebook, instagram, line
+            const { shopName, about, address, picture, tags, telephone, facebook, instagram, line
                 , tiktok, eventApplications, eventParticipations, favouriteByUsers, products} = req.body;
 
-            if (!id) {
-                return res.status(400).json({ message: 'Please provide the visitor ID' });
-            }
-             
-            const prisma = new PrismaClient();
-
-            const existingShop = await prisma.shop.findUnique({ where: { id },include: {tags: true,
-                eventApplications: true,
-                eventParticipations: true,
-                favouriteByVisitors: true,
-                products: true,}},);
-
-            if (!existingShop) {
-                return res.status(404).json({ message: 'Shop not found' });
-              }
-
+            const id = shop[0].id
             const shopTags = await validateInput(tags, 'tag');
             const shopEventApplications = await validateInput(eventApplications, 'event');
             const shopEventParticipations = await validateInput(eventParticipations, 'event');
@@ -66,20 +51,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             const updatedShop = await prisma.shop.update({
                 where: {id},
               data: {
-                shopName: shopName || existingShop.shopName,
-                about: about || existingShop.about,
-                address: address || existingShop.address,
-                picture: picture || existingShop.picture,
-                tags: shopTags || existingShop.tags,
-                telephone: telephone || existingShop.telephone,
-                facebook: facebook || existingShop.facebook,
-                instagram: instagram || existingShop.instagram,
-                line: line || existingShop.line,
-                tiktok: tiktok || existingShop.tiktok,
-                eventApplications: shopEventApplications || existingShop.eventApplications,
-                eventParticipations: shopEventParticipations || existingShop.eventParticipations,
-                favouriteByVisitors: shopFavouriteByVisitors || existingShop.favouriteByVisitors,
-                products: products || existingShop.products,
+                shopName: shopName || shop[0].shopName,
+                about: about || shop[0].about,
+                address: address || shop[0].address,
+                picture: picture || shop[0].picture,
+                tags: shopTags || shop[0].tags,
+                telephone: telephone || shop[0].telephone,
+                facebook: facebook || shop[0].facebook,
+                instagram: instagram || shop[0].instagram,
+                line: line || shop[0].line,
+                tiktok: tiktok || shop[0].tiktok,
+                eventApplications: shopEventApplications || shop[0].eventApplications,
+                eventParticipations: shopEventParticipations || shop[0].eventParticipations,
+                favouriteByVisitors: shopFavouriteByVisitors || shop[0].favouriteByVisitors,
               },
               include: {
                 tags: true,
