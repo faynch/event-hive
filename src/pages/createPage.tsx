@@ -105,6 +105,7 @@ export default function createPage() {
 
                     if (response.ok) {
                         console.log('Data successfully submitted!')
+                        window.location.reload()
                     } else {
                         console.log('Failed to submit data')
                     }
@@ -143,6 +144,7 @@ export default function createPage() {
 
                     if (response.ok) {
                         console.log('Data successfully submitted!')
+                        window.location.reload()
                     } else {
                         console.log('Failed to submit data')
                     }

@@ -135,6 +135,7 @@ export default function CardInfo(props: CardInfoProps) {
                 if (response.ok) {
                     // Successful response, handle accordingly
                     console.log('Data successfully submitted!')
+                    window.location.reload()
                 } else {
                     // Error response, handle accordingly
                     console.log('Failed to submit data')
@@ -178,6 +179,7 @@ export default function CardInfo(props: CardInfoProps) {
                 if (response.ok) {
                     // Successful response, handle accordingly
                     console.log('Data successfully submitted!')
+                    window.location.reload()
                 } else {
                     // Error response, handle accordingly
                     console.log('Failed to submit data')
@@ -260,8 +262,15 @@ export default function CardInfo(props: CardInfoProps) {
                                 onChange={(e) => setAddress(e.target.value)}
                             />
                         </div>
-                        {props.type == 'Shop' && (
-                            <RangePicker onChange={onChange} />
+                        {props.type == 'Event' && (
+                            <div className="flex flex-row items-center gap-2">
+                                <Image
+                                    className="h-8"
+                                    src={Calendar}
+                                    alt={''}
+                                />
+                                <RangePicker onChange={onChange} />
+                            </div>
                         )}
 
                         <div className="flex w-full flex-row items-center gap-2">
