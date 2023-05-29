@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
     const { query } = req;
-    const { id } = query;
+    const { id } = query as { id: string };
     const prisma = new PrismaClient();
     const eventOrganizer = await prisma.eventOrganizer.findMany({
         where: {
@@ -65,6 +65,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           } catch (error) {
             console.log(error)
             return res.status(400).json({ message: 'Something went wrong' });
+          }
+    }
+
+    if(req.method == 'DELETE'){
+        try {
+            const deleteEventOrganizer = await prisma.eventOrganizer.delete({
+              where: { id },
+            });
+      
+            return res.status(200).json({ message: 'EventOrganizer deleted successfully' });
+          } catch (error) {
+            console.log(error);
+            return res.status(500).json({ message: 'Something went wrong' });
           }
     }
 
