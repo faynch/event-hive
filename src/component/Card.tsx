@@ -6,6 +6,7 @@ import Unlike from '../pages/assets/unlike.svg'
 import Event from '../pages/assets/event.svg'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
+import { useSession } from 'next-auth/react'
 
 interface CardProps {
     type: string
@@ -14,6 +15,8 @@ interface CardProps {
 
 export default function Card(props: CardProps) {
     const [active, setActive] = useState(false)
+
+    const { data: session } = useSession()
 
     const router = useRouter()
     const valueToSend = props.data.id
@@ -75,6 +78,7 @@ export default function Card(props: CardProps) {
                     </h5>
                 </div>
             )}
+            {session?.user ? 
             <div className="absolute top-7 right-7">
                 <button onClick={() => setActive(!active)} className="w-8">
                     {active ? (
@@ -83,7 +87,7 @@ export default function Card(props: CardProps) {
                         <Image src={Unlike} alt={''} />
                     )}
                 </button>
-            </div>
+            </div> : ""}
             <GroupButton
                 line={props.data.line}
                 facebook={props.data.facebook}
