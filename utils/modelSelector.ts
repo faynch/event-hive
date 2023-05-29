@@ -8,7 +8,7 @@ export default class ModelSelector {
     create(modelName: string): ModelSelector {
         console.log('Hi there chaos im in lmao')
         switch (modelName) {
-            case 'user':
+            case 'visitor':
                 return new ModelVisitor()
             case 'shopOwner':
                 return new ModelShopOwner()
