@@ -17,6 +17,12 @@ const Navbar = () => {
     const router = useRouter()
     const currentRoute = router.pathname
 
+    const valueToSend = session?.user?.name
+
+    const sendAccValue = () => {
+        router.push(`/shopowneracc?id=${valueToSend}`)
+    }
+
     return (
         <nav className="sticky top-0 z-10 w-full bg-white shadow">
             <div className="justify-stretch mx-auto px-8 md:flex md:items-center lg:max-w-7xl">
@@ -35,14 +41,14 @@ const Navbar = () => {
                             </div>
                         </a>
                         <div className="flex items-center space-x-3 md:hidden">
-                            <button>
-                                <a href="/shopowneracc">
+                            <button onClick={sendAccValue}>
+                                {/* <a href=" "> */}
                                     <Image
                                         className="w-6"
                                         src={Account}
                                         alt={'account'}
                                     />
-                                </a>
+                                {/* </a> */}
                             </button>
 
                             <button onClick={() => setNavbar(!navbar)}>
@@ -132,16 +138,16 @@ const Navbar = () => {
                 <div className="hidden basis-1/3 justify-end space-x-3 md:flex">
                     {session?.user ? (
                         <>
-                            <button>
+                            {/* <button> */}
                                 {session.user.image === 'shopOwner' ||
                                 session.user.image === 'eventOrganizer' ? (
-                                    <a href="/createPage">
+                                    <button onClick={sendAccValue}>
                                         <Image
                                             className="w-6"
                                             src={Account}
                                             alt={'account'}
                                         />
-                                    </a>
+                                    </button>
                                 ) : (
                                     <Image
                                         className="w-6"
@@ -149,7 +155,7 @@ const Navbar = () => {
                                         alt={'account'}
                                     />
                                 )}
-                            </button>
+                            {/* </button> */}
                             <div className="flex items-center gap-6">
                                 <div className="justify-end rounded-lg font-extrabold">
                                     Signed in as {session.user.name}
@@ -179,11 +185,11 @@ const Navbar = () => {
                                 >
                                     Sign in
                                 </div>
-                                <Link href="/register">
+                                {/* <Link href="/register"> */}
                                     <div className="rounded-md bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gradient-to-r focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">
                                         Register
                                     </div>
-                                </Link>
+                                {/* </Link> */}
                             </div>
                         </>
                     )}

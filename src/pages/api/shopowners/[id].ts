@@ -20,6 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             shop: {
                 include: {
                     tags: true,
+                    shopOwner: true,
                 }
             },
         }

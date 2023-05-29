@@ -40,7 +40,7 @@ export default function CardInfo(props: CardInfoProps) {
     const [editMode, setEditMode] = useState(false)
     const [like, setLike] = useState(false)
     const [showTagSelector, setShowTagSelector] = useState(false)
-    const [selectedTags, setSelectedTags] = useState<Tag[]>(props.data?.tags)
+    const [selectedTags, setSelectedTags] = useState<Tag[]>(props.data?.tags || [])
     const [picture, setPicture] = useState(props.data?.picture || '')
     const [pictureFile, setPictureFile] = useState<File | null>(null)
 
@@ -54,6 +54,7 @@ export default function CardInfo(props: CardInfoProps) {
     const handleShowTagSelector = () => {
         setShowTagSelector(true)
     }
+    
     const tagId = selectedTags.map((tag) => {
         return tag.id
     })
@@ -120,6 +121,7 @@ export default function CardInfo(props: CardInfoProps) {
             if (response.ok) {
                 // Successful response, handle accordingly
                 console.log('Data successfully submitted!')
+                window.location.reload()
             } else {
                 // Error response, handle accordingly
                 console.log('Failed to submit data')
@@ -134,9 +136,9 @@ export default function CardInfo(props: CardInfoProps) {
 
     function isAvailble() {
         if (
-            props.data.line == '' &&
-            props.data.facebook == '' &&
-            props.data.instagram == ''
+            props.data?.line == '' &&
+            props.data?.facebook == '' &&
+            props.data?.instagram == ''
             // &&
             // props.data.tiktok == ''
         )
@@ -353,7 +355,7 @@ export default function CardInfo(props: CardInfoProps) {
     return (
         <div className="relative flex flex-col rounded-lg bg-white py-12 px-12 sm:px-20 xl:w-[72rem]">
             <div className="flex flex-col items-center gap-8 lg:flex-row lg:gap-16">
-                {props.data.picture === '' ? (
+                {props.data?.picture === '' ? (
                     <Image
                         className="w-52 basis-1/3 self-center sm:self-start"
                         src={defaultPic}
@@ -361,7 +363,7 @@ export default function CardInfo(props: CardInfoProps) {
                     />
                 ) : (
                     <img
-                        src={props.data.picture}
+                        src={props.data?.picture}
                         className="h-52 w-52 self-center rounded-full bg-slate-400 sm:self-start"
                         alt={''}
                     />
@@ -390,40 +392,40 @@ export default function CardInfo(props: CardInfoProps) {
                 <div className="col-span-2 flex basis-2/3 flex-col items-center gap-4 sm:items-start xl:w-[52rem]">
                     <h2 className="pr-4 text-center text-2xl font-extrabold sm:text-start sm:text-4xl">
                         {props.type === 'Event' ? (
-                            <>{props.data.eventName}</>
+                            <>{props.data?.eventName}</>
                         ) : (
-                            <>{props.data.shopName}</>
+                            <>{props.data?.shopName}</>
                         )}
                     </h2>
                     <div className="flex flex-col items-center gap-2 sm:flex-row">
                         <button className="flex flex-row items-center gap-2">
                             <Image className="h-8" src={Phone} alt={''} />
-                            {props.data.telephone}
+                            {props.data?.telephone}
                         </button>
 
                         <button className="flex flex-row items-center gap-2">
                             <Image className="ml-2 h-8" src={Email} alt={''} />
 
                             {props.type === 'Shop' ? (
-                                <>{props.data.shopOwner.email}</>
+                                <>{props.data?.shopOwner.email}</>
                             ) : (
-                                <>{props.data.eventOrganizer.email}</>
+                                <>{props.data?.eventOrganizer.email}</>
                             )}
                         </button>
                     </div>
                     <div className="flex flex-row items-center gap-2">
                         <Image className="h-8" src={Location} alt={''} />
-                        {props.data.address}
+                        {props.data?.address}
                     </div>
                     {props.type === 'Event' && (
                         <div className="flex flex-col items-center gap-2 sm:flex-row">
                             <button className="flex flex-row items-center gap-2">
                                 <Image className="h-8" src={Phone} alt={''} />
-                                {props.data.startDate}
+                                {props.data?.startDate}
                             </button>
                             <button className="flex flex-row items-center gap-2">
                                 <Image className="h-8" src={Phone} alt={''} />
-                                {props.data.endDate}
+                                {props.data?.endDate}
                             </button>
                         </div>
                     )}
@@ -433,13 +435,13 @@ export default function CardInfo(props: CardInfoProps) {
                         }`}
                     >
                         <GroupButton
-                            line={props.data.line}
-                            facebook={props.data.facebook}
-                            instagram={props.data.instagram}
-                            tiktok={props.data.tiktok}
+                            line={props.data?.line}
+                            facebook={props.data?.facebook}
+                            instagram={props.data?.instagram}
+                            tiktok={props.data?.tiktok}
                         />
                         <div className="flex flex-wrap gap-2 py-1 ">
-                            {props.data.tags.map((tag: any) => (
+                            {props.data?.tags.map((tag: any) => (
                                 <div
                                     key={tag.id}
                                     className="rounded-xl bg-[#F5EAEA] px-3 text-[#F16767]"
@@ -450,7 +452,7 @@ export default function CardInfo(props: CardInfoProps) {
                         </div>
                     </div>
                     <p className="text-center sm:text-start">
-                        {props.data.about}
+                        {props.data?.about}
                     </p>
                 </div>
             </div>
