@@ -22,6 +22,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     tags: true,
                     shopOwner: true,
                     products: true,
+                    eventApplications: true,
+                    eventParticipations: true,
                 }
             },
         }

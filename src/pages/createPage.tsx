@@ -37,8 +37,21 @@ export default function CreatePage() {
 
     function onChange(dates: any, dateString: [string, string]) {
         const [start, end] = dates
-        setStartDate(start?.toString())
-        setEndDate(end?.toString())
+        const sdate = new Date(start)
+        const edate = new Date(end)
+        const formattedsDate = sdate.toLocaleDateString("en-US", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+          });
+          const formattedeDate = edate.toLocaleDateString("en-US", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+          });
+        setStartDate(formattedsDate?.toString())
+        setEndDate(formattedeDate?.toString())
+        console.log(startDate)
     }
 
     const handleTagSelectorClose = () => {
