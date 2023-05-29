@@ -12,7 +12,7 @@ import Right from '../pages/assets/right.svg'
 import Left from '../pages/assets/left.svg'
 
 function EventInfo({ data }: any) {
-    console.log(data)
+
     const [curr, setCurr] = useState(0)
     const { data: session } = useSession()
 
@@ -73,7 +73,7 @@ function EventInfo({ data }: any) {
                 <Navbar />
                 <div className="flex-grow">
                     <div className="my-12 grid justify-center px-8 md:py-8 md:px-20">
-                        <CardInfo type="Event" edit={true} data={data} />
+                        <CardInfo type="Event" edit={owner} data={data} />
                         {session?.user?.image == 'shopOwner' ? (
                             <button
                                 onClick={() => handleRequest()}

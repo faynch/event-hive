@@ -32,7 +32,7 @@ export default function CardInfo(props: CardInfoProps) {
     const [storeName, setStoreName] = useState(props.data?.shopName || '')
     const [eventName, setEventName] = useState(props.data?.eventName || '')
     const [description, setDescription] = useState(props.data?.about || '')
-    const [address, setAddress] = useState(props.data?.address || '')
+    const [address, setAddress] = useState(props.data?.address || props.data?.location || '')
     const [phone, setPhone] = useState(props.data?.telephone || '')
     const [email, setEmail] = useState(props.data?.shopOwner?.email || '')
     const [startDate, setStartDate] = useState(props.data?.startDate || '')
@@ -223,7 +223,7 @@ export default function CardInfo(props: CardInfoProps) {
                             <input
                                 className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 text-2xl font-extrabold shadow-sm placeholder:text-slate-400 sm:text-4xl"
                                 value={eventName}
-                                onChange={(e) => setStoreName(e.target.value)}
+                                onChange={(e) => setEventName(e.target.value)}
                             />
                         )}
                         <div className="flex flex-col gap-2 md:flex-row">
@@ -455,7 +455,7 @@ export default function CardInfo(props: CardInfoProps) {
                             <>{props.data?.location}</>
                         )}
                     </div>
-                    {props.type === 'Shop' && (
+                    {props.type === 'Event' && (
                         <div className="flex flex-col items-center gap-2 sm:flex-row">
                             <button className="flex flex-row items-center gap-2">
                                 <Image
