@@ -10,6 +10,7 @@ import Image from 'next/image'
 import Shop from '../pages/assets/product.svg'
 import Right from '../pages/assets/right.svg'
 import Left from '../pages/assets/left.svg'
+import { PrismaClient } from '@prisma/client'
 
 function EventInfo({ data }: any) {
     const [curr, setCurr] = useState(0)
@@ -32,32 +33,39 @@ function EventInfo({ data }: any) {
     
 
     const handleRequest = async () => {
-        
-        const formData = {
-            shopId : session?.user?.name,
-            eventId : data.id
-        }
+        const shopOwnerId = session?.user?.name!;
+        const endpoint = `http://localhost:3000/api/shopowners/${shopOwnerId}`;
 
         try {
-            const response = await fetch(
-                `http://localhost:3000/api/applyforevent`,
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(formData),
-                }
-            )
+            const shopIdResponse = await fetch(endpoint, {method: 'GET', headers:{'Content-Type': 'application/json'}})
 
-            if (response.ok) {
-                // Successful response, handle accordingly
-                console.log('Data successfully submitted!')
-                // window.location.reload()
-            } else {
-                // Error response, handle accordingly
-                console.log('Failed to submit data')
+            if(shopIdResponse.ok){
+                const shopData = await shopIdResponse.json();
+
+                const formData = {
+                    shopId : shopData[0].shop.id,
+                    eventId : data.id
+                }
+                const response = await fetch(
+                    `http://localhost:3000/api/applyforevent`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formData),
+                    }
+                    )
+                if (response.ok) {
+                    // Successful response, handle accordingly
+                    console.log('Data successfully submitted!')
+                    // window.location.reload()
+                } else {
+                    // Error response, handle accordingly
+                    console.log('Failed to submit data')
+                }
             }
+            
         } catch (error) {
             // Error occurred during the request, handle accordingly
             console.error('Error:', error)
