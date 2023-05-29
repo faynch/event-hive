@@ -34,9 +34,11 @@ export default function CardInfo(props: CardInfoProps) {
     const [storeName, setStoreName] = useState(props.data?.shopName || '')
     const [eventName, setEventName] = useState(props.data?.eventName || '')
     const [description, setDescription] = useState(props.data?.about || '')
-    const [address, setAddress] = useState(props.data?.address || props.data?.location || '')
+    const [address, setAddress] = useState(
+        props.data?.address || props.data?.location || ''
+    )
     const [phone, setPhone] = useState(props.data?.telephone || '')
-    const [email, setEmail] = useState(props.data?.shopOwner?.email || '')
+    const [email] = useState(props.data?.shopOwner?.email || '')
     const [startDate, setStartDate] = useState(props.data?.startDate || '')
     const [endDate, setEndDate] = useState(props.data?.endDate || '')
     const [instagram, setInstagram] = useState(props.data?.instagram || '')
@@ -413,17 +415,20 @@ export default function CardInfo(props: CardInfoProps) {
                     >
                         <Image src={Edit} alt={''} />
                     </button>
-                    {session?.user ? 
-                    <button
-                        onClick={() => setLike(!like)}
-                        className="w-6 md:w-8"
-                    >
-                        {like ? (
-                            <Image src={Like} alt={''} />
-                        ) : (
-                            <Image src={Unlike} alt={''} />
-                        )}
-                    </button> : ""}
+                    {session?.user ? (
+                        <button
+                            onClick={() => setLike(!like)}
+                            className="w-6 md:w-8"
+                        >
+                            {like ? (
+                                <Image src={Like} alt={''} />
+                            ) : (
+                                <Image src={Unlike} alt={''} />
+                            )}
+                        </button>
+                    ) : (
+                        ''
+                    )}
                 </div>
 
                 <div className="col-span-2 flex basis-2/3 flex-col items-center gap-4 sm:items-start xl:w-[52rem]">
