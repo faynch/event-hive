@@ -18,10 +18,9 @@ const Navbar = () => {
     const valueToSend = session?.user?.name
 
     const sendAccValue = () => {
-        if (session?.user?.image == "shopOwner") {
+        if (session?.user?.image == 'shopOwner') {
             router.push(`/shopowneracc?id=${valueToSend}`)
-        }
-        else if (session?.user?.image == "eventOrganizer") {
+        } else if (session?.user?.image == 'eventOrganizer') {
             router.push(`/eventorganizeracc?id=${valueToSend}`)
         }
     }
@@ -44,14 +43,17 @@ const Navbar = () => {
                             </div>
                         </a>
                         <div className="flex items-center space-x-3 md:hidden">
-                        {session?.user ? (
-                            <button onClick={sendAccValue}>
+                            {session?.user ? (
+                                <button onClick={sendAccValue}>
                                     <Image
                                         className="w-6"
                                         src={Account}
                                         alt={'account'}
                                     />
-                            </button> ) : ""}
+                                </button>
+                            ) : (
+                                ''
+                            )}
 
                             <button onClick={() => setNavbar(!navbar)}>
                                 <Image
@@ -96,18 +98,21 @@ const Navbar = () => {
                                 </a>
                             </li>
                             {session?.user ? (
-                            <li className="text-xl font-extrabold">
-                                <a
-                                    href="/favourites"
-                                    className={`hover:text-secondary ${
-                                        currentRoute === '/favourites'
-                                            ? 'text-secondary'
-                                            : 'text-black'
-                                    }`}
-                                >
-                                    Favourites
-                                </a>
-                            </li>) : ""}
+                                <li className="text-xl font-extrabold">
+                                    <a
+                                        href="/favourites"
+                                        className={`hover:text-secondary ${
+                                            currentRoute === '/favourites'
+                                                ? 'text-secondary'
+                                                : 'text-black'
+                                        }`}
+                                    >
+                                        Favourites
+                                    </a>
+                                </li>
+                            ) : (
+                                ''
+                            )}
                             <li className="text-xl font-extrabold">
                                 {session?.user ? (
                                     <a
@@ -141,22 +146,22 @@ const Navbar = () => {
                 <div className="hidden basis-1/3 justify-end space-x-3 md:flex">
                     {session?.user ? (
                         <>
-                                {session.user.image === 'shopOwner' ||
-                                session.user.image === 'eventOrganizer' ? (
-                                    <button onClick={sendAccValue}>
-                                        <Image
-                                            className="w-6"
-                                            src={Account}
-                                            alt={'account'}
-                                        />
-                                    </button>
-                                ) : (
+                            {session.user.image === 'shopOwner' ||
+                            session.user.image === 'eventOrganizer' ? (
+                                <button onClick={sendAccValue}>
                                     <Image
                                         className="w-6"
                                         src={Account}
                                         alt={'account'}
                                     />
-                                )}
+                                </button>
+                            ) : (
+                                <Image
+                                    className="w-6"
+                                    src={Account}
+                                    alt={'account'}
+                                />
+                            )}
                             <div className="flex items-center gap-6">
                                 {/* <div className="justify-end rounded-lg font-extrabold">
                                     Signed in as {session.user.name}
@@ -182,11 +187,11 @@ const Navbar = () => {
                                 >
                                     Sign in
                                 </div>
-                                {/* <Link href="/register"> */}
+                                <Link href="/register">
                                     <div className="rounded-md bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gradient-to-r focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">
                                         Register
                                     </div>
-                                {/* </Link> */}
+                                </Link>
                             </div>
                         </>
                     )}
