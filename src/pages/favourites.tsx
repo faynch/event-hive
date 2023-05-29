@@ -3,6 +3,8 @@ import Card from '../component/Card'
 import Footer from '../component/Footer'
 
 import { useState } from 'react'
+import { getServerSession } from 'next-auth'
+import { authOptions } from './api/auth/[...nextauth]'
 
 function favourites({ eventdata, shopdata }: any) {
     const [toggle, setToggle] = useState(false)
@@ -59,7 +61,12 @@ function favourites({ eventdata, shopdata }: any) {
     )
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context: any) {
+    const session = await getServerSession(
+        context.req,
+        context.res,
+        authOptions
+    )
     const res1 = await fetch('http://localhost:3000/api/events/') // Replace with your API endpoint URL
     const data1 = await res1.json()
     const res2 = await fetch('http://localhost:3000/api/shops/') // Replace with your API endpoint URL
@@ -67,6 +74,7 @@ export async function getServerSideProps() {
 
     return {
         props: {
+            session,
             eventdata: data1,
             shopdata: data2,
         },

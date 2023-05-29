@@ -8,6 +8,8 @@ import Search from '../pages/assets/search.svg'
 import Filter from '../pages/assets/filter.svg'
 
 import { useState } from 'react'
+import { getServerSession } from 'next-auth'
+import { authOptions } from './api/auth/[...nextauth]'
 
 function shops({ shopdata, tags }: any) {
     const [filter, setFilter] = useState(false)
@@ -103,7 +105,12 @@ function shops({ shopdata, tags }: any) {
     )
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context: any) {
+    const session = await getServerSession(
+        context.req,
+        context.res,
+        authOptions
+    )
     const res1 = await fetch('http://localhost:3000/api/shops/') // Replace with your API endpoint URL
     const data1 = await res1.json()
 
@@ -111,6 +118,7 @@ export async function getServerSideProps() {
     const data2 = await res2.json()
     return {
         props: {
+            session,
             shopdata: data1,
             tags: data2,
         },

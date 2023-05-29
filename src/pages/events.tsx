@@ -9,6 +9,9 @@ import Filter from '../pages/assets/filter.svg'
 
 import { useState } from 'react'
 import { useRouter } from 'next/router'
+import { getServerSession } from 'next-auth'
+import { authOptions } from './api/auth/[...nextauth]'
+
 
 function events({ eventdata, tags }: any) {
     const [filter, setFilter] = useState(false)
@@ -104,7 +107,12 @@ function events({ eventdata, tags }: any) {
     )
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context: any) {
+    const session = await getServerSession(
+        context.req,
+        context.res,
+        authOptions
+    )
     const res1 = await fetch('http://localhost:3000/api/events/') // Replace with your API endpoint URL
     const data1 = await res1.json()
 
@@ -113,6 +121,7 @@ export async function getServerSideProps() {
 
     return {
         props: {
+            session,
             eventdata: data1,
             tags: data2,
         },
