@@ -9,7 +9,6 @@ const prisma = new PrismaClient();
 export const authOptions: NextAuthOptions = {
     secret: process.env.AUTH_SECRET,
     // Configure one or more authentication providers
-    adapter: PrismaAdapter(prisma),
     providers: [
         CredentialsProvider({
             // The name to display on the sign in form (e.g. "Sign in with...")
