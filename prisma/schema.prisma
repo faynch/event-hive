@@ -68,8 +68,8 @@ model Event {
   location            String
   picture             String
   tags                Tag[]          @relation("EventTag")
-  startDate           String
-  endDate             String
+  startDate           DateTime
+  endDate             DateTime
   telephone           String
   facebook            String?
   instagram           String?
