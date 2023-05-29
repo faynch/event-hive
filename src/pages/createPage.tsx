@@ -8,6 +8,7 @@ import Instagram from '../pages/assets/instagram.svg'
 import Twitter from '../pages/assets/twitter.svg'
 import Facebook from '../pages/assets/facebook.svg'
 import Tiktok from '../pages/assets/tiktok.svg'
+import Location from '../pages/assets/location.svg'
 import TagSelector, { Tag } from '../component/TagSelector'
 import ImageUploader from '@/component/ImageUploader'
 import { useSession } from 'next-auth/react'
@@ -18,6 +19,9 @@ import supabase from 'lib/supabase'
 export default function createPage() {
     const [storeName, setStoreName] = useState('')
     const [description, setDescription] = useState('')
+    const [address, setAddress] = useState('')
+    const [startDate, setStartDate] = useState('')
+    const [endDate, setEndDate] = useState('')
     const [phone, setPhone] = useState('')
     const [email, setEmail] = useState('')
     const [instagram, setInstagram] = useState('')
@@ -66,15 +70,17 @@ export default function createPage() {
                 const formData = {
                     shopName: storeName,
                     about: description,
-                    address: 'test',
-                    telephone: phone,
-                    line: line,
-                    instagram: instagram,
-                    facebook: facebook,
-                    tags: tagId,
+                    address: address,
                     picture: imageUrl.data.publicUrl,
-                    shopOwnerId: session?.user?.name,
+                    tags: tagId,
+                    telephone: phone,
+                    facebook: facebook,
+                    instagram: instagram,
+                    line: line,
+                    tiktok: tiktok,
+                    shopOwnerId: [session?.user?.name],
                 }
+
                 const jsonData = JSON.stringify(formData)
                 console.log(jsonData)
                 try {
@@ -101,14 +107,14 @@ export default function createPage() {
                 const formData = {
                     shopName: storeName,
                     about: description,
-                    address: 'test',
+                    address: address,
                     telephone: phone,
                     line: line,
                     instagram: instagram,
                     facebook: facebook,
                     tags: tagId,
                     picture: imageUrl.data.publicUrl,
-                    eventOrganizerId: session?.user?.name,
+                    eventOrganizerId: [session?.user?.name],
                 }
                 const jsonData = JSON.stringify(formData)
                 console.log(jsonData)
@@ -199,6 +205,44 @@ export default function createPage() {
                                             />
                                         </div>
                                     </div>
+                                    <div className="flex flex-row items-center gap-2">
+                                        <button>
+                                            <Image
+                                                className="h-8"
+                                                src={Location}
+                                                alt={''}
+                                            />
+                                        </button>
+                                        <input
+                                            className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                            placeholder="Address"
+                                            value={address}
+                                            onChange={(e) =>
+                                                setAddress(e.target.value)
+                                            }
+                                        />
+                                    </div>
+                                    {session?.user?.image ==
+                                        'eventOrganizer' && (
+                                        <div className="flex flex-row gap-2">
+                                            <input
+                                                className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                                placeholder="Start date"
+                                                value={startDate}
+                                                onChange={(e) =>
+                                                    setStartDate(e.target.value)
+                                                }
+                                            />
+                                            <input
+                                                className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                                placeholder="End date"
+                                                value={endDate}
+                                                onChange={(e) =>
+                                                    setEndDate(e.target.value)
+                                                }
+                                            />
+                                        </div>
+                                    )}
 
                                     <div className="flex w-full flex-row items-center gap-2">
                                         <button>
