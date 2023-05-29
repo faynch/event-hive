@@ -27,7 +27,7 @@ function shopowneracc({ data }: any) {
     const [description, setDescription] = useState(String)
     const [price, setPrice] = useState(String)
 
-    const [slides, setSlides] = useState(data.products)
+    const [slides, setSlides] = useState(data?.products)
 
     const prev = () =>
         setCurr((curr) => (curr === 0 ? slides.length - 1 : curr - 1))
