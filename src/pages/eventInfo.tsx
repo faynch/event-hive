@@ -12,13 +12,14 @@ import Right from '../pages/assets/right.svg'
 import Left from '../pages/assets/left.svg'
 
 function EventInfo({ data }: any) {
+    console.log(data)
     const [curr, setCurr] = useState(0)
     const { data: session } = useSession()
 
     const [request, setRequest] = useState(false)
 
     const slides = data.shopParticipations
-    const owner = session?.user?.name === data.shopOwnerId ? true : false
+    const owner = session?.user?.name === data.eventOrganizerId ? true : false
 
     const prev = () =>
         setCurr((curr) => (curr === 0 ? slides.length - 1 : curr - 1))
@@ -29,13 +30,10 @@ function EventInfo({ data }: any) {
         setCurr(i)
     }
 
-    
-
     const handleRequest = async () => {
-        
         const formData = {
-            shopId : session?.user?.name,
-            eventId : data.id
+            shopId: session?.user?.name,
+            eventId: data.id,
         }
 
         try {
@@ -75,11 +73,7 @@ function EventInfo({ data }: any) {
                 <Navbar />
                 <div className="flex-grow">
                     <div className="my-12 grid justify-center px-8 md:py-8 md:px-20">
-                        <CardInfo
-                            type="Event"
-                            edit={owner}
-                            data={data}
-                        />
+                        <CardInfo type="Event" edit={true} data={data} />
                         {session?.user?.image == 'shopOwner' ? (
                             <button
                                 onClick={() => handleRequest()}

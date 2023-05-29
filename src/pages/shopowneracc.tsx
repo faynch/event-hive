@@ -1,7 +1,7 @@
 import Navbar from '../component/Navbar'
 import CardInfo from '../component/CardInfo'
 import Footer from '../component/Footer'
-import Create from '../component/comp'
+import Create from '../component/CreatePage'
 
 import { useState } from 'react'
 
@@ -168,40 +168,50 @@ function shopowneracc({ data }: any) {
                                             }%)`,
                                         }}
                                     >
-                                        {slides == undefined? "" :slides.map((items: any) => (
-                                            <div className="flex w-full flex-none justify-center">
-                                                <div className="grid grid-cols-1 content-center justify-items-center gap-4 lg:grid-cols-2 lg:justify-items-end lg:gap-12">
-                                                    {items.image != '' ? (
-                                                        <img
-                                                            src={items.image}
-                                                            className="w-40 rounded-full md:w-52"
-                                                            alt={''}
-                                                        />
-                                                    ) : (
-                                                        <Image
-                                                            src={Product}
-                                                            className="w-40 md:w-52"
-                                                            alt={''}
-                                                        />
-                                                    )}
+                                        {slides == undefined
+                                            ? ''
+                                            : slides.map((items: any) => (
+                                                  <div className="flex w-full flex-none justify-center">
+                                                      <div className="grid grid-cols-1 content-center justify-items-center gap-4 lg:grid-cols-2 lg:justify-items-end lg:gap-12">
+                                                          {items.image != '' ? (
+                                                              <img
+                                                                  src={
+                                                                      items.image
+                                                                  }
+                                                                  className="w-40 rounded-full md:w-52"
+                                                                  alt={''}
+                                                              />
+                                                          ) : (
+                                                              <Image
+                                                                  src={Product}
+                                                                  className="w-40 md:w-52"
+                                                                  alt={''}
+                                                              />
+                                                          )}
 
-                                                    <div className="flex flex-col gap-2 pb-2 lg:items-start lg:pt-8 lg:pr-24 xl:pr-36">
-                                                        <h4 className="text-center text-xl font-extrabold">
-                                                            {items.productName}
-                                                        </h4>
-                                                        <p className="text-center text-[#989898] lg:text-start ">
-                                                            {items.description
-                                                                .length > 130
-                                                                ? items.description.slice(
-                                                                      0,
-                                                                      130
-                                                                  ) + '...'
-                                                                : items.description}
-                                                        </p>
-                                                        <p className="text-center font-extrabold">
-                                                            {items.price} ฿
-                                                        </p>
-                                                        {/* <button
+                                                          <div className="flex flex-col gap-2 pb-2 lg:items-start lg:pt-8 lg:pr-24 xl:pr-36">
+                                                              <h4 className="text-center text-xl font-extrabold">
+                                                                  {
+                                                                      items.productName
+                                                                  }
+                                                              </h4>
+                                                              <p className="text-center text-[#989898] lg:text-start ">
+                                                                  {items
+                                                                      .description
+                                                                      .length >
+                                                                  130
+                                                                      ? items.description.slice(
+                                                                            0,
+                                                                            130
+                                                                        ) +
+                                                                        '...'
+                                                                      : items.description}
+                                                              </p>
+                                                              <p className="text-center font-extrabold">
+                                                                  {items.price}{' '}
+                                                                  ฿
+                                                              </p>
+                                                              {/* <button
                                                             className="rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-8 py-2 text-center font-extrabold text-white hover:bg-gradient-to-r"
                                                             onClick={() =>
                                                                 deleteSlide(
@@ -211,14 +221,15 @@ function shopowneracc({ data }: any) {
                                                         >
                                                             Delete
                                                         </button> */}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ))}
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              ))}
                                     </div>
                                     <div
                                         className={`absolute left-5 top-1/3 hidden md:flex ${
-                                            (slides == undefined || slides.length <= 1 )
+                                            slides == undefined ||
+                                            slides.length <= 1
                                                 ? 'invisible'
                                                 : ''
                                         }`}
@@ -229,7 +240,8 @@ function shopowneracc({ data }: any) {
                                     </div>
                                     <div
                                         className={`absolute right-5 top-1/3 hidden md:flex ${
-                                            (slides == undefined || slides.length <= 1 )
+                                            slides == undefined ||
+                                            slides.length <= 1
                                                 ? 'invisible'
                                                 : ''
                                         }`}
@@ -241,19 +253,24 @@ function shopowneracc({ data }: any) {
                                 </div>
                                 <div
                                     className={`flex items-center justify-center gap-2 py-4 ${
-                                        (slides == undefined || slides.length <= 1 ) ? 'invisible' : ''
+                                        slides == undefined ||
+                                        slides.length <= 1
+                                            ? 'invisible'
+                                            : ''
                                     }`}
                                 >
-                                    {slides == undefined? "" :slides.map((_: any, i: number) => (
-                                        <button
-                                            key={i}
-                                            onClick={() => handleClick(i)}
-                                            className={`
+                                    {slides == undefined
+                                        ? ''
+                                        : slides.map((_: any, i: number) => (
+                                              <button
+                                                  key={i}
+                                                  onClick={() => handleClick(i)}
+                                                  className={`
               h-3 w-3 rounded-full bg-secondary transition-all
               ${curr === i ? 'p-2' : 'bg-opacity-50'}
             `}
-                                        />
-                                    ))}
+                                              />
+                                          ))}
                                 </div>
                             </>
                         )}

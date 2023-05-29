@@ -22,7 +22,7 @@ const Navbar = () => {
             router.push(`/shopowneracc?id=${valueToSend}`)
         }
         else if (session?.user?.image == "eventOrganizer") {
-            router.push(`/eventorganizeracc`)
+            router.push(`/eventorganizeracc?id=${valueToSend}`)
         }
     }
 
