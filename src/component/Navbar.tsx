@@ -11,8 +11,6 @@ import EventHive from '../pages/assets/eventHive.svg'
 const Navbar = () => {
     const { data: session } = useSession()
     const [navbar, setNavbar] = useState(false)
-    // const [account, setAccount] = useState(false)
-    const account = false
 
     const router = useRouter()
     const currentRoute = router.pathname
@@ -41,15 +39,14 @@ const Navbar = () => {
                             </div>
                         </a>
                         <div className="flex items-center space-x-3 md:hidden">
+                        {session?.user ? (
                             <button onClick={sendAccValue}>
-                                {/* <a href=" "> */}
                                     <Image
                                         className="w-6"
                                         src={Account}
                                         alt={'account'}
                                     />
-                                {/* </a> */}
-                            </button>
+                            </button> ) : ""}
 
                             <button onClick={() => setNavbar(!navbar)}>
                                 <Image
@@ -93,6 +90,7 @@ const Navbar = () => {
                                     Events
                                 </a>
                             </li>
+                            {session?.user ? (
                             <li className="text-xl font-extrabold">
                                 <a
                                     href="/favourites"
@@ -104,7 +102,7 @@ const Navbar = () => {
                                 >
                                     Favourites
                                 </a>
-                            </li>
+                            </li>) : ""}
                             <li className="text-xl font-extrabold">
                                 {session?.user ? (
                                     <a
@@ -138,7 +136,6 @@ const Navbar = () => {
                 <div className="hidden basis-1/3 justify-end space-x-3 md:flex">
                     {session?.user ? (
                         <>
-                            {/* <button> */}
                                 {session.user.image === 'shopOwner' ||
                                 session.user.image === 'eventOrganizer' ? (
                                     <button onClick={sendAccValue}>
@@ -155,11 +152,10 @@ const Navbar = () => {
                                         alt={'account'}
                                     />
                                 )}
-                            {/* </button> */}
                             <div className="flex items-center gap-6">
-                                <div className="justify-end rounded-lg font-extrabold">
+                                {/* <div className="justify-end rounded-lg font-extrabold">
                                     Signed in as {session.user.name}
-                                </div>
+                                </div> */}
                                 <div
                                     className="text-md justify-end rounded-lg font-extrabold hover:text-primary"
                                     onClick={() =>
@@ -174,11 +170,7 @@ const Navbar = () => {
                         </>
                     ) : (
                         <>
-                            <div
-                                className={`flex flex-row items-center gap-6 ${
-                                    account ? 'hidden' : 'block'
-                                }`}
-                            >
+                            <div className="flex items-center gap-6">
                                 <div
                                     className="text-md justify-end rounded-lg font-extrabold hover:text-primary"
                                     onClick={() => signIn()}

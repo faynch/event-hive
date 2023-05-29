@@ -44,8 +44,6 @@ export default function CardInfo(props: CardInfoProps) {
     const [picture, setPicture] = useState(props.data?.picture || '')
     const [pictureFile, setPictureFile] = useState<File | null>(null)
 
-    const shopOwnerAccount = false
-    const [request, setRequest] = useState(false)
 
     const handleTagSelectorClose = () => {
         setShowTagSelector(false)
@@ -415,7 +413,12 @@ export default function CardInfo(props: CardInfoProps) {
                     </div>
                     <div className="flex flex-row items-center gap-2">
                         <Image className="h-8" src={Location} alt={''} />
-                        {props.data?.address}
+                        {props.type === 'Shop' ? (
+                                <>{props.data?.address}</>
+                            ) : (
+                                <>{props.data?.location}</>
+                            )}
+                        
                     </div>
                     {props.type === 'Event' && (
                         <div className="flex flex-col items-center gap-2 sm:flex-row">
@@ -456,7 +459,7 @@ export default function CardInfo(props: CardInfoProps) {
                     </p>
                 </div>
             </div>
-            {shopOwnerAccount ? (
+            {/* {props.role == "shopOwner" ? (
                 <button
                     onClick={() => setRequest(!request)}
                     className="mx-3 mt-4 w-32 justify-end self-center rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-6 py-2 font-extrabold text-white hover:bg-gradient-to-r lg:self-end"
@@ -465,7 +468,7 @@ export default function CardInfo(props: CardInfoProps) {
                 </button>
             ) : (
                 ''
-            )}
+            )} */}
         </div>
     )
 }
