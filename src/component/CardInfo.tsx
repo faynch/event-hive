@@ -13,6 +13,7 @@ import Tiktok from '../pages/assets/tiktok.svg'
 import Phone from '../pages/assets/phone.svg'
 import Email from '../pages/assets/email.svg'
 import Add from '@/pages/assets/add.svg'
+import Location from '../pages/assets/location.svg'
 import { useState } from 'react'
 import { v4 as uuid } from 'uuid'
 import supabase from 'lib/supabase'
@@ -25,18 +26,22 @@ interface CardInfoProps {
 }
 
 export default function CardInfo(props: CardInfoProps) {
-    const [storeName, setStoreName] = useState(props.data?.shopName)
-    const [description, setDescription] = useState(props.data?.about)
-    const [phone, setPhone] = useState(props.data?.telephone)
-    const [email, setEmail] = useState(props.data?.shopOwner?.email)
-    const [instagram, setInstagram] = useState(props.data?.instagram)
-    const [facebook, setFacebook] = useState(props.data?.facebook)
-    const [line, setLine] = useState(props.data?.line)
-    const [tiktok, setTiktok] = useState(props.data?.tiktok)
+    const [storeName, setStoreName] = useState(props.data?.shopName || '')
+    const [description, setDescription] = useState(props.data?.about || '')
+    const [address, setAddress] = useState(props.data?.address || '')
+    const [startDate, setStartDate] = useState(props.data?.startDate || '')
+    const [endDate, setEndDate] = useState(props.data?.endDate || '')
+    const [phone, setPhone] = useState(props.data?.telephone || '')
+    const [email, setEmail] = useState(props.data?.shopOwner?.email || '')
+    const [instagram, setInstagram] = useState(props.data?.instagram || '')
+    const [facebook, setFacebook] = useState(props.data?.facebook || '')
+    const [line, setLine] = useState(props.data?.line || '')
+    const [tiktok, setTiktok] = useState(props.data?.tiktok || '')
     const [editMode, setEditMode] = useState(false)
     const [like, setLike] = useState(false)
     const [showTagSelector, setShowTagSelector] = useState(false)
     const [selectedTags, setSelectedTags] = useState<Tag[]>(props.data?.tags)
+    const [picture, setPicture] = useState(props.data?.picture || '')
     const [pictureFile, setPictureFile] = useState<File | null>(null)
 
     const shopOwnerAccount = false
@@ -82,20 +87,46 @@ export default function CardInfo(props: CardInfoProps) {
                 .from(storageName)
                 .getPublicUrl(fileName)
             console.log('Image URL:', imageUrl.data.publicUrl)
+            setPicture(imageUrl.data.publicUrl)
+        }
+        const formData = {
+            shopName: storeName,
+            about: description,
+            address: address,
+            email: email,
+            telephone: phone,
+            instagram: instagram,
+            facebook: facebook,
+            tiktok: tiktok,
+            tags: tagId,
+            picture: picture,
+        }
 
-            const formData = {
-                shopName: storeName,
-                about: description,
-                email: email,
-                telephone: phone,
-                instagram: instagram,
-                facebook: facebook,
-                tags: tagId,
-                picture: imageUrl.data.publicUrl,
+        const jsonData = JSON.stringify(formData)
+        console.log(jsonData)
+
+        try {
+            const response = await fetch(
+                `http://localhost:3000/api/shops/${props.data.id}`,
+                {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: jsonData,
+                }
+            )
+
+            if (response.ok) {
+                // Successful response, handle accordingly
+                console.log('Data successfully submitted!')
+            } else {
+                // Error response, handle accordingly
+                console.log('Failed to submit data')
             }
-
-            const jsonData = JSON.stringify(formData)
-            console.log(jsonData)
+        } catch (error) {
+            // Error occurred during the request, handle accordingly
+            console.error('Error:', error)
         }
         // logic to save changes made by the user
         setEditMode(false) // switch back to view mode
@@ -162,6 +193,36 @@ export default function CardInfo(props: CardInfoProps) {
                                 />
                             </div>
                         </div>
+                        <div className="flex flex-row items-center gap-2">
+                            <button>
+                                <Image
+                                    className="h-8"
+                                    src={Location}
+                                    alt={''}
+                                />
+                            </button>
+                            <input
+                                className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                value={address}
+                                onChange={(e) => setAddress(e.target.value)}
+                            />
+                        </div>
+                        {props.type == 'Event' && (
+                            <div className="flex flex-row gap-2">
+                                <input
+                                    className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                    value={startDate}
+                                    onChange={(e) =>
+                                        setStartDate(e.target.value)
+                                    }
+                                />
+                                <input
+                                    className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                    value={endDate}
+                                    onChange={(e) => setEndDate(e.target.value)}
+                                />
+                            </div>
+                        )}
 
                         <div className="flex w-full flex-row items-center gap-2">
                             <button>
@@ -350,6 +411,22 @@ export default function CardInfo(props: CardInfoProps) {
                             )}
                         </button>
                     </div>
+                    <div className="flex flex-row items-center gap-2">
+                        <Image className="h-8" src={Location} alt={''} />
+                        {props.data.address}
+                    </div>
+                    {props.type === 'Event' && (
+                        <div className="flex flex-col items-center gap-2 sm:flex-row">
+                            <button className="flex flex-row items-center gap-2">
+                                <Image className="h-8" src={Phone} alt={''} />
+                                {props.data.startDate}
+                            </button>
+                            <button className="flex flex-row items-center gap-2">
+                                <Image className="h-8" src={Phone} alt={''} />
+                                {props.data.endDate}
+                            </button>
+                        </div>
+                    )}
                     <div
                         className={`flex flex-col flex-wrap items-center sm:flex-row ${
                             isAvailble() ? 'gap-4' : ''
@@ -380,7 +457,7 @@ export default function CardInfo(props: CardInfoProps) {
             {shopOwnerAccount ? (
                 <button
                     onClick={() => setRequest(!request)}
-                    className="mx-3 w-32 justify-end self-center rounded-lg mt-4 bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-6 py-2 font-extrabold text-white hover:bg-gradient-to-r lg:self-end"
+                    className="mx-3 mt-4 w-32 justify-end self-center rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-6 py-2 font-extrabold text-white hover:bg-gradient-to-r lg:self-end"
                 >
                     {request ? 'Requested' : 'Join'}
                 </button>
