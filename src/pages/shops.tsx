@@ -19,7 +19,7 @@ function Shops({ shopdata, tags }: any) {
     const onSearch = async (value: string) => {
         if (value.length != 0) {
             const res = await fetch(
-                'http://localhost:3000/api/search?searchString=' + value
+                'https://event-hive-service.onrender.com/api/search?searchString=' + value
             ) // Replace with your API endpoint URL
             const data = await res.json()
             setItems(data)
@@ -31,7 +31,7 @@ function Shops({ shopdata, tags }: any) {
     const handleValue = async (value: any) => {
         console.log('Received value:', value)
         setSearchtag(value)
-        const res = await fetch('http://localhost:3000/api/tags/' + value) // Replace with your API endpoint URL
+        const res = await fetch('https://event-hive-service.onrender.com/api/tags/' + value) // Replace with your API endpoint URL
         const data = await res.json()
         console.log(data[0].shops)
         setItems(data[0].shops)
@@ -112,10 +112,10 @@ export async function getServerSideProps(context: any) {
         context.res,
         authOptions
     )
-    const res1 = await fetch('http://localhost:3000/api/shops/') // Replace with your API endpoint URL
+    const res1 = await fetch('https://event-hive-service.onrender.com/api/shops/') // Replace with your API endpoint URL
     const data1 = await res1.json()
 
-    const res2 = await fetch('http://localhost:3000/api/tags/') // Replace with your API endpoint URL
+    const res2 = await fetch('https://event-hive-service.onrender.com/api/tags/') // Replace with your API endpoint URL
     const data2 = await res2.json()
     return {
         props: {

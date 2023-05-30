@@ -106,7 +106,7 @@ export default function CreatePage() {
                 console.log(jsonData)
                 try {
                     const response = await fetch(
-                        'http://localhost:3000/api/shops/registration',
+                        'https://event-hive-service.onrender.com/api/shops/registration',
                         {
                             method: 'POST',
                             headers: {
@@ -145,7 +145,7 @@ export default function CreatePage() {
                 console.log(jsonData)
                 try {
                     const response = await fetch(
-                        'http://localhost:3000/api/events/registration',
+                        'https://event-hive-service.onrender.com/api/events/registration',
                         {
                             method: 'POST',
                             headers: {
@@ -157,7 +157,7 @@ export default function CreatePage() {
 
                     if (response.ok) {
                         console.log('Data successfully submitted!')
-                        window.location.href = `http://localhost:3000/eventorganizeracc?id=${session?.user?.name}`
+                        window.location.href = `https://event-hive-service.onrender.com/eventorganizeracc?id=${session?.user?.name}`
                     } else {
                         console.log('Failed to submit data')
                     }

@@ -66,7 +66,7 @@ export default function Shop() {
 
         try {
             const response = await fetch(
-                'http://localhost:3000/api/shopowners/registration',
+                'https://event-hive-service.onrender.com/api/shopowners/registration',
                 {
                     method: 'POST',
                     headers: {

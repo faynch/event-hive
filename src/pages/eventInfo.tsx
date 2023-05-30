@@ -36,7 +36,7 @@ function EventInfo({ data }: any) {
     
     async function handleApplication() {
         const shopOwnerId = session?.user?.name!
-        const endpoint = `http://localhost:3000/api/shopowners/${shopOwnerId}`
+        const endpoint = `https://event-hive-service.onrender.com/api/shopowners/${shopOwnerId}`
         // var request = false
         
         const shopIdResponse = await fetch(endpoint)
@@ -54,7 +54,7 @@ function EventInfo({ data }: any) {
     const handleRequest = async () => {
         setRequest(true)
         const shopOwnerId = session?.user?.name!
-        const endpoint = `http://localhost:3000/api/shopowners/${shopOwnerId}`
+        const endpoint = `https://event-hive-service.onrender.com/api/shopowners/${shopOwnerId}`
 
         try {
             const shopIdResponse = await fetch(endpoint, {
@@ -70,7 +70,7 @@ function EventInfo({ data }: any) {
                     eventId: data.id,
                 }
                 const response = await fetch(
-                    `http://localhost:3000/api/applyforevent`,
+                    `https://event-hive-service.onrender.com/api/applyforevent`,
                     {
                         method: 'POST',
                         headers: {
@@ -97,7 +97,7 @@ function EventInfo({ data }: any) {
     const handleDecline = async () => {
         setRequest(false)
         const shopOwnerId = session?.user?.name!
-        const endpoint = `http://localhost:3000/api/shopowners/${shopOwnerId}`
+        const endpoint = `https://event-hive-service.onrender.com/api/shopowners/${shopOwnerId}`
 
         try {
             const shopIdResponse = await fetch(endpoint, {
@@ -113,7 +113,7 @@ function EventInfo({ data }: any) {
                     eventId: data.id,
                 }
                 const response = await fetch(
-                    `http://localhost:3000/api/declineshop`,
+                    `https://event-hive-service.onrender.com/api/declineshop`,
                     {
                         method: 'POST',
                         headers: {
@@ -268,7 +268,7 @@ export async function getServerSideProps(context: { req: any; query: any }) {
     const { req, query } = context
     const valueFromRouter = query.id
     const data = await fetch(
-        `http://localhost:3000/api/events/${valueFromRouter}`
+        `https://event-hive-service.onrender.com/api/events/${valueFromRouter}`
     )
     const jsonData = await data.json()
     return {

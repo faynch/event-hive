@@ -85,7 +85,7 @@ export default function RegisterVisitor() {
 
         try {
             const response = await fetch(
-                'http://localhost:3000/api/visitors/registration',
+                'https://event-hive-service.onrender.com/api/visitors/registration',
                 {
                     method: 'POST',
                     headers: {

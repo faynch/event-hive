@@ -45,7 +45,7 @@ export async function getServerSideProps(context: { req: any; query: any }) {
     const valueFromRouter = query.id
     console.log(valueFromRouter)
     const data = await fetch(
-        `http://localhost:3000/api/eventorganizers/${valueFromRouter}`
+        `https://event-hive-service.onrender.com/api/eventorganizers/${valueFromRouter}`
     )
     const jsonData = await data.json()
     console.log(jsonData[0].events)
