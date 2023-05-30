@@ -21,11 +21,11 @@ function Shopowneracc({ data }: any) {
 
     const [edit, setEdit] = useState(false)
 
-    const [index, setIndex] = useState(data.id)
-    const [picture, setPicture] = useState(String)
+    const [index, setIndex] = useState(data?.id)
+    const [picture, setPicture] = useState(data?.image || '')
     const [pictureFile, setPictureFile] = useState<File | null>(null)
-    const [productName, setProductName] = useState(String)
-    const [description, setDescription] = useState(String)
+    const [productName, setProductName] = useState(data?.productName || '')
+    const [description, setDescription] = useState(data?.des)
     const [price, setPrice] = useState<number>()
 
     const [slides, setSlides] = useState(data?.products)
@@ -63,6 +63,7 @@ function Shopowneracc({ data }: any) {
             const formData = {
                 productName: productName,
                 description: description,
+                image : picture,
                 price: price,
                 shop: index,
             }
@@ -140,6 +141,7 @@ function Shopowneracc({ data }: any) {
     const handleImageChange = (file: File | null) => {
         setPictureFile(file) // Store the selected image file
     }
+
     if (data == null) {
         return <Create />
     }

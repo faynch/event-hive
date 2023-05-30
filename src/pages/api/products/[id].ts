@@ -31,7 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     if(req.method == 'PATCH'){
         try {
-            const { id, productName, description, price } = req.body;
+            const { id, productName, description, price, image } = req.body;
 
             if (!id) {
                 return res.status(400).json({ message: 'Please provide the visitor ID' });
