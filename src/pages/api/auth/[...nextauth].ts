@@ -63,8 +63,8 @@ export const authOptions: NextAuthOptions = {
     },
 
     pages: {
-        signIn: 'https://event-hive-service.onrender.com/login2',
-        error: 'https://event-hive-service.onrender.com/login2'
+        signIn: '/login',
+        error: '/login'
     },
 
     callbacks: {
