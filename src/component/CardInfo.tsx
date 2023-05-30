@@ -54,6 +54,68 @@ export default function CardInfo(props: CardInfoProps) {
     const [picture, setPicture] = useState(props.data?.picture || '')
     const [pictureFile, setPictureFile] = useState<File | null>(null)
 
+    const handleFollow = async (id:any) => {
+        
+        try {
+             if (like) {
+                setLike(false)
+                const formData = {
+                    type: props.type,
+                    id: id,
+                }
+            
+                const response = await fetch(
+                    `https://event-hive-service.onrender.com/api/follows`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formData),
+                    }
+                )
+                if (response.ok) {
+                    // Successful response, handle accordingly
+                    console.log('Data successfully follow!')
+                    window.location.reload()
+                } else {
+                    // Error response, handle accordingly
+                    console.log('Failed to follow data')
+                }
+            }
+            else {
+                setLike(true)
+                const formData = {
+                    type: props.type,
+                    id: id,
+                }
+            
+                const response = await fetch(
+                    `https://event-hive-service.onrender.com/api/unfollows`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formData),
+                    }
+                )
+                if (response.ok) {
+                    // Successful response, handle accordingly
+                    console.log('Data successfully follow!')
+                    window.location.reload()
+                } else {
+                    // Error response, handle accordingly
+                    console.log('Failed to follow data')
+                }
+            }
+            
+        } catch (error) {
+            // Error occurred during the request, handle accordingly
+            console.error('Error:', error)
+        }
+    }
+
     function onChange(dates: any, dateString: [string, string]) {
         const [start, end] = dates
         const sdate = new Date(start)
@@ -438,7 +500,7 @@ export default function CardInfo(props: CardInfoProps) {
                     </button>
                     {session?.user?.image == "visitor" ? (
                         <button
-                            onClick={() => setLike(!like)}
+                        onClick={() => handleFollow(props.data.id)}
                             className="w-6 md:w-8"
                         >
                             {like ? (

@@ -16,6 +16,68 @@ interface CardProps {
 export default function Card(props: CardProps) {
     const [active, setActive] = useState(false)
 
+    const handleFollow = async (id:any) => {
+        
+        try {
+             if (active) {
+                setActive(false)
+                const formData = {
+                    type: props.type,
+                    id: id,
+                }
+            
+                const response = await fetch(
+                    `https://event-hive-service.onrender.com/api/follows`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formData),
+                    }
+                )
+                if (response.ok) {
+                    // Successful response, handle accordingly
+                    console.log('Data successfully follow!')
+                    window.location.reload()
+                } else {
+                    // Error response, handle accordingly
+                    console.log('Failed to follow data')
+                }
+            }
+            else {
+                setActive(true)
+                const formData = {
+                    type: props.type,
+                    id: id,
+                }
+            
+                const response = await fetch(
+                    `https://event-hive-service.onrender.com/api/unfollows`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formData),
+                    }
+                )
+                if (response.ok) {
+                    // Successful response, handle accordingly
+                    console.log('Data successfully follow!')
+                    window.location.reload()
+                } else {
+                    // Error response, handle accordingly
+                    console.log('Failed to follow data')
+                }
+            }
+            
+        } catch (error) {
+            // Error occurred during the request, handle accordingly
+            console.error('Error:', error)
+        }
+    }
+
     const { data: session } = useSession()
 
     const router = useRouter()
@@ -81,7 +143,7 @@ export default function Card(props: CardProps) {
             )}
             {session?.user?.image == "visitor" ? 
             <div className="absolute top-7 right-7">
-                <button onClick={() => setActive(!active)} className="w-8">
+                <button onClick={() => handleFollow(props.data.id)} className="w-8">
                     {active ? (
                         <Image src={Like} alt={''} />
                     ) : (
