@@ -79,7 +79,7 @@ export default function Organizer() {
             if (response.ok) {
                 // Successful response, handle accordingly
                 console.log('Data successfully submitted!')
-                window.location.href = '/login2'
+                window.location.href = '/login'
             } else {
                 // Error response, handle accordingly
                 console.log('Failed to submit data')
