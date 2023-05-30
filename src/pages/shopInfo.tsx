@@ -56,7 +56,7 @@ function ShopInfo({ data }: any) {
                                             {items.image != '' ? (
                                                 <img
                                                     src={items.image}
-                                                    className="w-40 md:w-52"
+                                                    className="w-40 h-40 md:w-52 md:h-52 rounded-full"
                                                     alt={''}
                                                 />
                                             ) : (
