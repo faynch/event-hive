@@ -27,7 +27,7 @@ function Shops({ shopdata, tags }: any) {
     //     { id: 3, name: 'Item 3', option: 'option3' },
     //     // Additional data items
     //   ]);
-    const handleCheckboxChange = (event) => {
+    const handleCheckboxChange = (event: { target: { name: any; checked: any } }) => {
         const { name, checked } = event.target
         setFilters((prevFilters) => ({
             ...prevFilters,
@@ -79,7 +79,7 @@ function Shops({ shopdata, tags }: any) {
 
     const handleValue = async (value: any) => {
         setShowItems(
-            items.filter((item) => {
+            items.filter((item: { tags: any[] }) => {
                 const nameMatch = item.tags.some(
                     (tag) =>
                         // tag.id === value.id &&

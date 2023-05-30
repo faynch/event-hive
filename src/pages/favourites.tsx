@@ -65,15 +65,15 @@ export async function getServerSideProps(context: any) {
         authOptions
     )
     if (session?.user?.image == "visitor") {
-        const res = await fetch('http://localhost:3000/api/visitors/'+session.user.name) // Replace with your API endpoint URL
+        const res = await fetch('https://event-hive-service.onrender.com//api/visitors/'+session.user.name) // Replace with your API endpoint URL
         const data = await res.json()
     }
     else if (session?.user?.image == 'shopOwner') {
-        const res = await fetch('http://localhost:3000/api/shopowners/'+session.user.name) // Replace with your API endpoint URL
+        const res = await fetch('https://event-hive-service.onrender.com//api/shopowners/'+session.user.name) // Replace with your API endpoint URL
         const data = await res.json()
     }
     else if (session?.user?.image == "eventOrganizer") {
-        const res = await fetch('http://localhost:3000/api/eventorganizers/'+session.user.name) // Replace with your API endpoint URL
+        const res = await fetch('https://event-hive-service.onrender.com//api/eventorganizers/'+session.user.name) // Replace with your API endpoint URL
         const data = await res.json()
     }
 
