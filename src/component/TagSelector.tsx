@@ -44,7 +44,7 @@ const TagSelector: React.FC<Props> = ({ onClose, setSelectTags }) => {
 
     const fetchTags = async () => {
         try {
-            const response = await fetch('https://event-hive-26cc.onrender.com/api/tags')
+            const response = await fetch('http://localhost:3000/api/tags')
             if (response.ok) {
                 const data = await response.json()
                 setTags(data)
