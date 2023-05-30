@@ -37,22 +37,25 @@ export default function CreatePage() {
 
     function onChange(dates: any, dateString: [string, string]) {
         const [start, end] = dates
-        const sdate = new Date(start)
-        const edate = new Date(end)
-        const formattedsDate = sdate.toLocaleDateString("en-US", {
-            day: "2-digit",
-            month: "short",
-            year: "numeric",
-          });
-          const formattedeDate = edate.toLocaleDateString("en-US", {
-            day: "2-digit",
-            month: "short",
-            year: "numeric",
-          });
-        setStartDate(formattedsDate?.toString())
-        setEndDate(formattedeDate?.toString())
+        // const sdate = new Date(start)
+        // const edate = new Date(end)
+        // const formattedsDate = sdate.toLocaleDateString("en-US", {
+        //     day: "2-digit",
+        //     month: "numeric",
+        //     year: "numeric",
+        //   });
+        //   const formattedeDate = edate.toLocaleDateString("en-US", {
+        //     day: "2-digit",
+        //     month: "numeric",
+        //     year: "numeric",
+        //   });
+        setStartDate(start.format("DD/MM/YYYY"))
+        setEndDate(end.format("DD/MM/YYYY"))
         console.log(startDate)
     }
+    // function customFormat(value) {
+    //     return value.format("YYYY/MM/DD HH:mm:ss");
+    //   }
 
     const handleTagSelectorClose = () => {
         setShowTagSelector(false)
