@@ -14,7 +14,7 @@ export default function Login() {
             email: email.current,
             password: password.current,
             redirect: true,
-            callbackUrl: "https://event-hive-service.onrender.com/",
+            callbackUrl: "https://event-hive-26cc.onrender.com/",
         })
     }
     return (

@@ -124,10 +124,10 @@ export async function getServerSideProps(context: any) {
         context.res,
         authOptions
     )
-    const res1 = await fetch('https://event-hive-service.onrender.com/api/events/') // Replace with your API endpoint URL
+    const res1 = await fetch('https://event-hive-26cc.onrender.com/api/events/') // Replace with your API endpoint URL
     const data1 = await res1.json()
 
-    const res2 = await fetch('https://event-hive-service.onrender.com/api/tags/') // Replace with your API endpoint URL
+    const res2 = await fetch('https://event-hive-26cc.onrender.com/api/tags/') // Replace with your API endpoint URL
     const data2 = await res2.json()
 
     return {

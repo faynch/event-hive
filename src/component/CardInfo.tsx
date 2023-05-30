@@ -135,7 +135,7 @@ export default function CardInfo(props: CardInfoProps) {
 
             try {
                 const response = await fetch(
-                    `https://event-hive-service.onrender.com/api/shops/${props.data.id}`,
+                    `https://event-hive-26cc.onrender.com/api/shops/${props.data.id}`,
                     {
                         method: 'PATCH',
                         headers: {
@@ -179,7 +179,7 @@ export default function CardInfo(props: CardInfoProps) {
 
             try {
                 const response = await fetch(
-                    `https://event-hive-service.onrender.com/api/events/${props.data.id}`,
+                    `https://event-hive-26cc.onrender.com/api/events/${props.data.id}`,
                     {
                         method: 'PATCH',
                         headers: {
