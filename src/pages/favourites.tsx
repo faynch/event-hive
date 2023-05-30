@@ -35,7 +35,6 @@ function Favourites({ eventdata, shopdata }: any) {
                                 </div>
                             </button>
                         </div>
-                        {shopdata? eventdata? ():()}
                         <div className="mb-8 grid grid-cols-1 gap-8 place-self-center lg:max-w-7xl lg:grid-cols-2 xl:grid-cols-3">
                             {toggle ? (
                                 <>
@@ -66,7 +65,7 @@ export async function getServerSideProps(context: any) {
         authOptions
     )
     
-        const res = await fetch('https://event-hive-service.onrender.com//api/visitors/'+session.user.name) // Replace with your API endpoint URL
+        const res = await fetch('https://event-hive-service.onrender.com//api/visitors/'+session?.user?.name) // Replace with your API endpoint URL
         const data = await res.json()
     
 
