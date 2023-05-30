@@ -154,69 +154,9 @@ function Shops({ shopdata, tags }: any) {
                                     alt={'Search'}
                                 />
                             </button>
-                            <button
-                                className="rounded-r-md bg-white pr-2"
-                                onClick={() => setFilter(!filter)}
-                            >
-                                <Image
-                                    className="h-6"
-                                    src={Filter}
-                                    alt={'Filter'}
-                                />
-                            </button>
+                            
                         </div>
-                        <div
-                            className={`my-4 mx-12 rounded-sm bg-white p-8 md:mx-36 lg:max-w-7xl lg:self-end xl:mx-4 ${
-                                filter ? 'block' : 'hidden'
-                            }`}
-                        >
-                            <h4 className="mb-4 text-xl font-extrabold text-primary">
-                                Catagories
-                            </h4>
-                            <div className="grid grid-cols-3 gap-4 lg:grid-cols-5">
-                                <div>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            name="Food"
-                                            checked={filters.Food}
-                                            onChange={handleCheckboxChange}
-                                        />
-                                        Food
-                                    </label>
-                                </div>
-                                <div>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            name="Sport"
-                                            checked={filters.Sport}
-                                            onChange={handleCheckboxChange}
-                                        />
-                                        Sport
-                                    </label>
-                                </div>
-                                <div>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            name="Drink"
-                                            checked={filters.Drink}
-                                            onChange={handleCheckboxChange}
-                                        />
-                                        Drink
-                                    </label>
-                                </div>
-                                {/* {tags.map((tag: any) => (
-                                    <Button
-                                        key={tag.id}
-                                        id={tag.id}
-                                        data={tag.tagName}
-                                        onValue={handleValue}
-                                    />
-                                ))} */}
-                            </div>
-                        </div>
+                        
                         <h4 className="m-8 mx-auto text-xl font-extrabold text-primary">
                             SEARCH FOR :
                         </h4>
