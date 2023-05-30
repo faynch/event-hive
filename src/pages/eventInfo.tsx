@@ -52,6 +52,7 @@ function EventInfo({ data }: any) {
     }
 
     const handleRequest = async () => {
+        setRequest(true)
         const shopOwnerId = session?.user?.name!
         const endpoint = `http://localhost:3000/api/shopowners/${shopOwnerId}`
 
@@ -93,6 +94,49 @@ function EventInfo({ data }: any) {
         }
     }
 
+    const handleDecline = async () => {
+        setRequest(false)
+        const shopOwnerId = session?.user?.name!
+        const endpoint = `http://localhost:3000/api/shopowners/${shopOwnerId}`
+
+        try {
+            const shopIdResponse = await fetch(endpoint, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+            })
+
+            if (shopIdResponse.ok) {
+                const shopData = await shopIdResponse.json()
+
+                const formData = {
+                    shopId: shopData[0].shop.id,
+                    eventId: data.id,
+                }
+                const response = await fetch(
+                    `http://localhost:3000/api/declineshop`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formData),
+                    }
+                )
+                if (response.ok) {
+                    // Successful response, handle accordingly
+                    console.log('Data successfully deleted!')
+                    // window.location.reload()
+                } else {
+                    // Error response, handle accordingly
+                    console.log('Failed to delete data')
+                }
+            }
+        } catch (error) {
+            // Error occurred during the request, handle accordingly
+            console.error('Error:', error)
+        }
+    }
+
     const router = useRouter()
     const sendShopValue = (id: string) => {
         router.push(`/shopInfo?id=${id}`)
@@ -107,7 +151,7 @@ function EventInfo({ data }: any) {
                         <CardInfo type="Event" edit={owner} data={data} />
                         {session?.user?.image == 'shopOwner' ? (
                             <button
-                                onClick={() => handleRequest()}
+                                onClick={() => {request ? handleDecline(): handleRequest()}}
                                 className="mx-3 mt-4 w-32 justify-end self-center rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-6 py-2 font-extrabold text-white hover:bg-gradient-to-r lg:self-end"
                             >
                                 {request ? 'Requested' : 'Join'}
