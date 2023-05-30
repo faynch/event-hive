@@ -66,7 +66,7 @@ export default function Organizer() {
 
         try {
             const response = await fetch(
-                'https://event-hive-26cc.onrender.com/api/eventorganizers/registration',
+                'http://localhost:3000/api/eventorganizers/registration',
                 {
                     method: 'POST',
                     headers: {

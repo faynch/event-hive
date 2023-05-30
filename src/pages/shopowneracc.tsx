@@ -71,7 +71,7 @@ function Shopowneracc({ data }: any) {
             console.log(jsonData)
             try {
                 const response = await fetch(
-                    'https://event-hive-26cc.onrender.com/api/products/registration',
+                    'http://localhost:3000/api/products/registration',
                     {
                         method: 'POST',
                         headers: {
@@ -114,7 +114,7 @@ function Shopowneracc({ data }: any) {
             console.log(jsonData)
             try {
                 const response = await fetch(
-                    'https://event-hive-26cc.onrender.com/api/products/delete',
+                    'http://localhost:3000/api/products/delete',
                     {
                         method: 'DELETE',
                         headers: {
@@ -364,7 +364,7 @@ export async function getServerSideProps(context: { req: any; query: any }) {
     const valueFromRouter = query.id
 
     const data = await fetch(
-        `https://event-hive-26cc.onrender.com/api/shopowners/${valueFromRouter}`
+        `http://localhost:3000/api/shopowners/${valueFromRouter}`
     )
     const jsonData = await data.json()
     console.log(jsonData[0].shop)
