@@ -84,6 +84,7 @@ model Event {
 
 model Product {
   id          String @id @default(uuid())
+  image       String
   productName String
   description String
   price       Int

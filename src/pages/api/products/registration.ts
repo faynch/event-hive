@@ -7,7 +7,7 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
         return res.status(405).json({message: 'Method is not allowed'});
     }
     try{
-        const { productName, description, price, shop } = req.body;
+        const { productName, image, description, price, shop } = req.body;
         const prisma = new PrismaClient;
 
         if(!productName || !price || !shop){
@@ -19,6 +19,7 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
         const product = await prisma.product.create({
             data: {
                 productName: productName,
+                image: image,
                 description: description,
                 price: price,
                 shop: productShop,
