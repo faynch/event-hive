@@ -436,7 +436,7 @@ export default function CardInfo(props: CardInfoProps) {
                     >
                         <Image src={Edit} alt={''} />
                     </button>
-                    {session?.user ? (
+                    {session?.user?.image == "visitor" ? (
                         <button
                             onClick={() => setLike(!like)}
                             className="w-6 md:w-8"

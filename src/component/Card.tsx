@@ -79,7 +79,7 @@ export default function Card(props: CardProps) {
                     </h5>
                 </div>
             )}
-            {session?.user ? 
+            {session?.user?.image == "visitor" ? 
             <div className="absolute top-7 right-7">
                 <button onClick={() => setActive(!active)} className="w-8">
                     {active ? (

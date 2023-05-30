@@ -97,7 +97,7 @@ const Navbar = () => {
                                     Events
                                 </Link>
                             </li>
-                            {session?.user ? (
+                            {session?.user?.image == "visitor" ? (
                                 <li className="text-xl font-extrabold">
                                     <Link
                                         href="/favourites"
