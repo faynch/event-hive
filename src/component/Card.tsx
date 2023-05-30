@@ -27,7 +27,7 @@ export default function Card(props: CardProps) {
                 }
             
                 const response = await fetch(
-                    `https://event-hive-service.onrender.com/api/follows`,
+                    `https://event-hive-26cc.onrender.com/api/follows`,
                     {
                         method: 'POST',
                         headers: {
@@ -53,7 +53,7 @@ export default function Card(props: CardProps) {
                 }
             
                 const response = await fetch(
-                    `https://event-hive-service.onrender.com/api/unfollows`,
+                    `https://event-hive-26cc.onrender.com/api/unfollows`,
                     {
                         method: 'POST',
                         headers: {
