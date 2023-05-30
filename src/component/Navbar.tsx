@@ -170,7 +170,7 @@ const Navbar = () => {
                                     className="text-md justify-end rounded-lg font-extrabold hover:text-primary"
                                     onClick={() =>
                                         signOut({
-                                            callbackUrl: `https://event-hive-service.onrender.com/`,
+                                            callbackUrl: `https://event-hive-26cc.onrender.com/`,
                                         })
                                     }
                                 >
