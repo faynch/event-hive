@@ -179,7 +179,7 @@ export default function CardInfo(props: CardInfoProps) {
 
             try {
                 const response = await fetch(
-                    `http://localhost:3000/api/events/${props.data.id}`,
+                    `https://event-hive-service.onrender.com/api/events/${props.data.id}`,
                     {
                         method: 'PATCH',
                         headers: {
