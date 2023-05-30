@@ -115,7 +115,7 @@ function EventInfo({ data }: any) {
                     eventId: data.id,
                 }
                 const response = await fetch(
-                    `http://localhost:3000/api/acceptshop`,
+                    `https://event-hive-service.onrender.com//api/acceptshop`,
                     {
                         method: 'POST',
                         headers: {
@@ -189,7 +189,7 @@ function EventInfo({ data }: any) {
                 eventId: data.id,
             }
                 const response = await fetch(
-                    `http://localhost:3000/api/declineshop`,
+                    `https://event-hive-service.onrender.com//api/declineshop`,
                     {
                         method: 'POST',
                         headers: {

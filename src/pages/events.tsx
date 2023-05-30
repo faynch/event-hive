@@ -30,7 +30,7 @@ function Events({ eventdata, tags }: any) {
 
     const handleValue = async (value: any) => {
         setShowItems(
-            items.filter((item) => {
+            items.filter((item: { tags: any[] }) => {
                 const nameMatch = item.tags.some(
                     (tag) =>
                         tag.id === value.id &&

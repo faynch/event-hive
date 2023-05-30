@@ -10,7 +10,7 @@ interface ButtonProps {
     onValue: any
 }
 
-export default function Button({ value, onChange }) {
+export default function Button({ onChange }:any) {
     const [toggle, setToggle] = useState(false)
     
     // const jsonData = {tags : [ {
@@ -29,7 +29,7 @@ export default function Button({ value, onChange }) {
         Sport: false,
         Drink: false,
     })
-    const handleClick = (event) => {
+    const handleClick = (event: { target: { name: any; checked: any } }) => {
         const { name, checked } = event.target;
         setFilters(prevFilters => ({
           ...prevFilters,
@@ -38,7 +38,7 @@ export default function Button({ value, onChange }) {
         onChange(filters);
         console.log(filters)
       };
-    const handleCheckboxChange = (event) => {
+    const handleCheckboxChange = (event: { target: { name: any; checked: any } }) => {
         const { name, checked } = event.target;
         setFilters(prevFilters => ({
           ...prevFilters,
@@ -55,11 +55,11 @@ export default function Button({ value, onChange }) {
     //   console.log(filteredData)// console.log(showItems)
     
 
-    const tagAlert = () => {
-        // setToggle(!toggle)
-        console.log(filters)
-        props.onValue(filters)
-    }
+    // const tagAlert = () => {
+    //     // setToggle(!toggle)
+    //     console.log(filters)
+    //     props.onValue(filters)
+    // }
 
     return (
         <>
@@ -80,7 +80,10 @@ export default function Button({ value, onChange }) {
                                             name="Food"
                                             
                                             checked={filters.Food}
-                                            onClick={handleClick}
+                                            // onClick={handleClick}
+                                            onChange={(e) =>
+                                                handleClick(e)
+                                            }
                                             // onChange={(e) => {handleCheckboxChange(e)
                                             //     tagAlert()
 
@@ -96,7 +99,10 @@ export default function Button({ value, onChange }) {
                                             type="checkbox"
                                             name="Sport"
                                             checked={filters.Sport}
-                                            onClick={handleClick}
+                                            // onClick={handleClick}
+                                            onChange={(e) =>
+                                                handleClick(e)
+                                            }
                                             // onChange={(e) => {handleCheckboxChange(e)
                                             //     tagAlert()
 
@@ -113,7 +119,10 @@ export default function Button({ value, onChange }) {
                                             type="checkbox"
                                             name="Drink"
                                             checked={filters.Drink}
-                                            onClick={handleClick}
+                                            // onClick={handleClick}
+                                            onChange={(e) =>
+                                                handleClick(e)
+                                            }
                                             // onChange={(e) => {handleCheckboxChange(e)
                                             //     tagAlert()
 
