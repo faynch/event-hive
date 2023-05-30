@@ -24,7 +24,7 @@ export const authOptions: NextAuthOptions = {
             async authorize(credentials, req) {
                 // Add logic here to look up the user from the credentials supplied
                 const { email, password } = credentials as any
-                const res = await fetch('https://event-hive-26cc.onrender.com/api/login', {
+                const res = await fetch('http://localhost:3000/api/login', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
