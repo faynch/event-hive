@@ -63,8 +63,8 @@ export const authOptions: NextAuthOptions = {
     },
 
     pages: {
-        signIn: 'https://event-hive-26cc.onrender.com/login',
-        error: 'https://event-hive-26cc.onrender.com/login'
+        signIn: 'http://localhost:3000/login',
+        error: 'http://localhost:3000/login'
     },
 
     callbacks: {
