@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Phone from '../pages/assets/phone.svg'
 import Email from '../pages/assets/email.svg'
 import Add from '@/pages/assets/add.svg'
+import Calendar from '@/pages/assets/calendar.svg'
 import Instagram from '../pages/assets/instagram.svg'
 import Twitter from '../pages/assets/twitter.svg'
 import Facebook from '../pages/assets/facebook.svg'
@@ -15,6 +16,8 @@ import { useSession } from 'next-auth/react'
 import { v4 as uuid } from 'uuid'
 import { useState } from 'react'
 import supabase from 'lib/supabase'
+import { DatePicker } from 'antd'
+const { RangePicker } = DatePicker
 
 export default function CreatePage() {
     const [storeName, setStoreName] = useState('')
@@ -32,6 +35,25 @@ export default function CreatePage() {
     const [selectedTags, setSelectedTags] = useState<Tag[]>([])
     const [pictureFile, setPictureFile] = useState<File | null>(null)
     const { data: session } = useSession()
+
+    function onChange(dates: any, dateString: [string, string]) {
+        const [start, end] = dates
+        const sdate = new Date(start)
+        const edate = new Date(end)
+        const formattedsDate = sdate.toLocaleDateString("en-US", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+          });
+          const formattedeDate = edate.toLocaleDateString("en-US", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+          });
+        setStartDate(formattedsDate?.toString())
+        setEndDate(formattedeDate?.toString())
+    }
+
 
     const handleTagSelectorClose = () => {
         setShowTagSelector(false)
@@ -111,7 +133,10 @@ export default function CreatePage() {
                     telephone: phone,
                     line: line,
                     instagram: instagram,
+                    startDate : startDate,
+                    endDate: endDate,
                     facebook: facebook,
+                    ticktok: tiktok,
                     tags: tagId,
                     picture: imageUrl.data.publicUrl,
                     eventOrganizerId: [session?.user?.name],
@@ -225,23 +250,13 @@ export default function CreatePage() {
                                     </div>
                                     {session?.user?.image ==
                                         'eventOrganizer' && (
-                                        <div className="flex flex-row gap-2">
-                                            <input
-                                                className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
-                                                placeholder="Start date"
-                                                value={startDate}
-                                                onChange={(e) =>
-                                                    setStartDate(e.target.value)
-                                                }
+                                            <div className="flex flex-row items-center gap-2">
+                                            <Image
+                                                className="h-8"
+                                                src={Calendar}
+                                                alt={''}
                                             />
-                                            <input
-                                                className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
-                                                placeholder="End date"
-                                                value={endDate}
-                                                onChange={(e) =>
-                                                    setEndDate(e.target.value)
-                                                }
-                                            />
+                                            <RangePicker onChange={onChange} />
                                         </div>
                                     )}
 
