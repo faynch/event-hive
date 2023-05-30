@@ -16,27 +16,37 @@ import { authOptions } from './api/auth/[...nextauth]'
 function Events({ eventdata, tags }: any) {
     const [filter, setFilter] = useState(false)
     const [items, setItems] = useState(eventdata)
-    const [searchTag, setSearchtag] = useState(0)
+    const [showItems, setShowItems] = useState(eventdata)
+    const [searchTag, setSearchtag] = useState([])
 
-    const onSearch = async (value: string) => {
-        if (value.length != 0) {
-            const res = await fetch(
-                'https://event-hive-service.onrender.com/api/search?searchString=' + value
-            ) // Replace with your API endpoint URL
-            const data = await res.json()
-            setItems(data)
-        } else {
-            setItems(eventdata)
-        }
+    const onSearch = (value: string) => {
+        setShowItems(
+            items.filter((item: { eventName: string }) => {
+                const nameMatch = item.eventName.toLowerCase().includes(value)
+                return nameMatch
+            })
+        )
     }
 
     const handleValue = async (value: any) => {
-        console.log('Received value:', value)
-        setSearchtag(value)
-        const res = await fetch('https://event-hive-service.onrender.com/api/tags/' + value) // Replace with your API endpoint URL
-        const data = await res.json()
-        console.log(data[0].events)
-        setItems(data[0].events)
+        setShowItems(
+            items.filter((item) => {
+                const nameMatch = item.tags.some(
+                    (tag) =>
+                        tag.id === value.id &&
+                        tag.tagName === value.tagName
+                )
+                return nameMatch
+            })
+        )
+        // if (value != 0) {
+        //     setSearchtag(value)
+        //     const res = await fetch('http://localhost:3000/api/tags/' + value) // Replace with your API endpoint URL
+        //     const data = await res.json()
+        //     console.log(data[0].events)
+        //     setItems(data[0].events)
+        // }
+        // setItems(eventdata)
     }
 
     return (
@@ -82,14 +92,14 @@ function Events({ eventdata, tags }: any) {
                                 Catagories
                             </h4>
                             <div className="grid grid-cols-3 gap-4 lg:grid-cols-5">
-                                {tags.map((tag: any) => (
+                                {/* {tags.map((tag: any) => (
                                     <Button
                                         key={tag.id}
                                         id={tag.id}
                                         data={tag.tagName}
                                         onValue={handleValue}
                                     />
-                                ))}
+                                ))} */}
                             </div>
                         </div>
                         <h4 className="m-8 mx-auto text-xl font-extrabold text-primary">
