@@ -20,12 +20,17 @@ function Events({ eventdata, tags }: any) {
     const [searchTag, setSearchtag] = useState([])
 
     const onSearch = (value: string) => {
+        if(value == null) {
+            setShowItems(items)
+        } 
+        else {
         setShowItems(
-            items.filter((item: { eventName: string }) => {
-                const nameMatch = item.eventName.toLowerCase().includes(value)
+            items.filter((item: { shopName: string }) => {
+                const nameMatch = item.shopName.toLowerCase().includes(value)
                 return nameMatch
             })
         )
+        }
     }
 
     const handleValue = async (value: any) => {
@@ -79,7 +84,7 @@ function Events({ eventdata, tags }: any) {
                             SEARCH FOR :
                         </h4>
                         <div className="mb-8 grid grid-cols-1 gap-8 place-self-center lg:max-w-7xl lg:grid-cols-2 xl:grid-cols-3">
-                            {items.map((item: any) => (
+                            {showItems.map((item: any) => (
                                 <Card key={item.id} type="Event" data={item} />
                             ))}
                         </div>
