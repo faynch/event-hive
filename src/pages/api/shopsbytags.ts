@@ -15,7 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const shops = await prisma.shop.findMany({
     where: {
         tags: {
-            every:{
+            some:{
                 id: {
                     in: tagIds,
                 },
