@@ -145,7 +145,6 @@ export default function Card(props: CardProps) {
             )}
             {session?.user?.image === "visitor" ? 
             <div className="absolute top-7 right-7">
-                <div>{session?. 1user?.image}</div>
                 <button onClick={() => handleFollow(props.data.id)} className="w-8">
                     {active ? (
                         <Image src={Like} alt={''} />
