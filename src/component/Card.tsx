@@ -15,15 +15,16 @@ interface CardProps {
 
 export default function Card(props: CardProps) {
     const [active, setActive] = useState(false)
-
+    const { data: session } = useSession()
+    
     const handleFollow = async (id:any) => {
-        
         try {
              if (active) {
                 setActive(false)
                 const formData = {
                     type: props.type,
-                    id: id,
+                    targetId: id,
+                    userId: session?.user?.name
                 }
             
                 const response = await fetch(
@@ -49,9 +50,11 @@ export default function Card(props: CardProps) {
                 setActive(true)
                 const formData = {
                     type: props.type,
-                    id: id,
+                    targetId: id,
+                    userId: session?.user?.name
                 }
-            
+                console.log('unfollow ', formData)
+
                 const response = await fetch(
                     `http://localhost:3000/api/unfollows`,
                     {
@@ -78,7 +81,6 @@ export default function Card(props: CardProps) {
         }
     }
 
-    const { data: session } = useSession()
 
     const router = useRouter()
     const valueToSend = props.data.id
@@ -141,8 +143,9 @@ export default function Card(props: CardProps) {
                     </h5>
                 </div>
             )}
-            {session?.user?.image == "visitor" ? 
+            {session?.user?.image === "visitor" ? 
             <div className="absolute top-7 right-7">
+                <div>{session?. 1user?.image}</div>
                 <button onClick={() => handleFollow(props.data.id)} className="w-8">
                     {active ? (
                         <Image src={Like} alt={''} />
