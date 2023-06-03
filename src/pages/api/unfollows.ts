@@ -9,29 +9,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ message: 'Method Not Allowed' });
   }
 
-  //need to be in session before using the follows feature
-  const session = await getSession({ req });
+  const { type, targetId, userId } = req.body; 
 
-  if (!session || !session.user || !session.user.name) {
-    return res.status(401).json({ message: 'Unauthorized' });
-  }
-
-  const { type, id } = req.body; 
-
-  if (!type || !id) {
+  if (!type || !targetId || !userId) {
     return res.status(400).json({ message: 'Invalid Request' });
   }
-
-  if(!session.user.name){
-      return res.status(401).json({ message: 'Unauthorized' });
-    }
-   const userId = session.user.name
 
   try {
     let user;
     if (type === 'shop') {
         const shop = await prisma.shop.update({
-        where: { id: id },
+        where: { id: targetId },
         data: {
           favouriteByVisitors: {
             disconnect: { id: userId },
@@ -42,13 +30,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       where: {id: userId},
       data: {
         favouriteShops: {
-          disconnect: {id},
+          disconnect: {id:targetId},
         },
       },
     });
     } else if (type === 'event') {
         const event = await prisma.event.update({
-        where: { id: id },
+        where: { id: targetId },
         data: {
           favouriteByVisitors: {
             disconnect: { id: userId },
@@ -59,7 +47,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         where: {id: userId},
         data: {
           favouriteEvents: {
-            disconnect: {id},
+            disconnect: {id:targetId},
           },
         },
       });

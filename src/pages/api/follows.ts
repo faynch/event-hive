@@ -8,24 +8,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method Not Allowed' });
   }
+  console.log("is it here")
+  
+  const { type, targetId, userId } = req.body; 
 
-  //need to be in session before using the follows feature
-  const session = await getSession({ req });
-
-  if (!session || !session.user || !session.user.name) {
-    return res.status(401).json({ message: 'Unauthorized' });
-  }
-
-  const { type, id } = req.body; 
-
-  if (!type || !id) {
+  if (!type || !targetId || !userId) {
     return res.status(400).json({ message: 'Invalid Request' });
   }
-
-  if(!session.user.name){
-      return res.status(401).json({ message: 'Unauthorized' });
-    }
-   const userId = session.user.name
 
   try {
     let user;
@@ -34,7 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         where: { id: userId },
         data: {
           favouriteShops: {
-            connect: { id },
+            connect: { id: targetId },
           },
         },
       });
@@ -43,7 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         where: { id: userId },
         data: {
           favouriteEvents: {
-            connect: { id },
+            connect: { id: targetId },
           },
         },
       });
@@ -51,9 +40,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).json({ message: 'Invalid Type' });
     }
 
-    res.status(200).json(user);
+    return res.status(200).json(user);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Something went wrong' });
+    return res.status(500).json({ message: 'Something went wrong' });
   }
 }
