@@ -13,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         },
         orderBy: {
             favouriteByVisitors: {
-                _count: 'desc',
+                _count: 'asc',
             }
         }
     });

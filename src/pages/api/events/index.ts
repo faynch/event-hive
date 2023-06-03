@@ -5,11 +5,6 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
     const prisma = new PrismaClient();
     const currentDate = new Date();
     const events = await prisma.event.findMany({
-        where: {
-            endDate: {
-              gte: currentDate.toISOString(),
-            },
-        },
         orderBy: {
             startDate: 'asc',
         },
