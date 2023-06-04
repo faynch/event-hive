@@ -1,7 +1,7 @@
 import Navbar from '../component/Navbar'
 import CardInfo from '../component/CardInfo'
 import Footer from '../component/Footer'
-import Create from '../component/CreatePage'
+import Create from '../component/InitPage'
 
 import { useState } from 'react'
 
@@ -39,8 +39,6 @@ function Shopowneracc({ data }: any) {
         setCurr(i)
     }
 
-
-
     const handleSave = async () => {
         // Upload the image to Supabase storage
         if (pictureFile) {
@@ -58,12 +56,20 @@ function Shopowneracc({ data }: any) {
                 .from('ShopImage')
                 .getPublicUrl(fileName)
             console.log('Image URL:', imageUrl.data.publicUrl)
+
             setPicture(imageUrl.data.publicUrl)
+
+            console.log(
+                'pic state: ',
+                picture,
+                'url: ',
+                imageUrl.data.publicUrl
+            )
 
             const formData = {
                 productName: productName,
                 description: description,
-                image : picture,
+                image: imageUrl.data.publicUrl,
                 price: price,
                 shop: index,
             }
@@ -84,7 +90,6 @@ function Shopowneracc({ data }: any) {
 
                 if (response.ok) {
                     console.log('Data successfully submitted!')
-                    
                     window.location.reload()
                 } else {
                     console.log('Failed to submit data')
@@ -105,38 +110,36 @@ function Shopowneracc({ data }: any) {
     //     setSlides(delslides)
     // }
 
-    const handleDelete = async (id:any) => {
-
-            const formData = {
-                id: id
-            }
-
-            const jsonData = JSON.stringify(formData)
-            console.log(jsonData)
-            try {
-                const response = await fetch(
-                    'http://localhost:3000/api/products/delete',
-                    {
-                        method: 'DELETE',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: jsonData,
-                    }
-                )
-
-                if (response.ok) {
-                    console.log('Data successfully submitted!')
-                    
-                    window.location.reload()
-                } else {
-                    console.log('Failed to submit data')
-                }
-            } catch (error) {
-                console.error('Error:', error)
-            }
+    const handleDelete = async (id: any) => {
+        const formData = {
+            id: id,
         }
-    
+
+        const jsonData = JSON.stringify(formData)
+        console.log(jsonData)
+        try {
+            const response = await fetch(
+                'http://localhost:3000/api/products/delete',
+                {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: jsonData,
+                }
+            )
+
+            if (response.ok) {
+                console.log('Data successfully submitted!')
+
+                window.location.reload()
+            } else {
+                console.log('Failed to submit data')
+            }
+        } catch (error) {
+            console.error('Error:', error)
+        }
+    }
 
     const handleImageChange = (file: File | null) => {
         setPictureFile(file) // Store the selected image file
@@ -203,9 +206,11 @@ function Shopowneracc({ data }: any) {
                                             placeholder="price"
                                             value={price}
                                             onChange={(e) =>
-                                                setPrice(parseInt(e.target.value))
+                                                setPrice(
+                                                    parseInt(e.target.value)
+                                                )
                                             }
-                                     />
+                                        />
                                     </div>
                                 </div>
                                 <div className="flex w-full justify-center gap-4 px-12 lg:max-w-5xl lg:justify-end">
@@ -250,7 +255,10 @@ function Shopowneracc({ data }: any) {
                                         {slides == undefined
                                             ? ''
                                             : slides.map((items: any) => (
-                                                  <div key={items.id} className="flex w-full flex-none justify-center">
+                                                  <div
+                                                      key={items.id}
+                                                      className="flex w-full flex-none justify-center"
+                                                  >
                                                       <div className="grid grid-cols-1 content-center justify-items-center gap-4 lg:grid-cols-2 lg:justify-items-end lg:gap-12">
                                                           {items.image != '' ? (
                                                               <img
@@ -268,7 +276,10 @@ function Shopowneracc({ data }: any) {
                                                               />
                                                           )}
 
-                                                          <div key={items.id} className="flex flex-col gap-2 pb-2 lg:items-start lg:pt-8 lg:pr-24 xl:pr-36">
+                                                          <div
+                                                              key={items.id}
+                                                              className="flex flex-col gap-2 pb-2 lg:items-start lg:pt-8 lg:pr-24 xl:pr-36"
+                                                          >
                                                               <h4 className="text-center text-xl font-extrabold">
                                                                   {
                                                                       items.productName
@@ -291,15 +302,15 @@ function Shopowneracc({ data }: any) {
                                                                   ฿
                                                               </p>
                                                               <button
-                                                            className="rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-8 py-2 text-center font-extrabold text-white hover:bg-gradient-to-r"
-                                                            onClick={() =>
-                                                                handleDelete(
-                                                                    items.id
-                                                                )
-                                                            }
-                                                        >
-                                                            Delete
-                                                        </button>
+                                                                  className="rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-8 py-2 text-center font-extrabold text-white hover:bg-gradient-to-r"
+                                                                  onClick={() =>
+                                                                      handleDelete(
+                                                                          items.id
+                                                                      )
+                                                                  }
+                                                              >
+                                                                  Delete
+                                                              </button>
                                                           </div>
                                                       </div>
                                                   </div>
