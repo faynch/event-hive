@@ -16,15 +16,15 @@ interface CardProps {
 export default function Card(props: CardProps) {
     const [active, setActive] = useState(false)
     const { data: session } = useSession()
-    
-    const handleFollow = async (id:any) => {
+
+    const handleFollow = async (id: any) => {
         try {
-             if (!active) {
+            if (!active) {
                 setActive(true)
                 const formData = {
                     type: props.type,
                     targetId: id,
-                    userId: session?.user?.name
+                    userId: session?.user?.name,
                 }
                 console.log('follow ', formData)
                 const response = await fetch(
@@ -45,13 +45,12 @@ export default function Card(props: CardProps) {
                     // Error response, handle accordingly
                     console.log('Failed to follow data')
                 }
-            }
-            else {
+            } else {
                 setActive(false)
                 const formData = {
                     type: props.type,
                     targetId: id,
-                    userId: session?.user?.name
+                    userId: session?.user?.name,
                 }
                 console.log('unfollow ', formData)
 
@@ -74,13 +73,11 @@ export default function Card(props: CardProps) {
                     console.log('Failed to unfollow data')
                 }
             }
-            
         } catch (error) {
             // Error occurred during the request, handle accordingly
             console.error('Error:', error)
         }
     }
-
 
     const router = useRouter()
     const valueToSend = props.data.id
@@ -105,7 +102,7 @@ export default function Card(props: CardProps) {
     }
 
     return (
-        <div className="relative flex w-96 h-[27.75rem] flex-col items-center gap-3 rounded-lg bg-white px-9 pb-12 text-center">
+        <div className="relative flex h-[27.75rem] w-96 flex-col items-center gap-3 rounded-lg bg-white px-9 pb-12 text-center">
             {props.type === 'Event' ? (
                 <div
                     onClick={sendEventValue}
@@ -143,36 +140,70 @@ export default function Card(props: CardProps) {
                     </h5>
                 </div>
             )}
-            {session?.user?.image === "visitor" ? 
-            <div className="absolute top-7 right-7">
-                <button onClick={() => handleFollow(props.data.id)} className="w-8">
-                    {active ? (
-                        <Image src={Like} alt={''} />
-                    ) : (
-                        <Image src={Unlike} alt={''} />
-                    )}
-                </button>
-            </div> : ""}
+            {session?.user?.image === 'visitor' ? (
+                <div className="absolute top-7 right-7">
+                    <button
+                        onClick={() => handleFollow(props.data.id)}
+                        className="w-8"
+                    >
+                        {active ? (
+                            <Image src={Like} alt={''} />
+                        ) : (
+                            <Image src={Unlike} alt={''} />
+                        )}
+                    </button>
+                </div>
+            ) : (
+                ''
+            )}
             <GroupButton
                 line={props.data.line}
                 facebook={props.data.facebook}
                 instagram={props.data.instagram}
                 tiktok={props.data.tiktok}
             />
-            <p className={`h-[4.875rem] grid place-content-center ${isAvailble() ? '' : 'mb-4'}`}>
+            <p
+                className={`grid h-[4.875rem] place-content-center ${
+                    isAvailble() ? '' : 'mb-4'
+                }`}
+            >
                 {props.data.about.length > 100
                     ? props.data.about.slice(0, 100) + '...'
                     : props.data.about}
             </p>
             <div className="flex flex-wrap gap-2">
-                {props.data.tags.map((tag: any) => (
+                {props.data.tags.length > 3 ? (
+                    <>
                     <div
-                        key={tag.id}
+                        key={props.data.tags[0].id}
                         className="rounded-xl bg-[#F5EAEA] px-3 text-[#F16767]"
                     >
-                        {tag.tagName}
+                        {props.data.tags[0].tagName}
                     </div>
-                ))}
+                    <div
+                        key={props.data.tags[1].id}
+                        className="rounded-xl bg-[#F5EAEA] px-3 text-[#F16767]"
+                    >
+                        {props.data.tags[1].tagName}
+                    </div>
+                    <div
+                        className="rounded-xl bg-[#F5EAEA] px-3 text-[#F16767]"
+                    >
+                        ...
+                    </div>
+                    </>
+                ) : (
+                    <>
+                        {props.data.tags.map((tag: any) => (
+                            <div
+                                key={tag.id}
+                                className="rounded-xl bg-[#F5EAEA] px-3 text-[#F16767]"
+                            >
+                                {tag.tagName}
+                            </div>
+                        ))}
+                    </>
+                )}
             </div>
         </div>
     )

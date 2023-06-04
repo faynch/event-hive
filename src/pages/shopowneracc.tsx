@@ -278,7 +278,7 @@ function Shopowneracc({ data }: any) {
 
                                                           <div
                                                               key={items.id}
-                                                              className="flex flex-col gap-2 pb-2 lg:items-start lg:pt-8 lg:pr-24 xl:pr-36"
+                                                              className="flex flex-col gap-2 self-center lg:items-start lg:pr-24 xl:pr-36"
                                                           >
                                                               <h4 className="text-center text-xl font-extrabold lg:text-start ">
                                                                   {
@@ -297,10 +297,12 @@ function Shopowneracc({ data }: any) {
                                                                         '...'
                                                                       : items.description}
                                                               </p>
-                                                              <p className="text-center font-extrabold">
+                                                              <p className="text-center font-extrabold lg:text-start ">
                                                                   {items.price}{' '}
                                                                   ฿
                                                               </p>
+                                                              
+                                                              <div className="flex flex-row gap-4 w-full justify-center">
                                                               <button
                                                                   className="rounded-lg bg-[#FFB84C] from-[#EF9323] to-[#5D3891] px-8 py-2 text-center font-extrabold text-white hover:bg-gradient-to-r"
                                                                   onClick={() =>
@@ -311,6 +313,7 @@ function Shopowneracc({ data }: any) {
                                                               >
                                                                   Delete
                                                               </button>
+                                                            </div>
                                                           </div>
                                                       </div>
                                                   </div>

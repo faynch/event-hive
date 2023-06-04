@@ -266,7 +266,7 @@ function ShopInfo({ data }: any) {
 
                                                     <div
                                                         key={items.id}
-                                                        className="flex flex-col gap-2 pb-2 lg:items-start lg:pt-8 lg:pr-24 xl:pr-36"
+                                                        className="flex flex-col gap-2 self-center lg:items-start lg:pr-24 xl:pr-36"
                                                     >
                                                         <h4 className="text-center text-xl font-extrabold lg:text-start ">
                                                             {items.productName}
@@ -280,7 +280,7 @@ function ShopInfo({ data }: any) {
                                                                   ) + '...'
                                                                 : items.description}
                                                         </p>
-                                                        <p className="text-center font-extrabold">
+                                                        <p className="text-center font-extrabold lg:text-start ">
                                                             {items.price} ฿
                                                         </p>
                                                         <button
