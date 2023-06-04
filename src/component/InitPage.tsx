@@ -14,7 +14,7 @@ import TagSelector, { Tag } from './TagSelector'
 import ImageUploader from '@/component/ImageUploader'
 import { useSession } from 'next-auth/react'
 import { v4 as uuid } from 'uuid'
-import { useState } from 'react'
+import { Component, useState } from 'react'
 import supabase from 'lib/supabase'
 import { DatePicker } from 'antd'
 const { RangePicker } = DatePicker
@@ -40,6 +40,7 @@ export default function CreatePage() {
         const [start, end] = dates
         const sdate = new Date(start)
         const edate = new Date(end)
+        console.log("Component")
         const formattedsDate = sdate.toLocaleDateString("en-US", {
             day: "2-digit",
             month: "short",
