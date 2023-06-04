@@ -118,21 +118,8 @@ export default function CardInfo(props: CardInfoProps) {
 
     function onChange(dates: any, dateString: [string, string]) {
         const [start, end] = dates
-        const sdate = new Date(start)
-        const edate = new Date(end)
-        const formattedsDate = sdate.toLocaleDateString("en-US", {
-            day: "2-digit",
-            month: "short",
-            year: "numeric",
-          });
-        const formattedeDate = edate.toLocaleDateString("en-US", {
-            day: "2-digit",
-            month: "short",
-            year: "numeric",
-          });
-        setStartDate(formattedsDate)
-        setEndDate(formattedeDate)
-     
+        setStartDate(start.format("DD/MM/YYYY"))
+        setEndDate(end.format("DD/MM/YYYY"))
     }
 
     const handleTagSelectorClose = () => {
@@ -153,10 +140,11 @@ export default function CardInfo(props: CardInfoProps) {
 
     const handleSave = async () => {
         let storageName
+        let pic
         if (props.type === 'Shop') {
             storageName = 'ShopImage'
         } else if (props.type === 'Event') {
-            storageName = 'EventImage'
+            storageName = 'ShopImage'
         } else {
             console.error('Invalid type')
             return
@@ -176,7 +164,8 @@ export default function CardInfo(props: CardInfoProps) {
                 .from(storageName)
                 .getPublicUrl(fileName)
             console.log('Image URL:', imageUrl.data.publicUrl)
-            setPicture(imageUrl.data.publicUrl)
+            pic = imageUrl.data.publicUrl
+            setPicture(pic)
         }
         if (props.type === 'Shop') {
             const formData = {
@@ -189,7 +178,7 @@ export default function CardInfo(props: CardInfoProps) {
                 facebook: facebook,
                 tiktok: tiktok,
                 tags: tagId,
-                picture: picture,
+                picture: pic,
             }
 
             const jsonData = JSON.stringify(formData)
@@ -233,11 +222,11 @@ export default function CardInfo(props: CardInfoProps) {
                 facebook: facebook,
                 tiktok: tiktok,
                 tags: tagId,
-                picture: picture,
+                picture: pic,
             }
 
             const jsonData = JSON.stringify(formData)
-            console.log(jsonData)
+            // console.log(jsonData)
 
             try {
                 const response = await fetch(
