@@ -13,11 +13,12 @@ import Left from '../pages/assets/left.svg'
 import { PrismaClient } from '@prisma/client'
 
 function EventInfo({ data }: any) {
-    console.log(data)
+    // console.log(data)
     const [curr, setCurr] = useState(0)
     const [curr2, setCurr2] = useState(0)
     const { data: session } = useSession()
     const [request, setRequest] = useState(false)
+    const [participate, setParticipate] = useState(true)
 
     const slides = data.shopParticipations
     const slides2 = data.shopApplications
@@ -49,25 +50,36 @@ function EventInfo({ data }: any) {
 
     async function handleApplication() {
         const shopOwnerId = session?.user?.name!
-        const endpoint = `https://event-hive-service.onrender.com/api/shopowners/${shopOwnerId}`
+        const endpoint = `http://localhost:3000/api/shopowners/${shopOwnerId}`
         // var request = false
 
         const shopIdResponse = await fetch(endpoint)
         const jsonData = await shopIdResponse.json()
-        const items = jsonData[0].shop.eventApplications
-        items.map((item: any) => {
+        const itemsA = jsonData[0].shop.eventApplications
+        
+        itemsA.map((item: any) => {
             // console.log(item.id == data.id)
             if (item.id == data.id) {
                 console.log(item.id == data.id)
                 setRequest(true)
             }
         })
+        const itemsP = jsonData[0].shop.eventParticipations
+        let check = false
+        itemsP.map((item: any) => {
+            // console.log(item.id == data.id)
+            if (item.id == data.id) {
+                console.log(item.id == data.id)
+                check = true
+            }
+        })
+        setParticipate(check)
     }
 
     const handleRequest = async () => {
         setRequest(true)
         const shopOwnerId = session?.user?.name!
-        const endpoint = `https://event-hive-service.onrender.com/api/shopowners/${shopOwnerId}`
+        const endpoint = `http://localhost:3000/api/shopowners/${shopOwnerId}`
 
         try {
             const shopIdResponse = await fetch(endpoint, {
@@ -83,7 +95,7 @@ function EventInfo({ data }: any) {
                     eventId: data.id,
                 }
                 const response = await fetch(
-                    `https://event-hive-service.onrender.com/api/applyforevent`,
+                    `http://localhost:3000/api/applyforevent`,
                     {
                         method: 'POST',
                         headers: {
@@ -115,7 +127,7 @@ function EventInfo({ data }: any) {
                     eventId: data.id,
                 }
                 const response = await fetch(
-                    `https://event-hive-26cc.onrender.com/api/acceptshop`,
+                    `http://localhost:3000/api/acceptshop`,
                     {
                         method: 'POST',
                         headers: {
@@ -225,7 +237,7 @@ function EventInfo({ data }: any) {
                 <div className="flex-grow">
                     <div className="my-12 grid justify-center px-8 md:py-8 md:px-20">
                         <CardInfo type="Event" edit={owner} data={data} />
-                        {session?.user?.image == 'shopOwner' ? (
+                        {(session?.user?.image == 'shopOwner') && (!participate) ? (
                             <button
                                 onClick={() => {
                                     request ? handleDecline() : handleRequest()
