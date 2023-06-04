@@ -26,7 +26,7 @@ function Shopowneracc({ data }: any) {
     const [pictureFile, setPictureFile] = useState<File | null>(null)
     const [productName, setProductName] = useState(data?.productName || '')
     const [description, setDescription] = useState(data?.des)
-    const [price, setPrice] = useState<number>()
+    const [price, setPrice] = useState<number>(data?.price || '')
 
     const [slides, setSlides] = useState(data?.products)
 
@@ -280,7 +280,7 @@ function Shopowneracc({ data }: any) {
                                                               key={items.id}
                                                               className="flex flex-col gap-2 pb-2 lg:items-start lg:pt-8 lg:pr-24 xl:pr-36"
                                                           >
-                                                              <h4 className="text-center text-xl font-extrabold">
+                                                              <h4 className="text-center text-xl font-extrabold lg:text-start ">
                                                                   {
                                                                       items.productName
                                                                   }
