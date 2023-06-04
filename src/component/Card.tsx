@@ -19,14 +19,14 @@ export default function Card(props: CardProps) {
     
     const handleFollow = async (id:any) => {
         try {
-             if (active) {
-                setActive(false)
+             if (!active) {
+                setActive(true)
                 const formData = {
                     type: props.type,
                     targetId: id,
                     userId: session?.user?.name
                 }
-            
+                console.log('follow ', formData)
                 const response = await fetch(
                     `http://localhost:3000/api/follows`,
                     {
@@ -47,7 +47,7 @@ export default function Card(props: CardProps) {
                 }
             }
             else {
-                setActive(true)
+                setActive(false)
                 const formData = {
                     type: props.type,
                     targetId: id,
@@ -67,11 +67,11 @@ export default function Card(props: CardProps) {
                 )
                 if (response.ok) {
                     // Successful response, handle accordingly
-                    console.log('Data successfully follow!')
+                    console.log('Data successfully unfollow!')
                     window.location.reload()
                 } else {
                     // Error response, handle accordingly
-                    console.log('Failed to follow data')
+                    console.log('Failed to unfollow data')
                 }
             }
             
