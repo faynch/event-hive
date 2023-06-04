@@ -7,7 +7,7 @@ import Like from '../pages/assets/like.svg'
 import Unlike from '../pages/assets/unlike.svg'
 import Edit from '../pages/assets/edit.svg'
 import Instagram from '../pages/assets/instagram.svg'
-import Twitter from '../pages/assets/twitter.svg'
+import Line from '../pages/assets/line.svg'
 import Facebook from '../pages/assets/facebook.svg'
 import Tiktok from '../pages/assets/tiktok.svg'
 import Phone from '../pages/assets/phone.svg'
@@ -167,6 +167,7 @@ export default function CardInfo(props: CardInfoProps) {
             pic = imageUrl.data.publicUrl
             setPicture(pic)
         }
+        console.log(tagId)
         if (props.type === 'Shop') {
             const formData = {
                 shopName: storeName,
@@ -199,7 +200,7 @@ export default function CardInfo(props: CardInfoProps) {
                 if (response.ok) {
                     // Successful response, handle accordingly
                     console.log('Data successfully submitted!')
-                    window.location.reload()
+                    // window.location.reload()
                 } else {
                     // Error response, handle accordingly
                     console.log('Failed to submit data')
@@ -372,7 +373,7 @@ export default function CardInfo(props: CardInfoProps) {
                         </div>
                         <div className="flex w-full flex-row items-center gap-2">
                             <button>
-                                <Image className="h-8" src={Twitter} alt={''} />
+                                <Image className="h-8" src={Line} alt={''} />
                             </button>
                             <input
                                 className="rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"

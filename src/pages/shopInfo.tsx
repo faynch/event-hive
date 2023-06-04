@@ -268,7 +268,7 @@ function ShopInfo({ data }: any) {
                                                         key={items.id}
                                                         className="flex flex-col gap-2 pb-2 lg:items-start lg:pt-8 lg:pr-24 xl:pr-36"
                                                     >
-                                                        <h4 className="text-center text-xl font-extrabold">
+                                                        <h4 className="text-center text-xl font-extrabold lg:text-start ">
                                                             {items.productName}
                                                         </h4>
                                                         <p className="text-center text-[#989898] lg:text-start ">

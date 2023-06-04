@@ -58,18 +58,14 @@ function EventInfo({ data }: any) {
         const itemsA = jsonData[0].shop.eventApplications
         
         itemsA.map((item: any) => {
-            // console.log(item.id == data.id)
             if (item.id == data.id) {
-                console.log(item.id == data.id)
                 setRequest(true)
             }
         })
         const itemsP = jsonData[0].shop.eventParticipations
         let check = false
         itemsP.map((item: any) => {
-            // console.log(item.id == data.id)
             if (item.id == data.id) {
-                console.log(item.id == data.id)
                 check = true
             }
         })
@@ -300,7 +296,7 @@ function EventInfo({ data }: any) {
                                                         sendShopValue(items.id)
                                                     }
                                                 >
-                                                    <h4 className="text-center text-xl font-extrabold">
+                                                    <h4 className="text-center text-xl font-extrabold lg:text-start ">
                                                         {items.shopName}
                                                     </h4>
                                                 </button>
