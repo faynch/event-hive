@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
+import clearTags from "utils/clearTags";
 import validateInput from "utils/validateInput";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
@@ -45,6 +46,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             const eventShopParticipations = await validateInput(shopParticipations, 'shop');
             const eventFavouriteByVisitors = await validateInput(favouriteByUsers, 'user');
         
+            if(eventTags){
+                clearTags('event', id)
+            }
+            
             const updatedEvent = await prisma.event.update({
                 where: {id},
               data: {
