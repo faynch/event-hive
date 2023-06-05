@@ -15,7 +15,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from './api/auth/[...nextauth]'
 
 function Home({ eventdata, shopdata }: any) {
-    const slides = eventdata
+    const slides = eventdata.slice(0, 3);
     const [curr, setCurr] = useState(0)
     const prev = () =>
         setCurr((curr) => (curr === 0 ? slides.length - 1 : curr - 1))
@@ -250,7 +250,7 @@ export async function getServerSideProps(context: any) {
         authOptions
     )
     const res1 = await fetch(
-        'http://localhost:3000/api/events/sortedbyfollowers'
+        'http://localhost:3000/api/events/'
     ) // Replace with your API endpoint URL
     const data1 = await res1.json()
     const res2 = await fetch(
