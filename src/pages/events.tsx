@@ -12,46 +12,33 @@ import { useRouter } from 'next/router'
 import { getServerSession } from 'next-auth'
 import { authOptions } from './api/auth/[...nextauth]'
 
-
 function Events({ eventdata, tags }: any) {
     const [filter, setFilter] = useState(false)
     const [items, setItems] = useState(eventdata)
     const [showItems, setShowItems] = useState(eventdata)
-    const [searchTag, setSearchtag] = useState([])
 
     const onSearch = (value: string) => {
-        if(value == null) {
+        if (value == null) {
             setShowItems(items)
-        } 
-        else {
-        setShowItems(
-            items.filter((item: { shopName: string }) => {
-                const nameMatch = item.shopName.toLowerCase().includes(value)
-                return nameMatch
-            })
-        )
+        } else {
+            setShowItems(
+                items.filter((item: { shopName: string }) => {
+                    const nameMatch = item.shopName
+                        .toLowerCase()
+                        .includes(value)
+                    return nameMatch
+                })
+            )
         }
     }
 
     const handleValue = async (value: any) => {
-        setShowItems(
-            items.filter((item: { tags: any[] }) => {
+        setShowItems(items.filter((item: { tags: any[] }) => {
                 const nameMatch = item.tags.some(
-                    (tag) =>
-                        tag.id === value.id &&
-                        tag.tagName === value.tagName
+                    (tag) => tag.id === value.id
                 )
                 return nameMatch
-            })
-        )
-        // if (value != 0) {
-        //     setSearchtag(value)
-        //     const res = await fetch('http://localhost:3000/api/tags/' + value) // Replace with your API endpoint URL
-        //     const data = await res.json()
-        //     console.log(data[0].events)
-        //     setItems(data[0].events)
-        // }
-        // setItems(eventdata)
+         }))
     }
 
     return (
@@ -77,9 +64,37 @@ function Events({ eventdata, tags }: any) {
                                     alt={'Search'}
                                 />
                             </button>
-                            
+                            <button
+                                className="rounded-r-md bg-white pr-2"
+                                onClick={() => setFilter(!filter)}
+                            >
+                                <Image
+                                    className="h-6"
+                                    src={Filter}
+                                    alt={'Filter'}
+                                />
+                            </button>
                         </div>
-                        
+                        <div
+                            className={`my-4 mx-12 rounded-sm bg-white p-8 md:mx-36 lg:max-w-7xl lg:self-end xl:mx-4 ${
+                                filter ? 'block' : 'hidden'
+                            }`}
+                        >
+                            <h4 className="mb-4 text-xl font-extrabold text-primary">
+                                Catagories
+                            </h4>
+                            <div className="grid grid-cols-3 gap-4 lg:grid-cols-5">
+                                {tags.map((tag: any) => (
+                                    <Button
+                                        key={tag.id}
+                                        id={tag.id}
+                                        data={tag.tagName}
+                                        onValue={handleValue}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+
                         <h4 className="m-8 mx-auto text-xl font-extrabold text-primary">
                             SEARCH FOR :
                         </h4>

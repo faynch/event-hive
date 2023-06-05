@@ -2,11 +2,9 @@ import Navbar from './Navbar'
 import Footer from './Footer'
 import Image from 'next/image'
 import Phone from '../pages/assets/phone.svg'
-import Email from '../pages/assets/email.svg'
 import Add from '@/pages/assets/add.svg'
-import Calendar from '@/pages/assets/calendar.svg'
 import Instagram from '../pages/assets/instagram.svg'
-import Twitter from '../pages/assets/twitter.svg'
+import Line from '../pages/assets/line.svg'
 import Facebook from '../pages/assets/facebook.svg'
 import Tiktok from '../pages/assets/tiktok.svg'
 import Location from '../pages/assets/location.svg'
@@ -14,12 +12,10 @@ import TagSelector, { Tag } from './TagSelector'
 import ImageUploader from '@/component/ImageUploader'
 import { useSession } from 'next-auth/react'
 import { v4 as uuid } from 'uuid'
-import { Component, useState } from 'react'
+import { useState } from 'react'
 import supabase from 'lib/supabase'
-import { DatePicker } from 'antd'
-const { RangePicker } = DatePicker
 
-export default function CreatePage() {
+export default function CreateShop() {
     const [storeName, setStoreName] = useState('')
     const [description, setDescription] = useState('')
     const [address, setAddress] = useState('')
@@ -35,26 +31,6 @@ export default function CreatePage() {
     const [selectedTags, setSelectedTags] = useState<Tag[]>([])
     const [pictureFile, setPictureFile] = useState<File | null>(null)
     const { data: session } = useSession()
-
-    function onChange(dates: any, dateString: [string, string]) {
-        const [start, end] = dates
-        const sdate = new Date(start)
-        const edate = new Date(end)
-        console.log("Component")
-        const formattedsDate = sdate.toLocaleDateString("en-US", {
-            day: "2-digit",
-            month: "short",
-            year: "numeric",
-          });
-          const formattedeDate = edate.toLocaleDateString("en-US", {
-            day: "2-digit",
-            month: "short",
-            year: "numeric",
-          });
-        setStartDate(formattedsDate?.toString())
-        setEndDate(formattedeDate?.toString())
-    }
-
 
     const handleTagSelectorClose = () => {
         setShowTagSelector(false)
@@ -134,7 +110,7 @@ export default function CreatePage() {
                     telephone: phone,
                     line: line,
                     instagram: instagram,
-                    startDate : startDate,
+                    startDate: startDate,
                     endDate: endDate,
                     facebook: facebook,
                     ticktok: tiktok,
@@ -183,65 +159,26 @@ export default function CreatePage() {
                                         type={'Shop'}
                                     />
                                 </div>
-                                <div className="col-span-2 flex basis-2/3 flex-col gap-4 sm:items-start">
+                                <div className="flex flex-col gap-4 sm:items-start">
                                     <input
-                                        className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 text-2xl font-extrabold shadow-sm placeholder:text-slate-400 sm:text-4xl"
-                                        placeholder={
-                                            session?.user?.image == 'shopOwner'
-                                                ? 'Shop Name'
-                                                : 'Event Name'
-                                        }
+                                        className="block rounded-md border border-slate-300 bg-white p-2 text-2xl font-extrabold shadow-sm placeholder:text-slate-400 sm:text-4xl w-full"
+                                        placeholder={'Shop Name'}
                                         value={storeName}
                                         onChange={(e) =>
                                             setStoreName(e.target.value)
                                         }
                                     />
-                                    <div className="flex flex-col gap-2 sm:flex-row sm:gap-2">
-                                        <div className="flex flex-row gap-2">
-                                            <button>
-                                                <Image
-                                                    className="h-8"
-                                                    src={Phone}
-                                                    alt={''}
-                                                />
-                                            </button>
-                                            <input
-                                                className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
-                                                value={phone}
-                                                placeholder="Phone number"
-                                                onChange={(e) =>
-                                                    setPhone(e.target.value)
-                                                }
-                                            />
-                                        </div>
-                                        <div className="flex flex-row gap-2">
-                                            <button>
-                                                <Image
-                                                    className="ml-2 h-8"
-                                                    src={Email}
-                                                    alt={''}
-                                                />
-                                            </button>
-                                            <input
-                                                className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
-                                                value={email}
-                                                placeholder="Email"
-                                                onChange={(e) =>
-                                                    setEmail(e.target.value)
-                                                }
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="flex flex-row items-center gap-2">
-                                        <button>
+
+                                    <div className="flex flex-row w-full items-center gap-2">
+                                        <button className='flex-none w-8'>
                                             <Image
-                                                className="h-8"
+                                                className="h-8 w-8"
                                                 src={Location}
                                                 alt={''}
                                             />
                                         </button>
                                         <input
-                                            className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                            className="rounded-md border grow border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
                                             placeholder="Address"
                                             value={address}
                                             onChange={(e) =>
@@ -249,20 +186,27 @@ export default function CreatePage() {
                                             }
                                         />
                                     </div>
-                                    {session?.user?.image ==
-                                        'eventOrganizer' && (
-                                            <div className="flex flex-row items-center gap-2">
+
+                                    <div className="flex flex-row w-1/2 items-center gap-2">
+                                        <button className='flex flex-none w-8 justify-center'>
                                             <Image
-                                                className="h-8"
-                                                src={Calendar}
+                                                className="w-6"
+                                                src={Phone}
                                                 alt={''}
                                             />
-                                            <RangePicker onChange={onChange} />
-                                        </div>
-                                    )}
+                                        </button>
+                                        <input
+                                            className="grow rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                            value={phone}
+                                            placeholder="Phone number"
+                                            onChange={(e) =>
+                                                setPhone(e.target.value)
+                                            }
+                                        />
+                                    </div>
 
-                                    <div className="flex w-full flex-row items-center gap-2">
-                                        <button>
+                                    <div className="flex flex-row w-1/2 items-center gap-2">
+                                        <button className='flex flex-none w-8 justify-center'>
                                             <Image
                                                 className="h-8"
                                                 src={Instagram}
@@ -270,7 +214,7 @@ export default function CreatePage() {
                                             />
                                         </button>
                                         <input
-                                            className="rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                            className="grow rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
                                             placeholder="Instagram"
                                             value={instagram}
                                             onChange={(e) =>
@@ -278,8 +222,8 @@ export default function CreatePage() {
                                             }
                                         />
                                     </div>
-                                    <div className="flex w-full flex-row items-center gap-2">
-                                        <button>
+                                    <div className="flex flex-row w-1/2 items-center gap-2">
+                                        <button className='flex flex-none w-8 justify-center'>
                                             <Image
                                                 className="h-8"
                                                 src={Facebook}
@@ -287,7 +231,7 @@ export default function CreatePage() {
                                             />
                                         </button>
                                         <input
-                                            className="rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                            className="grow rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
                                             placeholder="Facebook"
                                             value={facebook}
                                             onChange={(e) =>
@@ -295,16 +239,16 @@ export default function CreatePage() {
                                             }
                                         />
                                     </div>
-                                    <div className="flex w-full flex-row items-center gap-2">
-                                        <button>
+                                    <div className="flex flex-row w-1/2 items-center gap-2">
+                                        <button className='flex flex-none w-8 justify-center'>
                                             <Image
                                                 className="h-8"
-                                                src={Twitter}
+                                                src={Line}
                                                 alt={''}
                                             />
                                         </button>
                                         <input
-                                            className="rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                            className="grow rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
                                             placeholder="Line"
                                             value={line}
                                             onChange={(e) =>
@@ -312,8 +256,8 @@ export default function CreatePage() {
                                             }
                                         />
                                     </div>
-                                    <div className="flex w-full flex-row items-center gap-2">
-                                        <button>
+                                    <div className="flex flex-row w-1/2 items-center gap-2">
+                                        <button className='flex flex-none w-8 justify-center'>
                                             <Image
                                                 className="h-8"
                                                 src={Tiktok}
@@ -321,7 +265,7 @@ export default function CreatePage() {
                                             />
                                         </button>
                                         <input
-                                            className="rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                            className="grow rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
                                             placeholder="TikTok"
                                             value={tiktok}
                                             onChange={(e) =>

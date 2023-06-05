@@ -1,7 +1,7 @@
 import Navbar from '../component/Navbar'
 import CardInfo from '../component/CardInfo'
 import Footer from '../component/Footer'
-import Create from '../component/InitPage'
+import NewShop from '../component/CreateShop'
 
 import { useState } from 'react'
 
@@ -146,7 +146,7 @@ function Shopowneracc({ data }: any) {
     }
 
     if (data == null) {
-        return <Create />
+        return <NewShop />
     }
     return (
         <>

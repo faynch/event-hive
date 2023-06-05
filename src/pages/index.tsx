@@ -15,7 +15,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from './api/auth/[...nextauth]'
 
 function Home({ eventdata, shopdata }: any) {
-    const slides = eventdata
+    const slides = eventdata.slice(0, 3);
     const [curr, setCurr] = useState(0)
     const prev = () =>
         setCurr((curr) => (curr === 0 ? slides.length - 1 : curr - 1))

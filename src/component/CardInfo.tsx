@@ -54,16 +54,15 @@ export default function CardInfo(props: CardInfoProps) {
     const [picture, setPicture] = useState(props.data?.picture || '')
     const [pictureFile, setPictureFile] = useState<File | null>(null)
 
-    const handleFollow = async (id:any) => {
-        
+    const handleFollow = async (id: any) => {
         try {
-             if (like) {
+            if (like) {
                 setLike(false)
                 const formData = {
                     type: props.type,
                     id: id,
                 }
-            
+
                 const response = await fetch(
                     `https://event-hive-service.onrender.com/api/follows`,
                     {
@@ -82,14 +81,13 @@ export default function CardInfo(props: CardInfoProps) {
                     // Error response, handle accordingly
                     console.log('Failed to follow data')
                 }
-            }
-            else {
+            } else {
                 setLike(true)
                 const formData = {
                     type: props.type,
                     id: id,
                 }
-            
+
                 const response = await fetch(
                     `https://event-hive-service.onrender.com/api/unfollows`,
                     {
@@ -109,7 +107,6 @@ export default function CardInfo(props: CardInfoProps) {
                     console.log('Failed to follow data')
                 }
             }
-            
         } catch (error) {
             // Error occurred during the request, handle accordingly
             console.error('Error:', error)
@@ -118,8 +115,8 @@ export default function CardInfo(props: CardInfoProps) {
 
     function onChange(dates: any, dateString: [string, string]) {
         const [start, end] = dates
-        setStartDate(start.format("DD/MM/YYYY"))
-        setEndDate(end.format("DD/MM/YYYY"))
+        setStartDate(start.format('YYYY-MM-DD'))
+        setEndDate(end.format('YYYY-MM-DD'))
     }
 
     const handleTagSelectorClose = () => {
@@ -262,7 +259,7 @@ export default function CardInfo(props: CardInfoProps) {
         if (
             props.data?.line == '' &&
             props.data?.facebook == '' &&
-            props.data?.instagram == ''&&
+            props.data?.instagram == '' &&
             props.data.tiktok == ''
         )
             return false
@@ -282,63 +279,61 @@ export default function CardInfo(props: CardInfoProps) {
                             data={props.data}
                         />
                     </div>
-                    <div className="col-span-2 flex basis-2/3 flex-col items-center gap-4 sm:items-start">
+                    <div className="col-span-2 flex basis-2/3 flex-col gap-4 items-start">
                         {props.type === 'Shop' ? (
                             <input
-                                className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 text-2xl font-extrabold shadow-sm placeholder:text-slate-400 sm:text-4xl"
+                                className="block w-full rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 text-2xl font-extrabold shadow-sm placeholder:text-slate-400 sm:text-4xl"
                                 value={storeName}
                                 onChange={(e) => setStoreName(e.target.value)}
                             />
                         ) : (
                             <input
-                                className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 text-2xl font-extrabold shadow-sm placeholder:text-slate-400 sm:text-4xl"
+                                className="block w-full rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 text-2xl font-extrabold shadow-sm placeholder:text-slate-400 sm:text-4xl"
                                 value={eventName}
                                 onChange={(e) => setEventName(e.target.value)}
                             />
                         )}
-                        <div className="flex flex-col gap-2 md:flex-row">
-                            <div className="flex flex-row gap-2">
-                                <button>
-                                    <Image
-                                        className="h-8"
-                                        src={Phone}
-                                        alt={''}
-                                    />
-                                </button>
-                                <input
-                                    className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
-                                    value={phone}
-                                    onChange={(e) => setPhone(e.target.value)}
-                                />
-                            </div>
-                        </div>
-                        <div className="flex flex-row items-center gap-2">
-                            <button>
+
+                        <div className="flex w-3/4 flex-row items-center gap-2">
+                            <button className="w-8 flex-none">
                                 <Image
-                                    className="h-8"
+                                    className="h-8 w-8"
                                     src={Location}
                                     alt={''}
                                 />
                             </button>
                             <input
-                                className="block rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                className="grow rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
                                 value={address}
                                 onChange={(e) => setAddress(e.target.value)}
                             />
                         </div>
                         {props.type == 'Event' && (
                             <div className="flex flex-row items-center gap-2">
-                                <Image
-                                    className="h-8"
-                                    src={Calendar}
-                                    alt={''}
-                                />
+                                <button className="flex w-8 justify-center">
+                                    <Image
+                                        className="w-6"
+                                        src={Calendar}
+                                        alt={''}
+                                    />
+                                </button>
                                 <RangePicker onChange={onChange} />
                             </div>
                         )}
 
-                        <div className="flex w-full flex-row items-center gap-2">
-                            <button>
+                        <div className="flex w-1/3 flex-row items-center gap-2">
+                            <button className="flex w-8 flex-none justify-center">
+                                <Image className="w-6" src={Phone} alt={''} />
+                            </button>
+                            <input
+                                className="grow rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                value={phone}
+                                onChange={(e) => setPhone(e.target.value)}
+                            />
+                        </div>
+
+                        <div className="flex w-1/3 flex-row items-center gap-2">
+                            <button className="flex w-8 flex-none justify-center">
                                 <Image
                                     className="h-8"
                                     src={Instagram}
@@ -346,7 +341,7 @@ export default function CardInfo(props: CardInfoProps) {
                                 />
                             </button>
                             <input
-                                className="rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                className="grow rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
                                 placeholder="Instagram"
                                 type="url"
                                 name="Instagram"
@@ -354,8 +349,8 @@ export default function CardInfo(props: CardInfoProps) {
                                 onChange={(e) => setInstagram(e.target.value)}
                             />
                         </div>
-                        <div className="flex w-full flex-row items-center gap-2">
-                            <button>
+                        <div className="flex w-1/3 flex-row items-center gap-2">
+                            <button className="flex w-8 flex-none justify-center">
                                 <Image
                                     className="h-8"
                                     src={Facebook}
@@ -363,7 +358,7 @@ export default function CardInfo(props: CardInfoProps) {
                                 />
                             </button>
                             <input
-                                className="rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                className="grow rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
                                 placeholder="Facebook"
                                 type="url"
                                 name="Facebook"
@@ -371,12 +366,12 @@ export default function CardInfo(props: CardInfoProps) {
                                 onChange={(e) => setFacebook(e.target.value)}
                             />
                         </div>
-                        <div className="flex w-full flex-row items-center gap-2">
-                            <button>
+                        <div className="flex w-1/3 flex-row items-center gap-2">
+                            <button className="flex w-8 flex-none justify-center">
                                 <Image className="h-8" src={Line} alt={''} />
                             </button>
                             <input
-                                className="rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                className="grow rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
                                 placeholder="Line"
                                 type="url"
                                 name="Line"
@@ -384,12 +379,12 @@ export default function CardInfo(props: CardInfoProps) {
                                 onChange={(e) => setLine(e.target.value)}
                             />
                         </div>
-                        <div className="flex w-full flex-row items-center gap-2">
-                            <button>
+                        <div className="flex w-1/3 flex-row items-center gap-2">
+                            <button className="flex w-8 flex-none justify-center">
                                 <Image className="h-8" src={Tiktok} alt={''} />
                             </button>
                             <input
-                                className="rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
+                                className="grow rounded-md border border-slate-300 bg-white py-2 pl-2 pr-3 shadow-sm placeholder:text-slate-400"
                                 placeholder="TikTok"
                                 type="url"
                                 name="TikTok"
@@ -488,9 +483,9 @@ export default function CardInfo(props: CardInfoProps) {
                     >
                         <Image src={Edit} alt={''} />
                     </button>
-                    {session?.user?.image == "visitor" ? (
+                    {session?.user?.image == 'visitor' ? (
                         <button
-                        onClick={() => handleFollow(props.data.id)}
+                            onClick={() => handleFollow(props.data.id)}
                             className="w-6 md:w-8"
                         >
                             {like ? (
