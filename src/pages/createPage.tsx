@@ -37,8 +37,8 @@ export default function CreatePage() {
 
     function onChange(dates: any, dateString: [string, string]) {
         const [start, end] = dates
-        setStartDate(start.format("DD/MM/YYYY"))
-        setEndDate(end.format("DD/MM/YYYY"))
+        setStartDate(start.format("YYYY-MM-DD"))
+        setEndDate(end.format("YYYY-MM-DD"))
     }
 
     const handleTagSelectorClose = () => {
