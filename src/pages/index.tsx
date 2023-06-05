@@ -250,7 +250,7 @@ export async function getServerSideProps(context: any) {
         authOptions
     )
     const res1 = await fetch(
-        'http://localhost:3000/api/events/sortedbyfollowers'
+        'http://localhost:3000/api/events/'
     ) // Replace with your API endpoint URL
     const data1 = await res1.json()
     const res2 = await fetch(
