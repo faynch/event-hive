@@ -18,8 +18,10 @@ import { v4 as uuid } from 'uuid'
 
 function ShopInfo({ data }: any) {
     const [curr, setCurr] = useState(0)
-    const { data: session } = useSession()
     const [edit, setEdit] = useState(false)
+
+    const { data: session } = useSession()
+    const id = session?.user?.name
 
     const [index, setIndex] = useState(data?.id)
     const [picture, setPicture] = useState(data?.image || '')
@@ -141,7 +143,14 @@ function ShopInfo({ data }: any) {
                 <Navbar />
                 <div className="flex-grow">
                     <div className="mt-12 grid justify-center px-8 md:py-8 md:px-20">
-                        <CardInfo type={'Shop'} edit={owner} data={data} />
+                        <CardInfo
+                            type={'Shop'}
+                            edit={owner}
+                            data={data}
+                            like={data.favouriteByVisitors.some(
+                                (visitor: { id: any }) => visitor.id === id
+                            )}
+                        />
                     </div>
                     <div
                         className={`flex flex-col items-center justify-center gap-8 p-8 md:px-24 ${

@@ -154,7 +154,7 @@ function Shopowneracc({ data }: any) {
                 <Navbar />
                 <div className="flex-grow">
                     <div className="mt-12 grid justify-center px-8 md:py-8 md:px-20">
-                        <CardInfo type={'Shop'} edit={true} data={data} />
+                        <CardInfo type={'Shop'} edit={true} data={data} like={false}/>
                     </div>
                     <div className="flex flex-col items-center justify-center gap-8 p-8 md:px-24">
                         {edit ? (

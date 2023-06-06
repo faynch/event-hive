@@ -22,7 +22,6 @@ export default function CreateShop() {
     const [startDate, setStartDate] = useState('')
     const [endDate, setEndDate] = useState('')
     const [phone, setPhone] = useState('')
-    const [email, setEmail] = useState('')
     const [instagram, setInstagram] = useState('')
     const [facebook, setFacebook] = useState('')
     const [line, setLine] = useState('')

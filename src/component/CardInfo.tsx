@@ -27,6 +27,7 @@ interface CardInfoProps {
     type: string
     edit: boolean
     data?: any
+    like: boolean
 }
 
 export default function CardInfo(props: CardInfoProps) {
@@ -46,7 +47,7 @@ export default function CardInfo(props: CardInfoProps) {
     const [line, setLine] = useState(props.data?.line || '')
     const [tiktok, setTiktok] = useState(props.data?.tiktok || '')
     const [editMode, setEditMode] = useState(false)
-    const [like, setLike] = useState(false)
+    const [like, setLike] = useState(props.like)
     const [showTagSelector, setShowTagSelector] = useState(false)
     const [selectedTags, setSelectedTags] = useState<Tag[]>(
         props.data?.tags || []

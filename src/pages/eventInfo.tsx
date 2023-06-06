@@ -10,15 +10,16 @@ import Image from 'next/image'
 import Shop from '../pages/assets/product.svg'
 import Right from '../pages/assets/right.svg'
 import Left from '../pages/assets/left.svg'
-import { PrismaClient } from '@prisma/client'
 
 function EventInfo({ data }: any) {
-    // console.log(data)
     const [curr, setCurr] = useState(0)
     const [curr2, setCurr2] = useState(0)
-    const { data: session } = useSession()
+
     const [request, setRequest] = useState(false)
     const [participate, setParticipate] = useState(true)
+
+    const { data: session } = useSession()
+    const id = session?.user?.name
 
     const slides = data.shopParticipations
     const slides2 = data.shopApplications
@@ -35,7 +36,6 @@ function EventInfo({ data }: any) {
     const next2 = () =>
         setCurr2((curr2) => (curr2 === slides2.length - 1 ? 0 : curr2 + 1))
 
-
     function handleClick(i: number) {
         setCurr(i)
     }
@@ -51,12 +51,11 @@ function EventInfo({ data }: any) {
     async function handleApplication() {
         const shopOwnerId = session?.user?.name!
         const endpoint = `http://localhost:3000/api/shopowners/${shopOwnerId}`
-        // var request = false
 
         const shopIdResponse = await fetch(endpoint)
         const jsonData = await shopIdResponse.json()
         const itemsA = jsonData[0].shop.eventApplications
-        
+
         itemsA.map((item: any) => {
             if (item.id == data.id) {
                 setRequest(true)
@@ -115,32 +114,30 @@ function EventInfo({ data }: any) {
         }
     }
 
-    const handleAccept = async (id:any) => {
-
+    const handleAccept = async (id: any) => {
         try {
-                const formData = {
-                    shopId: id,
-                    eventId: data.id,
+            const formData = {
+                shopId: id,
+                eventId: data.id,
+            }
+            const response = await fetch(
+                `http://localhost:3000/api/acceptshop`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
                 }
-                const response = await fetch(
-                    `http://localhost:3000/api/acceptshop`,
-                    {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(formData),
-                    }
-                )
-                if (response.ok) {
-                    // Successful response, handle accordingly
-                    console.log('Data successfully accepted!')
-                    window.location.reload()
-                } else {
-                    // Error response, handle accordingly
-                    console.log('Failed to accept data')
-                }
-            
+            )
+            if (response.ok) {
+                // Successful response, handle accordingly
+                console.log('Data successfully accepted!')
+                window.location.reload()
+            } else {
+                // Error response, handle accordingly
+                console.log('Failed to accept data')
+            }
         } catch (error) {
             // Error occurred during the request, handle accordingly
             console.error('Error:', error)
@@ -189,33 +186,32 @@ function EventInfo({ data }: any) {
             console.error('Error:', error)
         }
     }
-    const handleDecline2 = async (id:any) => {
+    const handleDecline2 = async (id: any) => {
         setRequest(false)
         try {
             const formData = {
                 shopId: id,
                 eventId: data.id,
             }
-                const response = await fetch(
-                    `http://localhost:3000/api/declineshop`,
-                    {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(formData),
-                    }
-                )
-                if (response.ok) {
-                    // Successful response, handle accordingly
-                    console.log('Data successfully deleted!')
-                    window.location.reload()
-                } else {
-                    // Error response, handle accordingly
-                    console.log('Failed to delete data')
+            const response = await fetch(
+                `http://localhost:3000/api/declineshop`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
                 }
+            )
+            if (response.ok) {
+                // Successful response, handle accordingly
+                console.log('Data successfully deleted!')
+                window.location.reload()
+            } else {
+                // Error response, handle accordingly
+                console.log('Failed to delete data')
             }
-         catch (error) {
+        } catch (error) {
             // Error occurred during the request, handle accordingly
             console.error('Error:', error)
         }
@@ -232,8 +228,15 @@ function EventInfo({ data }: any) {
                 <Navbar />
                 <div className="flex-grow">
                     <div className="my-12 grid justify-center px-8 md:py-8 md:px-20">
-                        <CardInfo type="Event" edit={owner} data={data} />
-                        {(session?.user?.image == 'shopOwner') && (!participate) ? (
+                        <CardInfo
+                            type="Event"
+                            edit={owner}
+                            data={data}
+                            like={data.favouriteByVisitors.some(
+                                (visitor: { id: any }) => visitor.id === id
+                            )}
+                        />
+                        {session?.user?.image == 'shopOwner' && !participate ? (
                             <button
                                 onClick={() => {
                                     request ? handleDecline() : handleRequest()
@@ -421,7 +424,7 @@ function EventInfo({ data }: any) {
                                                                   ) + '...'
                                                                 : items.about}
                                                         </p>
-                                                        <div className="flex flex-row gap-4 w-full justify-center">
+                                                        <div className="flex w-full flex-row justify-center gap-4">
                                                             <button
                                                                 onClick={() =>
                                                                     handleAccept(

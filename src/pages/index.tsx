@@ -20,7 +20,7 @@ function Home({ eventdata, shopdata }: any) {
     const shopcards = shopdata.slice(0, 3)
     
     const { data: session } = useSession()
-    const visitorid = session?.user?.name
+    const id = session?.user?.name
 
     const [curr, setCurr] = useState(0)
     const prev = () =>
@@ -216,7 +216,7 @@ function Home({ eventdata, shopdata }: any) {
                                                 data={shopcards[1]}
                                                 like={shopcards[1].favouriteByVisitors.some(
                                                     (visitor: { id: any }) =>
-                                                        visitor.id === visitorid
+                                                        visitor.id === id
                                                 )}
                                             />
                                         </div>
@@ -228,7 +228,7 @@ function Home({ eventdata, shopdata }: any) {
                                                 data={shopcards[0]}
                                                 like={shopcards[0].favouriteByVisitors.some(
                                                     (visitor: { id: any }) =>
-                                                        visitor.id === visitorid
+                                                        visitor.id === id
                                                 )}
                                             />
                                         </div>
@@ -240,7 +240,7 @@ function Home({ eventdata, shopdata }: any) {
                                                 data={shopcards[1]}
                                                 like={shopcards[1].favouriteByVisitors.some(
                                                     (visitor: { id: any }) =>
-                                                        visitor.id === visitorid
+                                                        visitor.id === id
                                                 )}
                                             />
                                         </div>
@@ -252,7 +252,7 @@ function Home({ eventdata, shopdata }: any) {
                                                 data={shopcards[2]}
                                                 like={shopcards[2].favouriteByVisitors.some(
                                                     (visitor: { id: any }) =>
-                                                        visitor.id === visitorid
+                                                        visitor.id === id
                                                 )}
                                             />
                                         </div>

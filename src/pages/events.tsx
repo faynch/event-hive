@@ -19,7 +19,7 @@ function Events({ eventdata, tags }: any) {
     const [showItems, setShowItems] = useState(eventdata)
 
     const { data: session } = useSession()
-    const visitorid = session?.user?.name
+    const id = session?.user?.name
 
     const onSearch = (value: string) => {
         if (value == null) {
@@ -107,7 +107,7 @@ function Events({ eventdata, tags }: any) {
                             showItems.map((item: any) => (
                                 <Card key={item.id} type="Event" data={item} like={item.favouriteByVisitors.some(
                                     (visitor: { id: any }) =>
-                                        visitor.id === visitorid
+                                        visitor.id === id
                                 )} />
                             )) : showItems.map((item: any) => (
                                 <Card key={item.id} type="Event" data={item} like={false} />
