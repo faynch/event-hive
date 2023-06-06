@@ -1,7 +1,7 @@
 import Navbar from '../component/Navbar'
 import Card from '../component/Card'
 import Footer from '../component/Footer'
-import Button from '../component/Button'
+import CheckboxButton from '../component/CheckboxButton'
 
 import Image from 'next/image'
 import Search from '../pages/assets/search.svg'
@@ -12,7 +12,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from './api/auth/[...nextauth]'
 import { useSession } from 'next-auth/react'
 
-function Shops({ shopdata, tags }: any) {
+function Shops({ shopdata }: any) {
     const [filter, setFilter] = useState(false)
     const [items, setItems] = useState(shopdata)
     const [showItems, setShowItems] = useState(shopdata)
@@ -36,12 +36,18 @@ function Shops({ shopdata, tags }: any) {
     }
 
     const handleValue = async (value: any) => {
-        setShowItems(items.filter((item: { tags: any[] }) => {
-                const nameMatch = item.tags.some(
-                    (tag) => tag.id === value.id
-                )
-                return nameMatch
-         }))
+        if (value.length == 0) {
+            setShowItems(items)
+        } else {
+            var temp: any[] = []
+            for (let index = 0; index < value.length; index++) {
+                temp = Array.from(new Set(temp.concat(items.filter((item: { tags: any[] }) => {
+                    const nameMatch = item.tags.some((tag) => tag.id === value[index])
+                    return nameMatch
+                }))))
+            }
+            setShowItems(temp)
+        }
     }
 
     return (
@@ -79,38 +85,37 @@ function Shops({ shopdata, tags }: any) {
                             </button>
                         </div>
                         <div
-                            className={`my-4 mx-12 rounded-sm bg-white p-8 md:mx-36 lg:max-w-7xl lg:self-end xl:mx-4 ${
-                                filter ? 'block' : 'hidden'
+                            className={`my-4 min-w-96 md:min-w-[32rem] self-center rounded-sm bg-white p-8 md:mx-36 lg:max-w-7xl lg:self-end xl:mx-4 ${
+                                filter ? 'grid grid-col' : 'hidden'
                             }`}
                         >
-                            <h4 className="mb-4 text-xl font-extrabold text-primary">
-                                Catagories
-                            </h4>
-                            <div className="grid grid-cols-3 gap-4 lg:grid-cols-5">
-                                {tags.map((tag: any) => (
-                                    <Button
-                                        key={tag.id}
-                                        id={tag.id}
-                                        data={tag.tagName}
-                                        onValue={handleValue}
-                                    />
-                                ))}
-                            </div>
+                                <CheckboxButton onValue={handleValue} />
                         </div>
 
                         <h4 className="m-8 mx-auto text-xl font-extrabold text-primary">
                             SEARCH FOR :
                         </h4>
                         <div className="mb-8 grid grid-cols-1 gap-8 place-self-center lg:max-w-7xl lg:grid-cols-2 xl:grid-cols-3">
-                            {session?.user?.image == "visitor" ? 
-                            showItems.map((item: any) => (
-                                <Card key={item.id} type="Shop" data={item} like={item.favouriteByVisitors.some(
-                                    (visitor: { id: any }) =>
-                                        visitor.id === id
-                                )} />
-                            )) : showItems.map((item: any) => (
-                                <Card key={item.id} type="Shop" data={item} like={false} />
-                            ))}
+                            {session?.user?.image == 'visitor'
+                                ? showItems.map((item: any) => (
+                                      <Card
+                                          key={item.id}
+                                          type="Shop"
+                                          data={item}
+                                          like={item.favouriteByVisitors.some(
+                                              (visitor: { id: any }) =>
+                                                  visitor.id === id
+                                          )}
+                                      />
+                                  ))
+                                : showItems.map((item: any) => (
+                                      <Card
+                                          key={item.id}
+                                          type="Shop"
+                                          data={item}
+                                          like={false}
+                                      />
+                                  ))}
                         </div>
                     </div>
                 </div>
@@ -126,16 +131,13 @@ export async function getServerSideProps(context: any) {
         context.res,
         authOptions
     )
-    const res1 = await fetch('http://localhost:3000/api/shops/') // Replace with your API endpoint URL
-    const data1 = await res1.json()
+    const res = await fetch('http://localhost:3000/api/shops/') // Replace with your API endpoint URL
+    const data = await res.json()
 
-    const res2 = await fetch('http://localhost:3000/api/tags/') // Replace with your API endpoint URL
-    const data2 = await res2.json()
     return {
         props: {
             session,
-            shopdata: data1,
-            tags: data2,
+            shopdata: data,
         },
     }
 }
