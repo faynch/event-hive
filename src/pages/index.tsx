@@ -13,9 +13,16 @@ import Left from '../pages/assets/left.svg'
 import { useRouter } from 'next/router'
 import { getServerSession } from 'next-auth'
 import { authOptions } from './api/auth/[...nextauth]'
+import { useSession } from 'next-auth/react'
 
 function Home({ eventdata, shopdata }: any) {
-    const slides = eventdata.slice(0, 3);
+    const slides = eventdata.slice(0, 3)
+    const shopcards = shopdata.slice(0, 3)
+    const { data: session } = useSession()
+
+    const visitorid = session?.user?.name
+  
+
     const [curr, setCurr] = useState(0)
     const prev = () =>
         setCurr((curr) => (curr === 0 ? slides.length - 1 : curr - 1))
@@ -38,7 +45,12 @@ function Home({ eventdata, shopdata }: any) {
     }, [])
 
     function isAvailble(item: any) {
-        if (item.line == '' && item.facebook == '' && item.instagram == '' && item.tiktok == '')
+        if (
+            item.line == '' &&
+            item.facebook == '' &&
+            item.instagram == '' &&
+            item.tiktok == ''
+        )
             return false
         return true
     }
@@ -196,38 +208,50 @@ function Home({ eventdata, shopdata }: any) {
                             TOP STORES
                         </h3>
                         <div className="grid grid-cols-1 gap-8 lg:grid-cols-4 lg:gap-x-16 xl:max-w-7xl xl:grid-cols-6 xl:gap-12">
-                            {shopdata.length > 0 ? (
+                            {shopcards.length > 0 ? (
                                 <>
-                                    {shopdata[1] && (
+                                    {shopcards[1] && (
                                         <div className="hidden xl:col-span-2 xl:col-start-1 xl:mt-12 xl:grid">
                                             <Card
                                                 type="Shop"
-                                                data={shopdata[1]}
-                                            />
+                                                data={shopcards[1]} like={shopcards[1].favouriteByVisitors.some(
+                                                    (visitor: { id: any }) => 
+                                                        visitor.id === visitorid
+                                                    
+                                                )}                                            />
                                         </div>
                                     )}
-                                    {shopdata[0] && (
+                                    {shopcards[0] && (
                                         <div className="lg:col-span-2 lg:col-start-2 lg:justify-self-center xl:col-start-3">
                                             <Card
                                                 type="Shop"
-                                                data={shopdata[0]}
-                                            />
+                                                data={shopcards[0]} like={shopcards[0].favouriteByVisitors.some(
+                                                    (visitor: { id: any }) => 
+                                                        visitor.id === visitorid
+                                                    
+                                                )}                                            />
                                         </div>
                                     )}
-                                    {shopdata[1] && (
+                                    {shopcards[1] && (
                                         <div className="lg:col-span-2 xl:hidden ">
                                             <Card
                                                 type="Shop"
-                                                data={shopdata[1]}
-                                            />
+                                                data={shopcards[1]} like={shopcards[1].favouriteByVisitors.some(
+                                                    (visitor: { id: any }) => 
+                                                        visitor.id === visitorid
+                                                    
+                                                )}                                            />
                                         </div>
                                     )}
-                                    {shopdata[2] && (
+                                    {shopcards[2] && (
                                         <div className="lg:col-span-2 xl:mt-12">
                                             <Card
                                                 type={'Shop'}
-                                                data={shopdata[2]}
-                                            />
+                                                data={shopcards[2]} like={shopcards[2].favouriteByVisitors.some(
+                                                    (visitor: { id: any }) => 
+                                                        visitor.id === visitorid
+                                                    
+                                                )}                                            />
                                         </div>
                                     )}
                                 </>
@@ -249,9 +273,7 @@ export async function getServerSideProps(context: any) {
         context.res,
         authOptions
     )
-    const res1 = await fetch(
-        'http://localhost:3000/api/events/'
-    ) // Replace with your API endpoint URL
+    const res1 = await fetch('http://localhost:3000/api/events/') // Replace with your API endpoint URL
     const data1 = await res1.json()
     const res2 = await fetch(
         'http://localhost:3000/api/shops/sortedbyfollowers'

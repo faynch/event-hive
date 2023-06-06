@@ -11,18 +11,20 @@ import { useSession } from 'next-auth/react'
 interface CardProps {
     type: string
     data: any
+    like: boolean
 }
 
 export default function Card(props: CardProps) {
-    const [active, setActive] = useState(false)
+    const [active, setActive] = useState(props.like)
     const { data: session } = useSession()
+    console.log(props.data)
 
     const handleFollow = async (id: any) => {
         try {
             if (!active) {
                 setActive(true)
                 const formData = {
-                    type: props.type,
+                    type: props.type.toLowerCase() ,
                     targetId: id,
                     userId: session?.user?.name,
                 }
@@ -40,7 +42,7 @@ export default function Card(props: CardProps) {
                 if (response.ok) {
                     // Successful response, handle accordingly
                     console.log('Data successfully follow!')
-                    window.location.reload()
+                    // window.location.reload()
                 } else {
                     // Error response, handle accordingly
                     console.log('Failed to follow data')
@@ -48,7 +50,7 @@ export default function Card(props: CardProps) {
             } else {
                 setActive(false)
                 const formData = {
-                    type: props.type,
+                    type: props.type.toLowerCase(),
                     targetId: id,
                     userId: session?.user?.name,
                 }
@@ -67,7 +69,7 @@ export default function Card(props: CardProps) {
                 if (response.ok) {
                     // Successful response, handle accordingly
                     console.log('Data successfully unfollow!')
-                    window.location.reload()
+                    // window.location.reload()
                 } else {
                     // Error response, handle accordingly
                     console.log('Failed to unfollow data')

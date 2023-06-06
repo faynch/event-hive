@@ -22,8 +22,16 @@ export default async function handler(
         },
         include: {
             tags: true,
-            favouriteShops: true,
-            favouriteEvents: true,
+            favouriteShops: {
+                include: {
+                    tags: true,
+                }
+            },
+            favouriteEvents: {
+                include: {
+                    tags: true,
+                }
+            },
         },
     })
 

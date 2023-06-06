@@ -39,13 +39,13 @@ function Favourites({ eventdata, shopdata }: any) {
                             {toggle ? (
                                 <>
                                     {shopdata.map((item: any) => (
-                                        <Card key={item.id} type="Shop" data={item} />
+                                        <Card key={item.id} type="Shop" data={item} like={true} />
                                     ))}
                                 </>
                             ) : (
                                 <>
                                     {eventdata.map((item: any) => (
-                                        <Card key={item.id} type="Event" data={item} />
+                                        <Card key={item.id} type="Event" data={item} like={true} />
                                     ))}
                                 </>
                             )}
