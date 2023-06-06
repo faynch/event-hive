@@ -18,10 +18,9 @@ import { useSession } from 'next-auth/react'
 function Home({ eventdata, shopdata }: any) {
     const slides = eventdata.slice(0, 3)
     const shopcards = shopdata.slice(0, 3)
+    
     const { data: session } = useSession()
-
     const visitorid = session?.user?.name
-  
 
     const [curr, setCurr] = useState(0)
     const prev = () =>
@@ -214,44 +213,48 @@ function Home({ eventdata, shopdata }: any) {
                                         <div className="hidden xl:col-span-2 xl:col-start-1 xl:mt-12 xl:grid">
                                             <Card
                                                 type="Shop"
-                                                data={shopcards[1]} like={shopcards[1].favouriteByVisitors.some(
-                                                    (visitor: { id: any }) => 
+                                                data={shopcards[1]}
+                                                like={shopcards[1].favouriteByVisitors.some(
+                                                    (visitor: { id: any }) =>
                                                         visitor.id === visitorid
-                                                    
-                                                )}                                            />
+                                                )}
+                                            />
                                         </div>
                                     )}
                                     {shopcards[0] && (
                                         <div className="lg:col-span-2 lg:col-start-2 lg:justify-self-center xl:col-start-3">
                                             <Card
                                                 type="Shop"
-                                                data={shopcards[0]} like={shopcards[0].favouriteByVisitors.some(
-                                                    (visitor: { id: any }) => 
+                                                data={shopcards[0]}
+                                                like={shopcards[0].favouriteByVisitors.some(
+                                                    (visitor: { id: any }) =>
                                                         visitor.id === visitorid
-                                                    
-                                                )}                                            />
+                                                )}
+                                            />
                                         </div>
                                     )}
                                     {shopcards[1] && (
                                         <div className="lg:col-span-2 xl:hidden ">
                                             <Card
                                                 type="Shop"
-                                                data={shopcards[1]} like={shopcards[1].favouriteByVisitors.some(
-                                                    (visitor: { id: any }) => 
+                                                data={shopcards[1]}
+                                                like={shopcards[1].favouriteByVisitors.some(
+                                                    (visitor: { id: any }) =>
                                                         visitor.id === visitorid
-                                                    
-                                                )}                                            />
+                                                )}
+                                            />
                                         </div>
                                     )}
                                     {shopcards[2] && (
                                         <div className="lg:col-span-2 xl:mt-12">
                                             <Card
                                                 type={'Shop'}
-                                                data={shopcards[2]} like={shopcards[2].favouriteByVisitors.some(
-                                                    (visitor: { id: any }) => 
+                                                data={shopcards[2]}
+                                                like={shopcards[2].favouriteByVisitors.some(
+                                                    (visitor: { id: any }) =>
                                                         visitor.id === visitorid
-                                                    
-                                                )}                                            />
+                                                )}
+                                            />
                                         </div>
                                     )}
                                 </>

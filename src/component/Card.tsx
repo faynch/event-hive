@@ -17,7 +17,7 @@ interface CardProps {
 export default function Card(props: CardProps) {
     const [active, setActive] = useState(props.like)
     const { data: session } = useSession()
-    console.log(props.data)
+    console.log(props.type)
 
     const handleFollow = async (id: any) => {
         try {

@@ -10,11 +10,15 @@ import Filter from '../pages/assets/filter.svg'
 import { useState } from 'react'
 import { getServerSession } from 'next-auth'
 import { authOptions } from './api/auth/[...nextauth]'
+import { useSession } from 'next-auth/react'
 
 function Shops({ shopdata, tags }: any) {
     const [filter, setFilter] = useState(false)
     const [items, setItems] = useState(shopdata)
     const [showItems, setShowItems] = useState(shopdata)
+
+    const { data: session } = useSession()
+    const visitorid = session?.user?.name
 
     const onSearch = (value: string) => {
         if (value == null) {
@@ -98,8 +102,14 @@ function Shops({ shopdata, tags }: any) {
                             SEARCH FOR :
                         </h4>
                         <div className="mb-8 grid grid-cols-1 gap-8 place-self-center lg:max-w-7xl lg:grid-cols-2 xl:grid-cols-3">
-                            {showItems.map((item: any) => (
-                                <Card key={item.id} type="Shop" data={item} />
+                            {session?.user?.image == "visitor" ? 
+                            showItems.map((item: any) => (
+                                <Card key={item.id} type="Shop" data={item} like={item.favouriteByVisitors.some(
+                                    (visitor: { id: any }) =>
+                                        visitor.id === visitorid
+                                )} />
+                            )) : showItems.map((item: any) => (
+                                <Card key={item.id} type="Shop" data={item} like={false} />
                             ))}
                         </div>
                     </div>

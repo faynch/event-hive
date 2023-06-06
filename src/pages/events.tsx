@@ -11,11 +11,15 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { getServerSession } from 'next-auth'
 import { authOptions } from './api/auth/[...nextauth]'
+import { useSession } from 'next-auth/react'
 
 function Events({ eventdata, tags }: any) {
     const [filter, setFilter] = useState(false)
     const [items, setItems] = useState(eventdata)
     const [showItems, setShowItems] = useState(eventdata)
+
+    const { data: session } = useSession()
+    const visitorid = session?.user?.name
 
     const onSearch = (value: string) => {
         if (value == null) {
@@ -99,8 +103,14 @@ function Events({ eventdata, tags }: any) {
                             SEARCH FOR :
                         </h4>
                         <div className="mb-8 grid grid-cols-1 gap-8 place-self-center lg:max-w-7xl lg:grid-cols-2 xl:grid-cols-3">
-                            {showItems.map((item: any) => (
-                                <Card key={item.id} type="Event" data={item} />
+                        {session?.user?.image == "visitor" ? 
+                            showItems.map((item: any) => (
+                                <Card key={item.id} type="Event" data={item} like={item.favouriteByVisitors.some(
+                                    (visitor: { id: any }) =>
+                                        visitor.id === visitorid
+                                )} />
+                            )) : showItems.map((item: any) => (
+                                <Card key={item.id} type="Event" data={item} like={false} />
                             ))}
                         </div>
                     </div>
