@@ -57,15 +57,16 @@ export default function CardInfo(props: CardInfoProps) {
 
     const handleFollow = async (id: any) => {
         try {
-            if (like) {
-                setLike(false)
+            if (!like) {
+                setLike(true)
                 const formData = {
-                    type: props.type,
-                    id: id,
+                    type: props.type.toLowerCase() ,
+                    targetId: id,
+                    userId: session?.user?.name,
                 }
-
+                console.log('follow ', formData)
                 const response = await fetch(
-                    `https://event-hive-service.onrender.com/api/follows`,
+                    `http://localhost:3000/api/follows`,
                     {
                         method: 'POST',
                         headers: {
@@ -77,20 +78,22 @@ export default function CardInfo(props: CardInfoProps) {
                 if (response.ok) {
                     // Successful response, handle accordingly
                     console.log('Data successfully follow!')
-                    window.location.reload()
+                    // window.location.reload()
                 } else {
                     // Error response, handle accordingly
                     console.log('Failed to follow data')
                 }
             } else {
-                setLike(true)
+                setLike(false)
                 const formData = {
-                    type: props.type,
-                    id: id,
+                    type: props.type.toLowerCase(),
+                    targetId: id,
+                    userId: session?.user?.name,
                 }
+                console.log('unfollow ', formData)
 
                 const response = await fetch(
-                    `https://event-hive-service.onrender.com/api/unfollows`,
+                    `http://localhost:3000/api/unfollows`,
                     {
                         method: 'POST',
                         headers: {
@@ -101,11 +104,11 @@ export default function CardInfo(props: CardInfoProps) {
                 )
                 if (response.ok) {
                     // Successful response, handle accordingly
-                    console.log('Data successfully follow!')
-                    window.location.reload()
+                    console.log('Data successfully unfollow!')
+                    // window.location.reload()
                 } else {
                     // Error response, handle accordingly
-                    console.log('Failed to follow data')
+                    console.log('Failed to unfollow data')
                 }
             }
         } catch (error) {
@@ -198,7 +201,7 @@ export default function CardInfo(props: CardInfoProps) {
                 if (response.ok) {
                     // Successful response, handle accordingly
                     console.log('Data successfully submitted!')
-                    // window.location.reload()
+                    window.location.reload()
                 } else {
                     // Error response, handle accordingly
                     console.log('Failed to submit data')
@@ -400,10 +403,10 @@ export default function CardInfo(props: CardInfoProps) {
                                 setSelectTags={setSelectedTags}
                             />
                         )}
-                        <div className="ml-5 flex flex-wrap">
+                        <div className="ml-5 flex flex-wrap gap-2">
                             {selectedTags.length > 0 ? (
                                 selectedTags.map((tag) => (
-                                    <div className="mx-1 flex" key={tag.id}>
+                                    <div className="flex" key={tag.id}>
                                         <button
                                             className="flex items-center rounded-xl bg-[#F5EAEA] px-3 text-[#F16767]"
                                             key={tag.id}
@@ -555,7 +558,7 @@ export default function CardInfo(props: CardInfoProps) {
                             instagram={props.data?.instagram}
                             tiktok={props.data?.tiktok}
                         />
-                        <div className="flex flex-wrap gap-2 py-1 ">
+                        <div className="flex flex-wrap gap-2 py-1 justify-center sm:justify-start">
                             {props.data?.tags.map((tag: any) => (
                                 <div
                                     key={tag.id}

@@ -145,7 +145,7 @@ function Home({ eventdata, shopdata }: any) {
                                                         }
                                                         tiktok={item.tiktok}
                                                     />
-                                                    <div className="flex flex-wrap gap-2 py-1 ">
+                                                    <div className="flex flex-wrap gap-2 py-1 justify-center lg:justify-start">
                                                         {item.tags.map(
                                                             (tag: any) => (
                                                                 <div
