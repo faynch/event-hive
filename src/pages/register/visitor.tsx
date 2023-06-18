@@ -298,7 +298,7 @@ export default function RegisterVisitor() {
 
 export async function getServerSideProps() {
     const data = await fetch(
-        `https://event-hive-26cc.onrender.com/api/tags`
+        `http://localhost:3000/api/tags`
     )
     const jsonData = await data.json()
     return {

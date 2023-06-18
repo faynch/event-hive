@@ -103,8 +103,8 @@ export default function Organizer() {
                                 <div>
                                     <RegisterCard
                                         image={Organzier}
-                                        alt="Organzier"
-                                        title="Organzier"
+                                        alt="Organizer"
+                                        title="Organizer"
                                     />
                                 </div>
                                 <div className="w-full max-w-[500px] rounded-lg bg-[#F5EAEA] p-10 drop-shadow-lg">
