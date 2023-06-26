@@ -29,7 +29,7 @@ function Eventorganizeracc({ data, id }: any) {
                         </div>
                         <div className="mb-8 grid grid-cols-1 gap-8 place-self-center lg:max-w-7xl lg:grid-cols-2 xl:grid-cols-3">
                             {data.map((item: any) => (
-                                <Card type="Event" data={item} key={item.id} />
+                                <Card type="Event" data={item} key={item.id}  like={false}/>
                             ))}
                         </div>
                     </div>
